@@ -1,12 +1,11 @@
 package kr.ac.kopo.tripforu;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -42,11 +41,11 @@ import java.net.Socket;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
 
-public class ActivityMain extends ControllerPage implements OnBackPressedListener{
+public class ActivityMain extends PageController implements OnBackPressedListener{
     //this context
     static Context context;
     
-    ControllerSchedule activityController = new ControllerSchedule();
+    ScheduleController activityController = new ScheduleController();
     
     //네비게이션 바
     Button btn_NavBarPrt_Schedule, btn_NavbarChd_NewSch, btn_NavbarChd_AllSch, btn_NavbarChd_RecSch,
@@ -81,7 +80,7 @@ public class ActivityMain extends ControllerPage implements OnBackPressedListene
         horizontalScroll[1].setTag(0);
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
-        ControllerSchedule.inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ScheduleController.inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         
         //카카오 SDK 초기화
         String kakao_app_key = getResources().getString(R.string.kakao_app_key);
@@ -90,16 +89,19 @@ public class ActivityMain extends ControllerPage implements OnBackPressedListene
         //로그인 상태에 따라 로그인 메뉴 표시
         CheckClientHasToken();
         
-        //여행일정 티켓 표시
-        ControllerSchedule.AddWaypointFromJSON(ReadJson("json/waypoints.json"));
-        ControllerSchedule.AddScheduleFromJSON(ReadJson("json/schedule.json"));
-        ControllerSchedule.AddMemberFromJSON(ReadJson("json/member.json"));
+        //Json형식의 데이터 동기화
+        ScheduleController.syncJsonToObject(JsonController.ReadJson("json/member.json", getApplicationContext()),
+                                            Member.class.toString());
+        ScheduleController.syncJsonToObject(JsonController.ReadJson("json/waypoints.json", getApplicationContext()),
+                                            Waypoint.class.toString());
+        ScheduleController.syncJsonToObject(JsonController.ReadJson("json/schedule.json", getApplicationContext()),
+                                            Schedule.class.toString());
+        
+        //메인 화면의 남은 여행 일정을 표시
         ShowScheduleTickets();
         
-        
-        //
         AddPage(new Page(ActivityMain.this, TYPE_ACTIVITY));
-    
+        
         
         //스크롤 뷰에 스냅 효과 및 애니메이션 적용
         for (HorizontalScrollView v : horizontalScroll) {
@@ -198,7 +200,7 @@ public class ActivityMain extends ControllerPage implements OnBackPressedListene
         View view = getWindow().getDecorView();
         view.setSystemUiVisibility(view.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         
-        ControllerAppBar appBarController = new ControllerAppBar(this);
+        AppBarController appBarController = new AppBarController(this);
         appBarController.settingSideNavBar();
         // 네비게이션 바
         Button[] navBarChd = {btn_NavbarChd_NewSch, btn_NavbarChd_AllSch, btn_NavbarChd_RecSch};
@@ -264,40 +266,16 @@ public class ActivityMain extends ControllerPage implements OnBackPressedListene
     
     /***
      * -> 작성자 : 이제경
-     * -> 함수 : json확장자 파일을 url을 통해 접근하여 내용을 String으로 반환
-     * -> 인자 : fileUrl = JSON파일이 있는 경로
-     */
-    private String ReadJson(String fileUrl){
-        try{
-            InputStream is = getAssets().open(fileUrl);
-            int fileSize = is.available();
-        
-            byte[] buffer = new byte[fileSize];
-            is.read(buffer);
-            is.close();
-        
-            String json = new String(buffer, "UTF-8");
-            Log.d("--  json = ", json);
-            
-            return json;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    
-    /***
-     * -> 작성자 : 이제경
      * -> 함수 : 메인 페이지에서 남은 여행 일정의 티켓을 보여주는 함수
      * - 클릭시 해당 여행 일정의 상세 내용을 표시
      */
     private void ShowScheduleTickets(){
-        for(int i = 0; i < ControllerSchedule.remainingSchedule.size(); i ++){
+        for(int i = 0; i < ScheduleController.remainingSchedule.size(); i ++){
             if(i > 2)
                 break;
-            Schedule thisSchedule =  ControllerSchedule.remainingSchedule.get(i);
+            Schedule thisSchedule =  ScheduleController.remainingSchedule.get(i);
             View ticket = findViewById(scheduleTickets[i]);
-            Member member = ControllerSchedule.GetMemberByID(thisSchedule.GetMemberGroupId());
+            Member member = ScheduleController.GetMemberByID(thisSchedule.GetMemberGroupId());
             
             ticket.setVisibility(View.VISIBLE);
             
@@ -311,7 +289,7 @@ public class ActivityMain extends ControllerPage implements OnBackPressedListene
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onClick(View view) {
-                    ControllerSchedule.ShowScheduleInfo(findViewById(R.id.LAYOUT_MainContainer), thisSchedule);
+                    ScheduleController.ShowScheduleInfo(findViewById(R.id.LAYOUT_MainContainer), thisSchedule);
                 }
             });
         }
