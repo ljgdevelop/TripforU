@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TripforU</string>
+    <string name="open">open</string>
+    <string name="opened">opened</string>
+    <string name="closed">closed</string>
+    <string name='kakao_app_key'>8b86b6e6598315d4629231091e53911b</string>
+</resources>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="20dp"
+    android:maxWidth="300dp"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/VIEW_SchInfoScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/VIEW_ScrollMargin1"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="30dp"
+                android:paddingHorizontal="30dp"
+                android:paddingBottom="20dp"
+                android:background="@drawable/background_scheduleinfo_top">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="#fdfdff"
+                    android:text="여행지"/>
+
+                <TextView
+                    android:id="@+id/TEXT_SchInfoName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textColor="#fdfdff"
+                    android:text="여행지 정보 영역"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="15dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="#fdfdff"
+                            android:text="출발일"/>
+
+                        <TextView
+                            android:id="@+id/TEXT_SchInfoStartDate"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="24sp"
+                            android:textColor="#fdfdff"
+                            android:textStyle="bold"
+                            android:text="가나다"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="#fdfdff"
+                            android:text="숙박일 수"/>
+
+                        <TextView
+                            android:id="@+id/TEXT_SchInfoEndDate"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="24sp"
+                            android:textColor="#fdfdff"
+                            android:textStyle="bold"
+                            android:text="가나다"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="2"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="#fdfdff"
+                    android:text="인원 수"/>
+
+                <TextView
+                    android:id="@+id/TEXT_SchInfoNum"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textColor="#fdfdff"
+                    android:textStyle="bold"
+                    android:text="人"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/VIEW_SchInfoWPContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="30dp"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

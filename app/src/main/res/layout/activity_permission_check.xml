@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin = "30dp"
+    android:orientation="vertical"
+    tools:context=".ActivityPermissionCheck">
+
+    <TextView
+        android:gravity="left"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Trip for U"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#5e5e5e"/>
+
+    <TextView
+        android:gravity="left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="더 나은 서비스를 위해 동의가 필요한\n권한을 요청합니다."
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#333333"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginVertical="30dp"
+        android:layout_gravity="center"
+        android:background="?android:attr/listDivider"/>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:rowCount="2"
+        android:columnCount="2">
+        <ImageView
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_folder"/>
+        <TextView
+            android:layout_row="0"
+            android:layout_column="1"
+            android:text="저장 공간"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#404040"
+            android:gravity="center_vertical"/>
+        <TextView
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
+            android:textSize="14sp"
+            android:textColor="#7f7f7f"
+            android:layout_marginBottom="20dp"
+            android:text="멋진 추억을 담을 수 있도록 저장공간 권한이 필요합니다."
+            android:gravity="center_vertical"/>
+    </GridLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:rowCount="2"
+        android:columnCount="2">
+        <ImageView
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_location"/>
+        <TextView
+            android:layout_row="0"
+            android:layout_column="1"
+            android:text="위치 엑세스"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#404040"
+            android:gravity="center_vertical"/>
+        <TextView
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
+            android:textSize="14sp"
+            android:textColor="#7f7f7f"
+            android:layout_marginBottom="20dp"
+            android:text="길 안내, 지도 검색시 위치 확인을 위해 위치 엑세스 권한이 필요 합니다."
+            android:gravity="center_vertical"/>
+    </GridLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:rowCount="2"
+        android:columnCount="2">
+        <ImageView
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_folder"/>
+        <TextView
+            android:layout_row="0"
+            android:layout_column="1"
+            android:text="알림"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#404040"
+            android:gravity="center_vertical"/>
+        <TextView
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
+            android:textSize="14sp"
+            android:textColor="#7f7f7f"
+            android:layout_marginBottom="20dp"
+            android:text="편리한 여행을 위한 알림 서비스를 이용하기 위해 알림 권한이 필요 합니다."
+            android:gravity="center_vertical"/>
+    </GridLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:maxWidth="300dp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintWidth_max="300dp"
+                android:text="허용하기"
+                android:id="@+id/BTN_permissionCheck"
+                android:backgroundTint="#364A59"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

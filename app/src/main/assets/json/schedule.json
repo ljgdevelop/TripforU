@@ -1,0 +1,28 @@
+{
+  "schedules": [
+    {
+      "id": 1,
+      "name": "안성 추천 여행코스",
+      "destination": "경기도 안성시",
+      "days": 3,
+      "startDate": "2022-05-20",
+      "wayPointList": "200001/200001/200001/100002/200001/200001/100001/200001",
+      "memberGroupId": 1,
+      "likes": 10,
+      "isShared": false,
+      "sharedCount": 0
+    },
+    {
+      "id": 2,
+      "name": "제주 봄여행",
+      "destination": "제주특별자치도 제주시",
+      "days": 5,
+      "startDate": "2022-08-23",
+      "wayPointList": "100001/200001/100002",
+      "memberGroupId": 2,
+      "likes": 10,
+      "isShared": false,
+      "sharedCount": 0
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/LAYOUT_UserProfile"
+        android:layout_width="match_parent"
+        android:layout_height="94dp"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="20sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="11dp">
+
+
+            <ImageView
+                android:id="@+id/IMG_KakaoProfile"
+                android:src="@drawable/ic_launcher_background"
+                android:background="@drawable/ic_launcher_background"
+                android:scaleType="fitXY"
+                android:layout_width="48sp"
+                android:layout_height="48sp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingVertical="2dp"
+                android:paddingHorizontal="8dp">
+
+                <TextView
+                    android:id="@+id/TEXT_KakaoName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="#5e5e5e"
+                    android:layout_marginBottom="2dp"
+                    android:textStyle="bold"
+                    android:text="이름"/>
+
+                <TextView
+                    android:id="@+id/TEXT_KakaoAdress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="#5e5e5e"
+                    android:text="myAdress@company.com"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.widget.Button
+        android:id="@+id/BTN_Login"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="로그인"
+        android:textAlignment="textStart"
+        android:paddingLeft="15dp"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#5e5e5e"
+        android:background="@drawable/btn_navigation_bar_parent"/>
+
+    <android.widget.Button
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="일정 관리"
+        android:textAlignment="textStart"
+        android:paddingHorizontal="15dp"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#5e5e5e"
+        android:background="@drawable/btn_navigation_bar_parent"
+        android:drawableRight="@drawable/ic_expand_more"
+        android:id="@+id/BTN_NavBarPrt_Schedule"
+        android:tag="closed">
+    </android.widget.Button>
+
+
+
+    <android.widget.Button
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:paddingLeft="30dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:textAlignment="viewStart"
+        android:text="새 일정 만들기"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="#5e5e5e"
+        android:background="@drawable/btn_navigation_bar_child"
+        android:visibility="gone"
+        android:gravity="start"
+        android:id="@+id/BTN_NavbarChd_NewSch"/>
+
+    <android.widget.Button
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:paddingLeft="30dp"
+        android:layout_marginBottom="4dp"
+        android:textAlignment="viewStart"
+        android:text="전체 일정 보기"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="#5e5e5e"
+        android:background="@drawable/btn_navigation_bar_child"
+        android:visibility="gone"
+        android:gravity="start"
+        android:id="@+id/BTN_NavbarChd_AllSch"/>
+
+    <android.widget.Button
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:paddingLeft="30dp"
+        android:layout_marginBottom="4dp"
+        android:textAlignment="viewStart"
+        android:text="여행 추천받기"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="#5e5e5e"
+        android:background="@drawable/btn_navigation_bar_child"
+        android:visibility="gone"
+        android:id="@+id/BTN_NavbarChd_RecSch"/>
+
+    <android.widget.Button
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="설정"
+        android:textAlignment="textStart"
+        android:paddingLeft="15dp"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#5e5e5e"
+        android:background="@drawable/btn_navigation_bar_parent"/>
+</LinearLayout>

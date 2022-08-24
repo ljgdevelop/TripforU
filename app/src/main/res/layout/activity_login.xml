@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#364a59"
+    tools:context=".ActivityLogin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin = "30dp"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Trip for U"
+            android:textSize="32sp"
+            android:gravity="center"
+            android:textColor="#fdfdff"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="간편하게 카카오톡 계정을 이용하여\n로그인 할 수 있습니다.\n\n간편 로그인 하고\n편리한 기능을 사용해보세요"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:textColor="#fdfdff"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_weight="3"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:maxWidth="300dp">
+
+            <ImageButton
+                android:id="@+id/BTN_StartWithKakao"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_kakao_login"
+                app:layout_constraintBottom_toTopOf="@+id/BTN_StartWithoutLogin"
+                app:layout_constraintWidth_max="300dp"/>
+
+            <Button
+                android:id="@+id/BTN_StartWithoutLogin"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/btn_white_corners"
+                android:text="로그인 없이 시작하기"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/BTN_StartWithKakao"
+                app:layout_constraintWidth_max="300dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</LinearLayout>
