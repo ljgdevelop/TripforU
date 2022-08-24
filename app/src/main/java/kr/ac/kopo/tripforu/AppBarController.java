@@ -15,14 +15,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class ControllerAppBar extends AppCompatActivity {
+public class AppBarController extends AppCompatActivity {
         public Activity activity;
         ImageButton btn_Menu;
         Toolbar myToolbar;
         DrawerLayout drawLayout;
         NavigationView navigationView;
         
-        public ControllerAppBar(Activity activity){
+        public AppBarController(Activity activity){
                 this.activity = activity;
         }
         
