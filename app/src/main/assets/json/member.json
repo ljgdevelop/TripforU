@@ -1,15 +1,29 @@
 {
-  "members":[
+  "items":[
     {
       "id": 1,
-      "userIdList": [{"id": 1}, {"id": 2}],
-      "memoList": [1, 2],
+      "userIdList": [
+        1,
+        2,
+        3
+      ],
+      "memoIdList": [
+        1,
+        2
+      ],
       "scheduleId": 1
     },
     {
       "id": 2,
-      "userIdList": [{"id": 1}, {"id": 2}, {"id": 2}],
-      "memoList": [1, 2],
+      "userIdList": [
+        1,
+        2
+      ],
+      "memoIdList": [
+        1,
+        2,
+        3
+      ],
       "scheduleId": 1
     }
   ]

@@ -1,12 +1,35 @@
 {
-  "schedules": [
+  "items": [
     {
       "id": 1,
       "name": "안성 추천 여행코스",
       "destination": "경기도 안성시",
       "days": 3,
       "startDate": "2022-05-20",
-      "wayPointList": "200001/200001/200001/100002/200001/200001/100001/200001",
+      "wayPointList": [
+        {
+          "id": 100001,
+          "name": "A스테이",
+          "posX": 1.1,
+          "posY": 1.1,
+          "reviewCount": 244,
+          "type": 6,
+          "rating": 5,
+          "originLink": "google.com",
+          "time": 540
+        },
+        {
+          "id": 100002,
+          "name": "B스테이",
+          "posX": 1.2,
+          "posY": 1.2,
+          "reviewCount": 728,
+          "type": 6,
+          "rating": 50,
+          "originLink": "google.com",
+          "time": 60
+        }
+      ],
       "memberGroupId": 1,
       "likes": 10,
       "isShared": false,
@@ -18,7 +41,41 @@
       "destination": "제주특별자치도 제주시",
       "days": 5,
       "startDate": "2022-08-23",
-      "wayPointList": "100001/200001/100002",
+      "wayPointList": [
+        {
+          "id": 100001,
+          "name": "A스테이",
+          "posX": 1.1,
+          "posY": 1.1,
+          "reviewCount": 244,
+          "type": 6,
+          "rating": 5,
+          "originLink": "google.com",
+          "time": 540
+        },
+        {
+          "id": 100002,
+          "name": "B스테이",
+          "posX": 1.2,
+          "posY": 1.2,
+          "reviewCount": 728,
+          "type": 6,
+          "rating": 50,
+          "originLink": "google.com",
+          "time": 60
+        },
+        {
+          "id": 200001,
+          "name": "Cafe나무",
+          "posX": 1.3,
+          "posY": 1.3,
+          "reviewCount": 123,
+          "type": 7,
+          "rating": 46,
+          "originLink": "google.com",
+          "time": 120
+        }
+      ],
       "memberGroupId": 2,
       "likes": 10,
       "isShared": false,
