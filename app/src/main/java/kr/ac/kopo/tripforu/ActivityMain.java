@@ -31,6 +31,8 @@ import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.common.KakaoSdk;
 import com.kakao.sdk.user.UserApiClient;
 
+import org.json.simple.JSONObject;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -44,8 +46,6 @@ import kotlin.jvm.functions.Function2;
 public class ActivityMain extends PageController implements OnBackPressedListener{
     //this context
     static Context context;
-    
-    ScheduleController activityController = new ScheduleController();
     
     //네비게이션 바
     Button btn_NavBarPrt_Schedule, btn_NavbarChd_NewSch, btn_NavbarChd_AllSch, btn_NavbarChd_RecSch,
@@ -64,7 +64,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.layout_main_page);
         
         // 환경변수 초기화
         btn_NavBarPrt_Schedule = findViewById(R.id.BTN_NavBarPrt_Schedule);
@@ -83,7 +83,8 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         ScheduleController.inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         
         //카카오 SDK 초기화
-        String kakao_app_key = getResources().getString(R.string.kakao_app_key);
+        JSONObject obj = JsonController.ReadJsonObj("json/appKey.json", getApplicationContext());
+        String kakao_app_key = obj.get("key").toString();
         KakaoSdk.init(this, kakao_app_key);
     
         //로그인 상태에 따라 로그인 메뉴 표시
@@ -101,7 +102,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         ShowScheduleTickets();
         
         AddPage(new Page(ActivityMain.this, TYPE_ACTIVITY));
-        
+    
         
         //스크롤 뷰에 스냅 효과 및 애니메이션 적용
         for (HorizontalScrollView v : horizontalScroll) {

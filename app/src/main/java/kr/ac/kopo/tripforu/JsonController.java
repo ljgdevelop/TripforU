@@ -62,4 +62,31 @@ public class JsonController extends AppCompatActivity {
             return null;
         }
     }
+    
+    /***
+     * -> 작성자 : 이제경
+     * -> 함수 : 파일 경로에 있는 Json 파일을 읽어 JsonObject로 반환
+     * -> 인자 : fileUrl = JSON파일이 있는 경로
+     */
+    public static JSONObject ReadJsonObj(String fileUrl, Context context) {
+        try {
+            InputStream is = context.getAssets().open(fileUrl);
+            int fileSize = is.available();
+            
+            byte[] buffer = new byte[fileSize];
+            is.read(buffer);
+            is.close();
+            
+            String json = new String(buffer, "UTF-8");
+            
+            JSONParser parser = new JSONParser();
+            JSONObject obj = (JSONObject) parser.parse(json);
+            
+            return obj;
+            
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

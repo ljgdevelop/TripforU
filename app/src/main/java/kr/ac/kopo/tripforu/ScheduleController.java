@@ -45,11 +45,17 @@ public class ScheduleController extends Activity{
     public final static int IC_RESTAURANT = 7;
     public final static int IC_PIN = 8;
     
-    public static void syncJsonToObject(org.json.simple.JSONArray json, String cls){
+    
+    /***
+     * -> 작성자 : 이제경
+     * -> 함수 : JsonArray형식의 .Json파일을 읽어와 객체로 변환합니다.
+     * -> 인자 : json = json파일
+     * -> 인자 : className = 저장할 객체의 클래스 이름
+     */
+    public static void syncJsonToObject(org.json.simple.JSONArray json, String className){
         Gson gson = new Gson();
         ArrayList<Object> newObj;
-        System.out.println(cls);
-        switch (cls){
+        switch (className){
             case "class kr.ac.kopo.tripforu.Waypoint":
                 
                 System.out.println("Waypoint");
@@ -67,11 +73,14 @@ public class ScheduleController extends Activity{
                 break;
             case "class kr.ac.kopo.tripforu.Schedule":
     
-                System.out.println("Schedule");
                 newObj = gson.fromJson(json.toString(), new TypeToken<ArrayList<Schedule>>(){}.getType());
                 for (int i = 0; i < newObj.size(); i++) {
                     remainingSchedule.add((Schedule)newObj.get(i));
                 }
+                break;
+            default:
+                
+                System.out.println("Schedule");
                 break;
         }
     }

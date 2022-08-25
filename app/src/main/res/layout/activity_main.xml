@@ -24,13 +24,12 @@
             <include
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/LAYOUT_Sidebar"
                 layout="@layout/layout_app_bar"/>
 
-            <include
+            <FrameLayout
+                android:id="@+id/activity_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/layout_main_page"/>
+                android:layout_height="wrap_content"/>
 
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/LAYOUT_NavView"

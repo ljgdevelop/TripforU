@@ -3,5 +3,5 @@
     <string name="open">open</string>
     <string name="opened">opened</string>
     <string name="closed">closed</string>
-    <string name='kakao_app_key'>8b86b6e6598315d4629231091e53911b</string>
+    <string name="PassLogin"><u>로그인 없이 사용</u></string>
 </resources>
