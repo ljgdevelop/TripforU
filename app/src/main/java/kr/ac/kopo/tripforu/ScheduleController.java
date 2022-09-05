@@ -2,8 +2,6 @@ package kr.ac.kopo.tripforu;
 
 import android.app.Activity;
 import android.os.Build;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -33,7 +31,6 @@ public class ScheduleController extends Activity{
     public static ArrayList<Schedule> remainingSchedule = new ArrayList<>();
     public static ArrayList<Member> memberList = new ArrayList<>();
     public static ArrayList<Waypoint> waypointList = new ArrayList<>();
-    public static LayoutInflater inflater;
     static int wpc = 10000000;
     
     public final int IC_HOME = 1;
@@ -58,14 +55,12 @@ public class ScheduleController extends Activity{
         switch (className){
             case "class kr.ac.kopo.tripforu.Waypoint":
                 
-                System.out.println("Waypoint");
                 newObj = gson.fromJson(json.toString(), new TypeToken<ArrayList<Waypoint>>(){}.getType());
                 for (int i = 0; i < newObj.size(); i++)
                     waypointList.add((Waypoint)newObj.get(i));
                 break;
             case "class kr.ac.kopo.tripforu.Member":
     
-                System.out.println("Member");
                 newObj = gson.fromJson(json.toString(), new TypeToken<ArrayList<Member>>(){}.getType());
                 for (int i = 0; i < newObj.size(); i++) {
                     memberList.add((Member) newObj.get(i));

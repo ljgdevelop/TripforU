@@ -40,6 +40,7 @@
                     android:layout_height="match_parent"
                     android:text="Trip for U"
                     android:gravity="center"
+                    android:textStyle="normal"
                     android:textSize="18sp"
                     android:textColor="#5e5e5e"/>
             </LinearLayout>
@@ -60,16 +61,6 @@
                     android:layout_height="48dp"
                     android:background="@color/white"
                     android:layout_marginRight="10dp"/>
-
-                <ImageButton
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/ic_menu"
-                    android:id="@+id/BTN_menu"
-                    android:padding="24dp"
-                    android:scaleX="0.5"
-                    android:scaleY="0.5"
-                    android:layout_marginRight="16dp"/>
             </LinearLayout>
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>

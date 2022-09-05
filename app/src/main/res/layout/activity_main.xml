@@ -1,48 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#d7dde9"
+    android:background="@color/white"
     tools:context=".ActivityMain">
 
-    <FrameLayout
-        android:id="@+id/LAYOUT_MainContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.drawerlayout.widget.DrawerLayout
+        <FrameLayout
+            android:id="@+id/activity_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/LAYOUT_Drawer"
-            android:fitsSystemWindows="true"
-            tools:openDrawer="start"
-            android:clickable="false">
+            android:layout_marginTop="56dp"/>
 
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/layout_app_bar"/>
-
-            <FrameLayout
-                android:id="@+id/activity_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <com.google.android.material.navigation.NavigationView
-                android:id="@+id/LAYOUT_NavView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:fitsSystemWindows="true">
-
-                <include
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    layout="@layout/layout_drawer_layout"/>
-            </com.google.android.material.navigation.NavigationView>
-        </androidx.drawerlayout.widget.DrawerLayout>
-    </FrameLayout>
-</LinearLayout>
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            layout="@layout/layout_app_bar"/>
+</FrameLayout>

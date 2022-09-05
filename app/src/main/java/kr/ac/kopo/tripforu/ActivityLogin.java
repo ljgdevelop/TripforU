@@ -3,15 +3,22 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.view.GravityCompat;
 
-public class ActivityLogin extends ActivityMain {
-    
+import com.kakao.sdk.auth.model.OAuthToken;
+import com.kakao.sdk.user.UserApiClient;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function2;
+
+public class ActivityLogin extends PageController {
     ImageButton btn_startWithKakao;
     Button btn_startWithoutLogin;
     
@@ -43,8 +50,57 @@ public class ActivityLogin extends ActivityMain {
         btn_startWithoutLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            
+                finish();
             }
+        });
+    }
+    
+    /***
+     * -> 작성자 : 이제경
+     * -> 함수 : 카카오톡 로그인 시도, 카카오톡 어플이 설치되어 있을경우 앱을 통해 로그인
+     * - 설치되어 있지 않을경우 카카오톡 계정을 통해 로그인 할 수 있는 웹 페이지로 이동
+     */
+    public void TryKakaoLogin(){
+        if (UserApiClient.getInstance().isKakaoTalkLoginAvailable(getApplicationContext())) {
+            UserApiClient.getInstance().loginWithKakaoTalk(this, callback);
+        } else {
+            UserApiClient.getInstance().loginWithKakaoAccount(this, callback);
+        }
+    }
+    
+    /***
+     * -> 작성자 : Kakao Developers (https://developers.kakao.com/docs/latest/ko/kakaologin/android)
+     */
+    private Function2<OAuthToken, Throwable, Unit> callback = (oAuthToken, throwable) -> {
+        if (oAuthToken != null) {
+            Log.i("[카카오] 로그인", "성공");
+            updateKakaoLogin();
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
+        if (throwable != null) {
+            Log.i("[카카오] 로그인", "실패");
+            Log.e("signInKakao()", throwable.getLocalizedMessage());
+        }
+        return null;
+    };
+    
+    /***
+     * -> 작성자 : Kakao Developers (https://developers.kakao.com/docs/latest/ko/kakaologin/android)
+     */
+    private void updateKakaoLogin() {
+        UserApiClient.getInstance().me((user, throwable) -> {
+            if (user != null) {
+                // @brief : 로그인 성공
+                Log.i("[카카오] 로그인 정보", user.toString());
+                // @brief : 로그인한 유저의 email주소와 token 값 가져오기. pw는 제공 X
+                String email = user.getKakaoAccount().getEmail();
+                Log.i("[카카오] 로그인 정보", email + "");
+            }
+            else {
+                // @brief : 로그인 실패
+            } return null;
         });
     }
 }

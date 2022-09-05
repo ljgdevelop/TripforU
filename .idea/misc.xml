@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/android/TripforU/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2495" />
+        <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_navigation_bar.xml" value="0.142" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_roundcorner_15.xml" value="0.2495" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_scheduleinfo_top.xml" value="0.218" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_ticket.xml" value="0.21" />
+        <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_ticket_new.xml" value="0.22" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_ticket_top.xml" value="0.2495" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_white_corners.xml" value="0.2495" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_white_rcorner_15.xml" value="0.2495" />
@@ -18,6 +20,7 @@
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/btn_navigation_bar_parent.xml" value="0.2495" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/btn_no_border.xml" value="0.218" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/btn_white_corners.xml" value="0.2495" />
+        <entry key="..\:/android/TripforU/app/src/main/res/drawable/ic_account.xml" value="0.142" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.25" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/ic_baseline_hexagon_24.xml" value="0.2495" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/ic_expand_less.xml" value="0.2495" />
@@ -26,6 +29,7 @@
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2495" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/ic_location.xml" value="0.2495" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/ic_menu.xml" value="0.1235" />
+        <entry key="..\:/android/TripforU/app/src/main/res/drawable/ic_share.xml" value="0.142" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/ic_waypoint_car.xml" value="0.2495" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/ic_waypoint_circle.xml" value="0.142" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/ic_waypoint_home.xml" value="0.2495" />
@@ -43,13 +47,17 @@
         <entry key="..\:/android/TripforU/app/src/main/res/layout/activity_recommend_trip_banner.xml" value="0.2957427536231884" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/activity_scheduleinfo.xml" value="0.17916666666666667" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/appbar.xml" value="0.2957427536231884" />
-        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_app_bar.xml" value="0.3619791666666667" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_app_bar.xml" value="0.44074074074074077" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_appbar.xml" value="0.18489583333333334" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_drawer_layout.xml" value="0.33" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_drawerlayout.xml" value="0.18489583333333334" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_kakao_login.xml" value="0.3619791666666667" />
-        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_main_page.xml" value="0.33" />
-        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_main_scheduleticket.xml" value="0.3619791666666667" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_main.xml" value="0.30012610340479196" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_main_account.xml" value="0.3619791666666667" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_main_mainpage.xml" value="0.2957427536231884" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_main_page.xml" value="0.31029986962190353" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_main_scheduleticket.xml" value="0.25" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_main_welcome.xml" value="0.2957427536231884" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_memo_summary.xml" value="0.3619791666666667" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_navigation_bar_parent.xml" value="0.3619791666666667" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_page_main.xml" value="0.3016304347826087" />
