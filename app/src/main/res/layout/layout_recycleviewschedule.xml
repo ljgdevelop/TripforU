@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ActivityRecycleViewSchedule">
+
+    //위치 이동하는 스크롤
+    //공유되면 왼쪽위에 공유된 표시 및 공유 수 표시
+    //너무 길어지면 ...으로 표시하는 기능
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/white_corners_10">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="15dp"
+            android:paddingLeft="15dp"
+            android:paddingBottom="15dp"
+            android:id="@+id/LAYOUT_SchedulText">
+
+            //제목
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/TEXT_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:textSize="16dp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+            </LinearLayout>
+
+
+            //여행코스
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/TEXT_Destination"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:textSize="14dp">
+                </TextView>
+
+            </LinearLayout>
+
+
+            //참여자
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/TEXT_MemberGroupId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:textSize="14dp">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    //별점
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp">
+
+                        <RatingBar
+                            android:id="@+id/RATINGBAR"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:progressTint="#F1C40F"
+                            android:secondaryProgressTint="#F1C40F"
+                            android:progressBackgroundTint="#F1C40F"
+                            android:layout_gravity="center"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:rating="0"/>
+
+                        <TextView
+                            android:id="@+id/TEXT_Grade"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#333333"
+                            android:textSize="14dp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                    </LinearLayout>
+
+                    //기간
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/TEXT_StartDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#333333"
+                            android:textSize="12dp">
+                        </TextView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LAYOUT_SharedContents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal"
+                    android:layout_gravity="bottom">
+
+                    //좋아요 수
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="15dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_numberlike"/>
+
+                        <TextView
+                            android:id="@+id/TEXT_Likes"
+                            android:layout_marginLeft="5dp"
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="#333333"
+                            android:textSize="14dp"
+                            android:text="1.3"
+                            android:layout_gravity="bottom" />
+
+                    </LinearLayout>
+
+                    //공유된 수
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="15dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_numbershared"/>
+
+                        <TextView
+                            android:id="@+id/TEXT_SharedCount"
+                            android:layout_marginLeft="5dp"
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="#333333"
+                            android:textSize="14dp"
+                            android:text="1,2"
+                            android:layout_gravity="bottom" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="65dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="right"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_expand_less_24"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_expand_more_24"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/LAYOUT_SharedMark">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_sharedmark"/>
+    </LinearLayout>
+
+
+
+
+
+</FrameLayout>

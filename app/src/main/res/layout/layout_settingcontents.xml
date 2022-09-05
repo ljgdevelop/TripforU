@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FDFDFF"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#D7DDE9"> //알림 구간
+
+            <TextView
+                style="@style/settingsTextStyle"
+                android:text="알림"
+                android:layout_gravity="top"/>
+
+        </LinearLayout>
+
+        <GridLayout
+            style="@style/settingsGridLayoutStyle"> //전체 알림
+
+            <TextView style="@style/settingsTextStyle"
+                android:text="전체 알림"/>
+
+            <include
+                layout="@layout/switch_slidebutton"
+                style="@style/includeLayoutStyle"
+                android:id="@+id/SWITCH_AllAlarm"/>
+
+        </GridLayout>
+
+        <TextView style="@style/divideLine"/>
+
+        <GridLayout
+            style="@style/settingsGridLayoutStyle"> // D-day 알림
+
+            <TextView style="@style/settingsTextStyle"
+                android:text="D-day 알림"
+                android:layout_gravity="top"/>
+
+            <include
+                layout="@layout/switch_slidebutton"
+                style="@style/includeLayoutStyle"
+                android:id="@+id/dDayAlarm"/>
+
+        </GridLayout>
+
+        <TextView style="@style/divideLine"/>
+
+        <GridLayout
+            style="@style/settingsGridLayoutStyle"> // 장소 이동 알림
+
+            <TextView style="@style/settingsTextStyle"
+                android:text="장소 이동 알림"
+                android:layout_gravity="top"/>
+
+            <include
+                layout="@layout/switch_slidebutton"
+                style="@style/includeLayoutStyle"/>
+
+        </GridLayout>
+
+        <TextView style="@style/divideLine"/>
+
+        <GridLayout
+            style="@style/settingsGridLayoutStyle"> //추천 여행 알림
+
+            <TextView style="@style/settingsTextStyle"
+                android:text="추천 여행 알림"
+                android:layout_gravity="top"/>
+
+            <include
+                layout="@layout/switch_slidebutton"
+                style="@style/includeLayoutStyle"/>
+
+        </GridLayout>
+
+        <TextView style="@style/divideLine"/>
+
+        <GridLayout
+            style="@style/settingsGridLayoutStyle"> //화면 알림
+
+            <TextView style="@style/settingsTextStyle"
+                android:text="화면 알림"
+                android:layout_gravity="top"/>
+
+            <include
+                layout="@layout/switch_slidebutton"
+                style="@style/includeLayoutStyle"/>
+
+        </GridLayout>
+
+        <TextView style="@style/divideLine"/>
+
+        <GridLayout
+            style="@style/settingsGridLayoutStyle"> //상단바 알림
+
+            <TextView style="@style/settingsTextStyle"
+                android:text="상단바 알림"
+                android:layout_gravity="top"/>
+
+            <include
+                layout="@layout/switch_slidebutton"
+                style="@style/includeLayoutStyle"/>
+
+        </GridLayout>
+
+        <TextView style="@style/divideLine"/>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"> // 알림 차단 시간 설정
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:backgroundTint="#FDFDFF"
+                android:text="알림 차단 시간 설정"
+                android:textSize="16dp"
+                android:gravity="left"
+                android:soundEffectsEnabled="false"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:id="@+id/BTN_AlarmForbidTime"/>
+
+        </GridLayout>
+
+        <TextView style="@style/divideLine"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#D7DDE9">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/settingsTextStyle"
+                android:layout_gravity="center"
+                android:text="기타"/>
+
+        </LinearLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:backgroundTint="#FDFDFF"
+                android:text="크레딧"
+                android:textSize="16dp"
+                android:gravity="left"
+                android:soundEffectsEnabled="false"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:id="@+id/BTN_Credit"/>
+
+        </GridLayout>
+
+        <TextView style="@style/divideLine"/>
+
+    </LinearLayout>
+
+</LinearLayout>
