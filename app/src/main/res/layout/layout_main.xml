@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:scrollX="1080dp"
         android:overScrollMode="never">
 
         <LinearLayout
@@ -22,7 +23,7 @@
 
             <include
                 android:id="@+id/LAYOUT_SchList"
-                layout="@layout/layout_main_account"
+                layout="@layout/activity_schedulelist"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

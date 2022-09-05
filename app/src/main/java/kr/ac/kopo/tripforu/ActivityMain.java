@@ -2,6 +2,9 @@ package kr.ac.kopo.tripforu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Point;
 import android.graphics.drawable.LayerDrawable;
@@ -14,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import android.content.Context;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,7 +59,8 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         
         //메인 화면의 남은 여행 일정을 표시
         ShowScheduleTickets();
-    
+        ShowScheduleList();
+        
         //탭 페이지 설정
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -75,7 +80,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
                 TabHorizontalScroll(findViewById(R.id.VIEW_MainPageTabPage), (Integer) view.getTag());
             });
         }
-        
+    
         //스크롤 뷰를 터치를 통해 이동되지 않도록 오버라이드
         findViewById(R.id.VIEW_MainPageTabPage).setOnTouchListener((view, event) -> {return true;});
     }
@@ -107,9 +112,24 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         }
     }
     
-    
-    
-    
+    public void ShowScheduleList() {
+        LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        LinearLayout layout_SharedMark = findViewById(R.id.LAYOUT_SharedMark);
+        LinearLayout layout_SharedContents = findViewById(R.id.LAYOUT_SharedContents);
+        ScheduleContentAdapter mScheduleContentAdapter = new ScheduleContentAdapter();
+        RecyclerView mRecyclerView_Schedule = (RecyclerView) findViewById(R.id.RECYCLEVIEW_Schedule);
+        mRecyclerView_Schedule.setLayoutManager(manager);
+        mRecyclerView_Schedule.setAdapter(mScheduleContentAdapter);
+        
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(mScheduleContentAdapter));
+        mItemTouchHelper.attachToRecyclerView(mRecyclerView_Schedule);
+        
+        
+        // isShared 상태에 맞게 공유표시 레이아웃 생기고 끄는 기능 구현해야됨
+        
+        mScheduleContentAdapter.setItems();
+    }
     
     public static int ConvertSPtoPX(@NonNull Context context, int sp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());

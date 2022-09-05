@@ -21,18 +21,12 @@
             android:orientation="vertical">
 
             //스케쥴
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/RECYCLEVIEW_Schedule"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:listitem="@layout/layout_recycleviewschedule"
                 android:nestedScrollingEnabled="false"/>
-
         </LinearLayout>
-
     </LinearLayout>
-
-
-
 </androidx.core.widget.NestedScrollView>
