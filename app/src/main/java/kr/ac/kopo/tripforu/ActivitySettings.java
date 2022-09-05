@@ -15,8 +15,7 @@ public class ActivitySettings extends PageController {
     Button btn_AlarmForbidTime, btn_AlarmForbidTimePrevious, btn_AlarmForbidTimeStorage, btn_Credit;
     SwitchCompat switch_AllAlarm;
     LinearLayout layout_AlarmForbidTime, layout_AllAlarmScreenFence, layout_Credit;
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
+    public void showSettings(){
         setContentView(R.layout.activity_settings);
 
         btn_AlarmForbidTime = findViewById(R.id.BTN_AlarmForbidTime);

@@ -6,9 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ActivityCredit extends PageController {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
+
+    protected void showCredit(){
         setContentView(R.layout.activity_credit);
 
 
