@@ -3,6 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android studio/school/TripforU/app/src/main/res/drawable/button1.xml" value="0.1035" />
+        <entry key="..\:/android studio/school/TripforU/app/src/main/res/drawable/corners.xml" value="0.1035" />
+        <entry key="..\:/android studio/school/TripforU/app/src/main/res/drawable/custom_ratingbar.xml" value="0.1035" />
+        <entry key="..\:/android studio/school/TripforU/app/src/main/res/drawable/dounarrow.xml" value="0.1035" />
+        <entry key="..\:/android studio/school/TripforU/app/src/main/res/drawable/search.xml" value="0.1035" />
+        <entry key="..\:/android studio/school/TripforU/app/src/main/res/drawable/searchviewmap.xml" value="0.1035" />
+        <entry key="..\:/android studio/school/TripforU/app/src/main/res/drawable/textview1.xml" value="0.1035" />
+        <entry key="..\:/android studio/school/TripforU/app/src/main/res/drawable/textview3.xml" value="0.1035" />
+        <entry key="..\:/android studio/school/TripforU/app/src/main/res/drawable/uparrow.xml" value="0.1035" />
+        <entry key="..\:/android studio/school/TripforU/app/src/main/res/layout/activity_addwaypoint.xml" value="0.22826086956521738" />
+        <entry key="..\:/android studio/school/TripforU/app/src/main/res/layout/activity_finalconfirmation.xml" value="0.22826086956521738" />
+        <entry key="..\:/android studio/school/TripforU/app/src/main/res/layout/dialog_waypointtimeslt.xml" value="0.22826086956521738" />
+        <entry key="..\:/android studio/school/TripforU/app/src/main/res/layout/layout_waypointsearch.xml" value="0.1" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2495" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_navigation_bar.xml" value="0.142" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_roundcorner_15.xml" value="0.2495" />

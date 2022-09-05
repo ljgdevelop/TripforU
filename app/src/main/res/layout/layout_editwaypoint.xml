@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D7DDE9">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_margin="15dp"
+            android:text="현재 일정 입니다."
+            android:textSize="18dp"
+            android:textColor="@color/black"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button1"
+                android:gravity="left"
+                android:drawableEnd="@drawable/dounarrow"
+                android:layout_marginBottom="15dp"
+                android:text="달맞이동산\n1시간 2분코스"
+                android:textColor="@color/black"
+                android:buttonTint="@color/black"/>
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button1"
+                android:gravity="left"
+                android:drawableEnd="@drawable/dounarrow"
+                android:layout_marginBottom="15dp"
+                android:text="청사포 조개구이촌\n1시간 41분코스"
+                android:textColor="@color/black"
+                android:buttonTint="@color/black"/>
+
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

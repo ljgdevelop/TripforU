@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D7DDE9"
+    tools:context=".othersetting"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="15dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_margin="15dp"
+                android:gravity="center"
+                android:text="이동수단을 선택해 주세요"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:id="@+id/textview1"
+                />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    >
+
+                    <Button
+                        android:id="@+id/btnCar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button4"
+                        android:padding="10dp"
+                        android:text="자가용"
+                        >
+
+                    </Button>
+
+                    <Button
+                        android:id="@+id/btnPublicTransport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/buttonX"
+                        android:padding="10dp"
+                        android:text="대중교통"
+                        >
+
+                    </Button>
+
+                </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/btnBus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="버스"
+                android:background="@drawable/buttonC"
+                android:layout_marginBottom="5dp"
+                android:visibility="invisible">
+            </CheckBox>
+
+            <CheckBox
+                android:id="@+id/btnSubway"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttonC"
+                android:text="지하철"
+                android:layout_marginBottom="5dp"
+                android:visibility="invisible">
+
+            </CheckBox>
+
+            <CheckBox
+                android:id="@+id/btnTrain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="기차"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/buttonC"
+                android:visibility="invisible">
+            </CheckBox>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:text="인원수를 정해해주세요"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:id="@+id/textview2"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editText"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/search"
+                    android:hint="인원을 정해주세요"
+                    android:maxLines="2"
+                    android:digits="0123456789"
+                    android:textColor="#808080"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
