@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package kr.ac.kopo.tripforu;
 
 import androidx.appcompat.app.AppCompatActivity;
 
