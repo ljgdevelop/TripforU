@@ -48,7 +48,7 @@
                         android:id="@+id/btnPublicTransport"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@drawable/buttonX"
+                        android:background="@drawable/button5"
                         android:padding="10dp"
                         android:text="대중교통"
                         >
@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="버스"
-                android:background="@drawable/buttonC"
+                android:background="@drawable/button6"
                 android:layout_marginBottom="5dp"
                 android:visibility="invisible">
             </CheckBox>
@@ -77,7 +77,7 @@
                 android:id="@+id/btnSubway"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/buttonC"
+                android:background="@drawable/button6"
                 android:text="지하철"
                 android:layout_marginBottom="5dp"
                 android:visibility="invisible">
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:text="기차"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/buttonC"
+                android:background="@drawable/button6"
                 android:visibility="invisible">
             </CheckBox>
 
