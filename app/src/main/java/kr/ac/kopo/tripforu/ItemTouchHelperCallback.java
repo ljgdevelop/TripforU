@@ -1,5 +1,9 @@
 package kr.ac.kopo.tripforu;
 
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,8 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     private ItemTouchHelperListener listener;
-
     public ItemTouchHelperCallback(ItemTouchHelperListener listener) { this.listener = listener; }
+
+
 
 
     @Override
@@ -29,9 +34,10 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
         listener.onItemSwipe(viewHolder.getAdapterPosition());
     }
 
+
     @Override
     public boolean isLongPressDragEnabled() {
-        return true;
+        return false;
     }
 
 

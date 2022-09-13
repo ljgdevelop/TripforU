@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ActivityRecycleViewSchedule">
+    tools:context=".ActivityRecycleViewSchedule"
+    android:background="?attr/selectableItemBackground"
+    android:id="@+id/FRAMELAYOUT_RecyclerView">
 
     //위치 이동하는 스크롤
     //공유되면 왼쪽위에 공유된 표시 및 공유 수 표시
@@ -12,13 +14,29 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="115dp"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:background="@drawable/white_corners_10">
+        android:background="@drawable/background_white_rcorner_15"
+        android:backgroundTint="#43992a">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:paddingLeft="10dp"
+            android:id="@+id/CHB_ScheduleList">
+                <CheckBox
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/checkbox_customizing"
+                    android:button="@null"/>
+        </LinearLayout>
+
+
         <LinearLayout
             android:layout_weight="1"
             android:layout_width="wrap_content"
@@ -39,8 +57,8 @@
                     android:id="@+id/TEXT_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#333333"
-                    android:textSize="16dp"
+                    android:textColor="#f1f5f0"
+                    android:textSize="16sp"
                     android:textStyle="bold">
 
                 </TextView>
@@ -58,37 +76,12 @@
                     android:id="@+id/TEXT_Destination"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#333333"
-                    android:textSize="14dp">
+                    android:textColor="#f1f5f0"
+                    android:textSize="14sp">
                 </TextView>
 
             </LinearLayout>
 
-
-            //참여자
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/TEXT_MemberGroupId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#333333"
-                    android:textSize="14dp">
-                </TextView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,23 +98,17 @@
                         android:orientation="horizontal"
                         android:layout_marginTop="5dp">
 
-                        <RatingBar
-                            android:id="@+id/RATINGBAR"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:progressTint="#F1C40F"
-                            android:secondaryProgressTint="#F1C40F"
-                            android:progressBackgroundTint="#F1C40F"
-                            android:layout_gravity="center"
-                            style="?android:attr/ratingBarStyleSmall"
-                            android:rating="0"/>
-
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_star"/>
                         <TextView
+                            android:paddingLeft="6dp"
                             android:id="@+id/TEXT_Grade"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#333333"
-                            android:textSize="14dp"
+                            android:textColor="#f1f5f0"
+                            android:textSize="14sp"
                             android:textStyle="bold">
 
                         </TextView>
@@ -138,8 +125,8 @@
                             android:id="@+id/TEXT_StartDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#333333"
-                            android:textSize="12dp">
+                            android:textColor="#f1f5f0"
+                            android:textSize="12sp">
                         </TextView>
 
                     </LinearLayout>
@@ -170,9 +157,8 @@
                             android:layout_marginLeft="5dp"
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
-                            android:textColor="#333333"
-                            android:textSize="14dp"
-                            android:text="1.3"
+                            android:textColor="#f1f5f0"
+                            android:textSize="14sp"
                             android:layout_gravity="bottom" />
 
                     </LinearLayout>
@@ -187,16 +173,15 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_numbershared"/>
+                            android:src="@drawable/ic_shared"/>
 
                         <TextView
                             android:id="@+id/TEXT_SharedCount"
                             android:layout_marginLeft="5dp"
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
-                            android:textColor="#333333"
-                            android:textSize="14dp"
-                            android:text="1,2"
+                            android:textColor="#f1f5f0"
+                            android:textSize="14sp"
                             android:layout_gravity="bottom" />
 
                     </LinearLayout>
@@ -214,15 +199,16 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_gravity="right"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp">
+            android:padding="15dp">
 
             <ImageView
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ic_baseline_expand_less_24"/>
             <ImageView
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

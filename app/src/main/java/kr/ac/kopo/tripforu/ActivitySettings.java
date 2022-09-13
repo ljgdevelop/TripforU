@@ -11,21 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
 public class ActivitySettings extends PageController {
-
-    Button btn_AlarmForbidTime, btn_AlarmForbidTimePrevious, btn_AlarmForbidTimeStorage, btn_Credit;
-    SwitchCompat switch_AllAlarm;
-    LinearLayout layout_AlarmForbidTime, layout_AllAlarmScreenFence, layout_Credit;
     public void showSettings(){
-        setContentView(R.layout.activity_settings);
-
-        btn_AlarmForbidTime = findViewById(R.id.BTN_AlarmForbidTime);
-        btn_AlarmForbidTimePrevious = findViewById(R.id.BTN_AlarmForbidTime_Previous);
-        btn_AlarmForbidTimeStorage = findViewById(R.id.BTN_AlarmForbidTime_Storage);
-        btn_Credit = findViewById(R.id.BTN_Credit);
-        switch_AllAlarm = findViewById(R.id.SWITCH_AllAlarm);
-        layout_AllAlarmScreenFence = findViewById(R.id.LAYOUT_AllAlarmScreenFence);
-        layout_AlarmForbidTime = findViewById(R.id.LAYOUT_AlarmForbidTime);
-        layout_Credit = findViewById(R.id.LAYOUT_Credit);
+        Button btn_AlarmForbidTime = findViewById(R.id.BTN_AlarmForbidTime);
+        Button btn_AlarmForbidTimePrevious = findViewById(R.id.BTN_AlarmForbidTime_Previous);
+        Button btn_AlarmForbidTimeStorage = findViewById(R.id.BTN_AlarmForbidTime_Storage);
+        Button btn_Credit = findViewById(R.id.BTN_Credit);
+        SwitchCompat switch_AllAlarm = findViewById(R.id.SWITCH_AllAlarm);
+        LinearLayout layout_AllAlarmScreenFence = findViewById(R.id.LAYOUT_AllAlarmScreenFence);
+        LinearLayout layout_AlarmForbidTime = findViewById(R.id.LAYOUT_AlarmForbidTime);
+        LinearLayout layout_Credit = findViewById(R.id.LAYOUT_Credit);
 
         //전체 알림 상태 확인
         if (switch_AllAlarm.isChecked()){
@@ -65,18 +59,14 @@ public class ActivitySettings extends PageController {
         //알람 차단 시간 설정 (이전)
         btn_AlarmForbidTimePrevious.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-
                 layout_AlarmForbidTime.setVisibility(View.GONE);
-
             }
         });
 
         //알림 차단 시간 설정(저장)
         btn_AlarmForbidTimeStorage.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-
                 layout_AlarmForbidTime.setVisibility(View.GONE);
-
             }
         });
 
@@ -84,19 +74,8 @@ public class ActivitySettings extends PageController {
         btn_Credit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 setContentView(R.layout.activity_credit);
-
             }
         });
-
-
-
-
-
-
-
-
-
     }
 }

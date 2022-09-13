@@ -17,10 +17,13 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import android.content.Context;
+import android.view.ViewParent;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.kakao.sdk.auth.AuthApiClient;
@@ -121,11 +124,10 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         RecyclerView mRecyclerView_Schedule = (RecyclerView) findViewById(R.id.RECYCLEVIEW_Schedule);
         mRecyclerView_Schedule.setLayoutManager(manager);
         mRecyclerView_Schedule.setAdapter(mScheduleContentAdapter);
-        
+
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(mScheduleContentAdapter));
         mItemTouchHelper.attachToRecyclerView(mRecyclerView_Schedule);
-        
-        
+
         // isShared 상태에 맞게 공유표시 레이아웃 생기고 끄는 기능 구현해야됨
         
         mScheduleContentAdapter.setItems();

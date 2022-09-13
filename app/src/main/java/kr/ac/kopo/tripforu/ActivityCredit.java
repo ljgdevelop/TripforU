@@ -5,11 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ActivityCredit extends PageController {
-
-
     protected void showCredit(){
-        setContentView(R.layout.activity_credit);
-
 
     }
 }
