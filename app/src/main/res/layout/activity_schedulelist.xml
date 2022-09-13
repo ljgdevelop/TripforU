@@ -35,7 +35,7 @@
                 android:text="전체"/>
         </LinearLayout>
         <androidx.core.widget.NestedScrollView
-            android:background="#f1f5f0"
+            android:background="#F9FCF8"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
