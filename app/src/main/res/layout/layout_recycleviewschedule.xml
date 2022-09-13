@@ -57,7 +57,7 @@
                     android:id="@+id/TEXT_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#f1f5f0"
+                    android:textColor="#F9FCF8"
                     android:textSize="16sp"
                     android:textStyle="bold">
 
@@ -76,7 +76,7 @@
                     android:id="@+id/TEXT_Destination"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#f1f5f0"
+                    android:textColor="#F9FCF8"
                     android:textSize="14sp">
                 </TextView>
 
@@ -107,7 +107,7 @@
                             android:id="@+id/TEXT_Grade"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#f1f5f0"
+                            android:textColor="#F9FCF8"
                             android:textSize="14sp"
                             android:textStyle="bold">
 
@@ -125,7 +125,7 @@
                             android:id="@+id/TEXT_StartDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#f1f5f0"
+                            android:textColor="#F9FCF8"
                             android:textSize="12sp">
                         </TextView>
 
@@ -157,7 +157,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
-                            android:textColor="#f1f5f0"
+                            android:textColor="#F9FCF8"
                             android:textSize="14sp"
                             android:layout_gravity="bottom" />
 
@@ -180,7 +180,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
-                            android:textColor="#f1f5f0"
+                            android:textColor="#F9FCF8"
                             android:textSize="14sp"
                             android:layout_gravity="bottom" />
 
