@@ -1,33 +1,28 @@
 package kr.ac.kopo.tripforu;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Point;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.View;
 
 import android.content.Context;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.kakao.sdk.auth.AuthApiClient;
 import com.kakao.sdk.common.KakaoSdk;
-import com.kakao.sdk.user.UserApiClient;
 
 import org.json.simple.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ActivityMain extends PageController implements OnBackPressedListener{
     @Override protected boolean useToolbar(){ return true; }
@@ -83,6 +78,15 @@ public class ActivityMain extends PageController implements OnBackPressedListene
     
         //스크롤 뷰를 터치를 통해 이동되지 않도록 오버라이드
         findViewById(R.id.VIEW_MainPageTabPage).setOnTouchListener((view, event) -> {return true;});
+        
+        //메인 화면의 남은 일정 티켓에 스크롤 애니메이션 적용
+        AnimateHorizontalScroll(findViewById(R.id.VIEW_TicketScroll));
+        
+        //
+        findViewById(R.id.BTN_CreateNewSch).setOnClickListener(view -> {
+            Intent i = new Intent(getApplicationContext(), ActivityCreateSch.class);
+            startActivity(i);
+        });
     }
     
     
@@ -95,20 +99,24 @@ public class ActivityMain extends PageController implements OnBackPressedListene
     private void ShowScheduleTickets(){
         for(int i = 0; i < ScheduleController.remainingSchedule.size(); i ++){
             if(i > 2)
-                break;
+                return;
             Schedule thisSchedule =  ScheduleController.remainingSchedule.get(i);
             int[] scheduleTickets = {R.id.LAYOUT_SchTicket1, R.id.LAYOUT_SchTicket2, R.id.LAYOUT_SchTicket3};
             View ticket = findViewById(scheduleTickets[i]);
             Member member = ScheduleController.GetMemberByID(thisSchedule.GetMemberGroupId());
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)ticket.getLayoutParams();
+            
+            if(ScheduleController.remainingSchedule.size() > i + 1 && i != 2)
+                lp.rightMargin = ConvertPXtoDP(getApplicationContext(),15);
+            ticket.setLayoutParams(lp);
             
             ticket.setVisibility(View.VISIBLE);
             
             ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Title)).setText(thisSchedule.GetName());
-            ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Course)).setText("여행 코스");
+            ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Course)).setText(thisSchedule.GetDestination());
             ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Count)).setText(member.GetUserIdList().size() + "명");
             ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Days)).setText(thisSchedule.GetDays() + "일");
-            ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Date)).setText(thisSchedule.GetStartDate() + "일 출발");
-            
+            ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Date)).setText(getDateDay(thisSchedule.GetStartDate()));
         }
     }
     
@@ -131,11 +139,19 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         mScheduleContentAdapter.setItems();
     }
     
-    public static int ConvertSPtoPX(@NonNull Context context, int sp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
-    }
-    
-    public static int ConvertDPtoPX(@NonNull Context context, int dp) {
-        return Math.round((float) dp * context.getResources().getDisplayMetrics().density);
+    /**
+     *
+     */
+    private String getDateDay(String date){
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+            SimpleDateFormat nDate = new SimpleDateFormat("EEE, MM. dd");
+            Date formatDate = dateFormat.parse(date);
+            String strNewDtFormat = nDate.format(formatDate);
+            return strNewDtFormat;
+        }catch (Exception e){
+            Log.e("TAG", "getDateDay: ", e);
+            return "";
+        }
     }
 }

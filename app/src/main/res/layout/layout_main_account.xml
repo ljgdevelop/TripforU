@@ -2,11 +2,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/APP_Accent"
     android:orientation="vertical">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="test"
-        android:textSize="50dp"/>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="32dp"
+            android:paddingBottom="16dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/backgrount_profile"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:textSize="18sp"
+                android:text="이름"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="76sp"
+                android:layout_height="34sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:textSize="14sp"
+                android:textColor="#ff8888"
+                android:background="@drawable/background_white_rcorner_15"
+                android:visibility="visible"
+                android:text="로그아웃"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="60sp"
+                android:layout_height="30sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:textSize="14sp"
+                android:textColor="@color/TEXT_Black"
+                android:background="@drawable/background_white_rcorner_15"
+                android:visibility="gone"
+                android:text="로그인"/>
+
+            <include
+                layout="@layout/layout_settingcontents"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

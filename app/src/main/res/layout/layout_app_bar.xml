@@ -9,12 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:paddingVertical="6dp"
-        android:background="#FDFDFF"
+        android:background="@color/APP_Accent"
         app:titleMarginStart="16dp"
         android:weightSum="2"
         android:id="@+id/LAYOUT_AppBar"
-        android:elevation="4dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,46 +25,38 @@
             android:orientation="horizontal"
             android:id="@+id/LAYOUT_NavbarLeft">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@color/white"
-                    android:visibility="gone"
-                    android:layout_marginRight="10dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Trip for U"
-                    android:gravity="center"
-                    android:textStyle="normal"
-                    android:textSize="18sp"
-                    android:textColor="#5e5e5e"/>
+                    android:orientation="horizontal"
+                    android:layout_gravity="right"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Trip for U"
+                        android:gravity="center"
+                        android:textStyle="normal"
+                        android:textSize="18sp"
+                        android:textColor="#5e5e5e"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+
+                    <ImageButton
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/ic_search"
+                        android:scaleX="0.5"
+                        android:scaleY="0.5"
+                        android:layout_marginRight="16dp"/>
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1">
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
-
-                <ImageButton
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@color/white"
-                    android:layout_marginRight="10dp"/>
-            </LinearLayout>
-        </LinearLayout>
+        </FrameLayout>
     </androidx.appcompat.widget.Toolbar>
 </FrameLayout>

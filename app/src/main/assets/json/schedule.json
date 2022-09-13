@@ -5,7 +5,7 @@
       "name": "안성 추천 여행코스",
       "destination": "경기도 안성시",
       "days": 3,
-      "startDate": "2022-05-20",
+      "startDate": "20220520",
       "wayPointList": [
         {
           "id": 100001,
@@ -40,7 +40,7 @@
       "name": "제주 봄여행",
       "destination": "제주특별자치도 제주시",
       "days": 5,
-      "startDate": "2022-08-23",
+      "startDate": "20220823",
       "wayPointList": [
         {
           "id": 100001,

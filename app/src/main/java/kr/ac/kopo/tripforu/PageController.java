@@ -3,14 +3,20 @@ package kr.ac.kopo.tripforu;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Build;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -105,12 +111,15 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     protected void AnimateHorizontalScroll(HorizontalScrollView horizontalScrollView){
         horizontalScrollView.setTag(0);
         horizontalScrollView.setOnTouchListener((view, motionEvent) -> {
+            ViewParent vp = view.getParent();
+            vp.requestDisallowInterceptTouchEvent(true);
             if(motionEvent.getAction() == MotionEvent.ACTION_MOVE ){
                 scrollTime++;
                 if(scrollTime < 2)
                     oldX = (int)motionEvent.getX();
             }
             else if(motionEvent.getAction() == MotionEvent.ACTION_UP ){
+                Log.d("TAG", "Up: ");
                 //스크롤 뷰 속 컨테이너의 X좌표 가져오기
                 scrollTime = 0;
                 int count = 0;
@@ -216,5 +225,19 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         else {
             this.isLoggedIn = false;
         }
+    }
+    
+    public static int ConvertSPtoPX(@NonNull Context context, int sp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
+    }
+    
+    public static int ConvertDPtoPX(@NonNull Context context, int dp) {
+        return Math.round((float) dp * context.getResources().getDisplayMetrics().density);
+    }
+    
+    public static int ConvertPXtoDP(@NonNull Context context, int px) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        float dp = px * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return Math.round(dp);
     }
 }
