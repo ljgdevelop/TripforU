@@ -2,8 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="@color/white"
-    android:elevation="4dp"
+    android:clickable="false"
     android:padding="2dp">
 
     <LinearLayout
@@ -12,26 +11,32 @@
         android:layout_height="match_parent"
         android:padding="15dp"
         android:background="@drawable/background_ticket_new"
+        android:backgroundTint="@color/APP_Main"
+        android:clickable="false"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/TEXT_SchTicket_Course"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textColor="@color/APP_Accent"
+            android:textStyle="bold"
+            android:textSize="22sp"
             android:text="여행 코스 영역"/>
 
         <TextView
             android:id="@+id/TEXT_SchTicket_Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textColor="@color/APP_Accent"
+            android:textSize="16sp"
             android:text="제목 영역"/>
 
         <TextView
             android:id="@+id/TEXT_SchTicket_Count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/APP_Accent"
             android:textSize="12sp"
             android:text="인원 수 영역"
             android:visibility="gone"/>
@@ -40,6 +45,7 @@
             android:id="@+id/TEXT_SchTicket_Days"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/APP_Accent"
             android:textSize="12sp"
             android:text="숙박일 수 영역"/>
 
@@ -53,7 +59,8 @@
             android:gravity="right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textColor="@color/APP_Accent"
+            android:textSize="18sp"
             android:text="여행 기간 영역"/>
     </LinearLayout>
 

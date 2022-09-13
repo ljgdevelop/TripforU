@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TripforU">
         <activity
+            android:name=".ActivityCreateSch"
+            android:exported="false" />
+        <activity
             android:name=".ActivityMember"
             android:exported="false" />
         <activity

@@ -106,7 +106,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/ic_folder"/>
+            android:background="@drawable/ic_alarm"/>
         <TextView
             android:layout_row="0"
             android:layout_column="1"

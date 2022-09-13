@@ -29,7 +29,7 @@
                 android:text="전체 알림"/>
 
             <include
-                layout="@layout/layout_slidebutton"
+                layout="@layout/switch_slidebutton"
                 style="@style/includeLayoutStyle"
                 android:id="@+id/SWITCH_AllAlarm"/>
 
@@ -45,7 +45,7 @@
                 android:layout_gravity="top"/>
 
             <include
-                layout="@layout/layout_slidebutton"
+                layout="@layout/switch_slidebutton"
                 style="@style/includeLayoutStyle"
                 android:id="@+id/dDayAlarm"/>
 
@@ -61,7 +61,7 @@
                 android:layout_gravity="top"/>
 
             <include
-                layout="@layout/layout_slidebutton"
+                layout="@layout/switch_slidebutton"
                 style="@style/includeLayoutStyle"/>
 
         </GridLayout>
@@ -76,7 +76,7 @@
                 android:layout_gravity="top"/>
 
             <include
-                layout="@layout/layout_slidebutton"
+                layout="@layout/switch_slidebutton"
                 style="@style/includeLayoutStyle"/>
 
         </GridLayout>
@@ -91,7 +91,7 @@
                 android:layout_gravity="top"/>
 
             <include
-                layout="@layout/layout_slidebutton"
+                layout="@layout/switch_slidebutton"
                 style="@style/includeLayoutStyle"/>
 
         </GridLayout>
@@ -106,7 +106,7 @@
                 android:layout_gravity="top"/>
 
             <include
-                layout="@layout/layout_slidebutton"
+                layout="@layout/switch_slidebutton"
                 style="@style/includeLayoutStyle"/>
 
         </GridLayout>
