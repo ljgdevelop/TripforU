@@ -22,6 +22,8 @@ public class ActivityLogin extends PageController {
     ImageButton btn_startWithKakao;
     Button btn_startWithoutLogin;
     
+    @Override protected boolean useToolbar(){ return false; }
+    
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,7 @@ public class ActivityLogin extends PageController {
         if (oAuthToken != null) {
             Log.i("[카카오] 로그인", "성공");
             updateKakaoLogin();
+            CheckClientHasToken();
             Intent intent = getIntent();
             finish();
             startActivity(intent);

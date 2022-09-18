@@ -69,15 +69,16 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/BTN_CreateNewSch"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="32dp"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:maxWidth="300dp"
+            android:layout_height="45dp"
             android:background="@drawable/background_white_rcorner_8"
             android:backgroundTint="@color/APP_Secondary"
             android:text="새 일정 만들기"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_marginBottom="72dp"
-            android:padding="16dp"
+            android:paddingVertical="0dp"
             android:textColor="@color/APP_Accent"
             android:backgroundTintMode="src_over"/>
     </LinearLayout>

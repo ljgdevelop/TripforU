@@ -1,33 +1,37 @@
 package kr.ac.kopo.tripforu;
 
 import androidx.annotation.NonNull;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.View;
 
 import android.content.Context;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.kakao.sdk.auth.AuthApiClient;
 import com.kakao.sdk.common.KakaoSdk;
 import com.kakao.sdk.user.UserApiClient;
 
 import org.json.simple.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ActivityMain extends PageController implements OnBackPressedListener{
     @Override protected boolean useToolbar(){ return true; }
@@ -48,6 +52,9 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         
         context = this.getApplicationContext();
         AddPage(new Page(ActivityMain.this, TYPE_ACTIVITY));
+    
+        //첫 실행시 권한 요구 화면으로 이동
+        checkFirstRun();
         
         //Json형식의 데이터 동기화
         ScheduleController.syncJsonToObject(JsonController.ReadJson("json/member.json", getApplicationContext()),
@@ -83,8 +90,81 @@ public class ActivityMain extends PageController implements OnBackPressedListene
     
         //스크롤 뷰를 터치를 통해 이동되지 않도록 오버라이드
         findViewById(R.id.VIEW_MainPageTabPage).setOnTouchListener((view, event) -> {return true;});
+        
+        //메인 화면의 남은 일정 티켓에 스크롤 애니메이션 적용
+        AnimateHorizontalScroll(findViewById(R.id.VIEW_TicketScroll));
+        
+        //권한 허용상태를 메인화면과 연동
+        SyncPermissionIsChecked();
+        
+        //로그인 상태일시 프로필 사진 및 이름 동기화
+        CheckClientHasToken();
+        
+        //로그인 버튼 클릭시
+        findViewById(R.id.BTN_GoLogin).setOnClickListener(viwe -> {
+            Intent i = new Intent(this, ActivityLogin.class);
+            startActivity(i);
+        });
+    
+        //로그아웃
+        findViewById(R.id.BTN_GoLogout).setOnClickListener(view -> {
+            UserApiClient.getInstance().logout(throwable -> {
+                if(throwable == null){
+                    Intent i = new Intent(this, ActivityMain.class);
+                    finish();
+                    startActivity(i);
+                }
+                return null;
+            });
+        });
     }
     
+    /***
+     * -> 작성자 : 이제경
+     * -> 함수 : 메인 화면에서 설정 내용 속 권한 습득여부를 표시해주는 함수
+     * - 습득되어있으면 스위치 버튼을 체크 상태로, 안되어있으면 터치를 통해 해당 화면으로 이동할 수 있도록 유도
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    private void SyncPermissionIsChecked(){
+        SwitchCompat swch = findViewById(R.id.SETTING_Storage);
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            swch.setChecked(true);
+            swch.setOnTouchListener((view, motionEvent) -> {return true;});
+        }
+        else{
+            swch.setOnClickListener(view -> {
+                ((SwitchCompat)view).setChecked(false);
+                Intent i = new Intent(this, ActivityPermissionCheck.class);
+                startActivityForResult(i, 0);
+            });
+        }
+    
+        swch = findViewById(R.id.SETTING_Location);
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            swch.setChecked(true);
+            swch.setOnTouchListener((view, motionEvent) -> {return true;});
+        }
+        else{
+            swch.setOnClickListener(view -> {
+                ((SwitchCompat)view).setChecked(false);
+                Intent i = new Intent(this, ActivityPermissionCheck.class);
+                startActivityForResult(i, 0);
+            });
+        }
+    
+        swch = findViewById(R.id.SETTING_Alarm);
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WAKE_LOCK) == PackageManager.PERMISSION_GRANTED){
+            swch.setChecked(true);
+            swch.setOnTouchListener((view, motionEvent) -> {return true;});
+        }
+        else{
+            swch.setOnClickListener(view -> {
+                ((SwitchCompat)view).setChecked(false);
+                Intent i = new Intent(this, ActivityPermissionCheck.class);
+                startActivityForResult(i, 0);
+            });
+        }
+    }
     
     
     /***
@@ -95,20 +175,24 @@ public class ActivityMain extends PageController implements OnBackPressedListene
     private void ShowScheduleTickets(){
         for(int i = 0; i < ScheduleController.remainingSchedule.size(); i ++){
             if(i > 2)
-                break;
+                return;
             Schedule thisSchedule =  ScheduleController.remainingSchedule.get(i);
             int[] scheduleTickets = {R.id.LAYOUT_SchTicket1, R.id.LAYOUT_SchTicket2, R.id.LAYOUT_SchTicket3};
             View ticket = findViewById(scheduleTickets[i]);
             Member member = ScheduleController.GetMemberByID(thisSchedule.GetMemberGroupId());
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)ticket.getLayoutParams();
+            
+            if(ScheduleController.remainingSchedule.size() > i + 1 && i != 2)
+                lp.rightMargin = ConvertPXtoDP(getApplicationContext(),15);
+            ticket.setLayoutParams(lp);
             
             ticket.setVisibility(View.VISIBLE);
             
             ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Title)).setText(thisSchedule.GetName());
-            ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Course)).setText("여행 코스");
+            ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Course)).setText(thisSchedule.GetDestination());
             ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Count)).setText(member.GetUserIdList().size() + "명");
             ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Days)).setText(thisSchedule.GetDays() + "일");
-            ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Date)).setText(thisSchedule.GetStartDate() + "일 출발");
-            
+            ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Date)).setText(getDateDay(thisSchedule.GetStartDate()));
         }
     }
     
@@ -131,11 +215,29 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         mScheduleContentAdapter.setItems();
     }
     
-    public static int ConvertSPtoPX(@NonNull Context context, int sp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
+    /**
+     *
+     */
+    private String getDateDay(String date){
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+            SimpleDateFormat nDate = new SimpleDateFormat("EEE, MM. dd");
+            Date formatDate = dateFormat.parse(date);
+            String strNewDtFormat = nDate.format(formatDate);
+            return strNewDtFormat;
+        }catch (Exception e){
+            Log.e("TAG", "getDateDay: ", e);
+            return "";
+        }
     }
     
-    public static int ConvertDPtoPX(@NonNull Context context, int dp) {
-        return Math.round((float) dp * context.getResources().getDisplayMetrics().density);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {//권한 요구
+            if(resultCode == Activity.RESULT_OK){
+                SyncPermissionIsChecked();
+            }
+        }
     }
 }

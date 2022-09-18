@@ -12,6 +12,7 @@
     <color name="APP_Main">#43992a</color>
     <color name="APP_Shade">#f1f5f0</color>
     <color name="APP_Secondary">#527821</color>
+    <color name="APP_Point">#364A59</color>
     <color name="APP_Accent">#F9FCF8</color>
     <color name="point_color">#60db79</color>
     <color name="transparent">#00000000</color>

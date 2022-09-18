@@ -2,16 +2,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:clickable="false"
-    android:padding="2dp">
+    android:clickable="false">
 
     <LinearLayout
         android:id="@+id/BTN_SchTicket"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp"
-        android:background="@drawable/background_ticket_new"
-        android:backgroundTint="@color/APP_Main"
+        android:layout_margin="2dp"
+        android:background="@drawable/background_white_rcorner_15"
+        android:backgroundTint="@color/white"
+        android:elevation="2dp"
         android:clickable="false"
         android:orientation="vertical">
 
@@ -19,7 +20,7 @@
             android:id="@+id/TEXT_SchTicket_Course"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/APP_Accent"
+            android:textColor="@color/TEXT_Black"
             android:textStyle="bold"
             android:textSize="22sp"
             android:text="여행 코스 영역"/>
@@ -28,7 +29,7 @@
             android:id="@+id/TEXT_SchTicket_Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/APP_Accent"
+            android:textColor="@color/TEXT_Black"
             android:textSize="16sp"
             android:text="제목 영역"/>
 
@@ -36,7 +37,7 @@
             android:id="@+id/TEXT_SchTicket_Count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/APP_Accent"
+            android:textColor="@color/TEXT_Black"
             android:textSize="12sp"
             android:text="인원 수 영역"
             android:visibility="gone"/>
@@ -45,7 +46,7 @@
             android:id="@+id/TEXT_SchTicket_Days"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/APP_Accent"
+            android:textColor="@color/TEXT_Black"
             android:textSize="12sp"
             android:text="숙박일 수 영역"/>
 
@@ -59,7 +60,7 @@
             android:gravity="right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/APP_Accent"
+            android:textColor="@color/TEXT_Black"
             android:textSize="18sp"
             android:text="여행 기간 영역"/>
     </LinearLayout>
@@ -70,6 +71,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_margin="15dp"
+        android:elevation="4dp"
         android:src="@drawable/ic_share"
         android:background="@color/transparent"/>
 </FrameLayout>
