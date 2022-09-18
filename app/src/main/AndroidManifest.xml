@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="kr.ac.kopo.tripforu">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.ACCESS_FINE_LOCATION"
@@ -50,7 +51,7 @@
                 <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
                 <data
                     android:host="oauth"
-                    android:scheme="kakao8b86b6e6598315d4629231091e53911b" />
+                    android:scheme="kakao${KAKAO_API_KEY}" />
             </intent-filter>
         </activity>
     </application>
