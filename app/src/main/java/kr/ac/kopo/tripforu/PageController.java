@@ -46,9 +46,12 @@ interface OnBackPressedListener {
     void onBackPressed();
 }
 
+interface PageAdepter{
+    public static PageController pageAdepter = new PageController();
+}
 
 
-public class PageController extends AppCompatActivity implements OnBackPressedListener{
+public class PageController extends AppCompatActivity implements OnBackPressedListener, PageAdepter{
     private static ArrayList<Page> pageStack = new ArrayList<>();
     public boolean isLoggedIn = false;
     byte TYPE_ACTIVITY = 0;
@@ -118,7 +121,7 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
             toolbar.setVisibility(View.GONE);
         }
     }
-    
+
     /**
      * 앱바 좌, 우에 원하는 텍스트 버튼 배치
      *
