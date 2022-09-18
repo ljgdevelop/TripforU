@@ -32,8 +32,8 @@
 
     <style name="divideLine">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">2dp</item>
-        <item name="android:background">#D7DDE9</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#4DD7DDE9</item>
     </style>
 
     <style name="settingsGridLayoutStyle">
