@@ -19,11 +19,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 
 import android.content.Context;
+import android.view.ViewParent;
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kakao.sdk.common.KakaoSdk;
 import com.kakao.sdk.user.UserApiClient;
@@ -117,6 +122,11 @@ public class ActivityMain extends PageController implements OnBackPressedListene
                 return null;
             });
         });
+        
+        View v = SetAppBarAction(1, false, "완료");
+        v.setOnClickListener(view -> {
+            Toast.makeText(getApplicationContext(), "완료 버튼 클릭", Toast.LENGTH_SHORT).show();
+        });
     }
     
     /***
@@ -172,6 +182,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
      * -> 함수 : 메인 페이지에서 남은 여행 일정의 티켓을 보여주는 함수
      * - 클릭시 해당 여행 일정의 상세 내용을 표시
      */
+    @SuppressLint("ClickableViewAccessibility")
     private void ShowScheduleTickets(){
         for(int i = 0; i < ScheduleController.remainingSchedule.size(); i ++){
             if(i > 2)
@@ -186,6 +197,14 @@ public class ActivityMain extends PageController implements OnBackPressedListene
                 lp.rightMargin = ConvertPXtoDP(getApplicationContext(),15);
             ticket.setLayoutParams(lp);
             
+            ticket.setOnTouchListener((view, event) -> {
+                Log.d("TAG", "r: " + event);
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    ShowScheduleInfo(thisSchedule);
+                }
+                return false;
+            });
+            
             ticket.setVisibility(View.VISIBLE);
             
             ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Title)).setText(thisSchedule.GetName());
@@ -194,6 +213,10 @@ public class ActivityMain extends PageController implements OnBackPressedListene
             ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Days)).setText(thisSchedule.GetDays() + "일");
             ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Date)).setText(getDateDay(thisSchedule.GetStartDate()));
         }
+    }
+    
+    public void doSomthing(){
+    
     }
     
     public void ShowScheduleList() {
@@ -220,7 +243,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
      */
     private String getDateDay(String date){
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat nDate = new SimpleDateFormat("EEE, MM. dd");
             Date formatDate = dateFormat.parse(date);
             String strNewDtFormat = nDate.format(formatDate);
