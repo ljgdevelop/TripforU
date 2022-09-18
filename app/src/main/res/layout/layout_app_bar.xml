@@ -33,9 +33,21 @@
                     android:layout_weight="1">
 
                     <TextView
+                        android:id="@+id/TEXT_AppBarTittle"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Trip for U"
+                        android:gravity="center"
+                        android:textStyle="normal"
+                        android:textSize="18sp"
+                        android:textColor="#5e5e5e"/>
+
+                    <TextView
+                        android:id="@+id/TEXT_AppBarLeft"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text=""
+                        android:visibility="gone"
                         android:gravity="center"
                         android:textStyle="normal"
                         android:textSize="18sp"
@@ -48,11 +60,24 @@
 
 
                     <ImageButton
+                        android:id="@+id/IMG_AppBarRight"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:background="@drawable/ic_search"
                         android:scaleX="0.5"
                         android:scaleY="0.5"
+                        android:layout_marginRight="16dp"/>
+
+                    <TextView
+                        android:id="@+id/TEXT_AppBarRight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text=""
+                        android:visibility="gone"
+                        android:gravity="center"
+                        android:textStyle="normal"
+                        android:textSize="18sp"
+                        android:textColor="#5e5e5e"
                         android:layout_marginRight="16dp"/>
                 </LinearLayout>
             </LinearLayout>
