@@ -4,7 +4,10 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.media.Image;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -14,7 +17,9 @@ import android.view.View;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -23,6 +28,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.bumptech.glide.Glide;
 import com.kakao.sdk.auth.AuthApiClient;
 import com.kakao.sdk.user.UserApiClient;
 
@@ -42,6 +48,7 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     byte TYPE_INFLATE = 1;
     byte TYPE_HIDEANDSHOW = 2;
     byte TYPE_NAVDRAWER = 3;
+    public SharedPreferences prefs;
     
     public static void AddPage(Page page){
         pageStack.add(page);
@@ -86,15 +93,14 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     }
     
     
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void setContentView(int layoutResID){
-        FrameLayout fullView = (FrameLayout) getLayoutInflater().inflate(R.layout.activity_main, null);
+        LinearLayout fullView = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_main, null);
         FrameLayout activityContainer = (FrameLayout) fullView.findViewById(R.id.activity_content);
         View child = getLayoutInflater().inflate(layoutResID, activityContainer, true);
         
         super.setContentView(fullView);
-        
+    
         Toolbar toolbar = (Toolbar) fullView.findViewById(R.id.LAYOUT_AppBar);
         if(useToolbar()){
             setSupportActionBar(toolbar);
@@ -181,40 +187,15 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
                 }
                 else if (user != null) {
                     this.isLoggedIn = true;
-                    Log.i("TAG", "사용자 정보 요청 성공");
+                    /*Log.i("TAG", "사용자 정보 요청 성공");
                     Log.i("TAG", "회원번호: " + user.getId());
                     Log.i("TAG", "이메일: " + user.getKakaoAccount().getEmail());
                     Log.i("TAG", "닉네임: " + user.getKakaoAccount().getProfile().getNickname());
-                    Log.i("TAG", "프로필사진: " + user.getKakaoAccount().getProfile().getProfileImageUrl());
-                    UserApiClient.getInstance().accessTokenInfo((accessTokenInfo, error) -> {
-                        if (error != null) {
-                            Log.e("TAG", "토큰 정보 보기 실패", error);
-                        }
-                        else if (accessTokenInfo != null) {
-                            Log.i("TAG", "토큰 정보 보기 성공" +
-                                "\n회원번호: " + accessTokenInfo.getId() +
-                                "\n만료시간: " + accessTokenInfo.getExpiresIn() + " 초");
-                        }
-                        return null;
-                    });
-                    /*int layoutHeight = ConvertSPtoPX(findViewById(R.id.IMG_KakaoProfile).getContext(), 50) +
-                        ConvertDPtoPX((findViewById(R.id.LAYOUT_UserProfile).getContext()), 42);
-                    
-                    ((TextView)findViewById(R.id.TEXT_KakaoName)).setText(user.getKakaoAccount().getProfile().getNickname());
-                    ((TextView)findViewById(R.id.TEXT_KakaoAdress)).setText(user.getKakaoAccount().getEmail());
-                    Glide.with(this).load(user.getKakaoAccount().getProfile().getProfileImageUrl()).into((ImageView) findViewById(R.id.IMG_KakaoProfile));
-                    findViewById(R.id.LAYOUT_UserProfile).getLayoutParams().height = layoutHeight;
-                    LayerDrawable drawable =
-                        (LayerDrawable) getApplicationContext().getDrawable(R.drawable.background_white_rcorner_15);
-                    findViewById(R.id.IMG_KakaoProfile).setBackground(drawable);
-                    findViewById(R.id.IMG_KakaoProfile).setClipToOutline(true);*/
-                    /*findViewById(R.id.IMG_KakaoProfile).setOutlineProvider(new ViewOutlineProvider() {
-                        @Override
-                        public void getOutline(View view, Outline outline) {
-                            //outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), ConvertSPtoPX(findViewById(R.id.IMG_KakaoProfile).getContext(), 15));
-    
-                        }
-                    });*/
+                    Log.i("TAG", "프로필사진: " + user.getKakaoAccount().getProfile().getProfileImageUrl());*/
+                    Glide.with(this).load(user.getKakaoAccount().getProfile().getProfileImageUrl()).into((ImageView) findViewById(R.id.IMG_Profile));
+                    ((TextView)findViewById(R.id.TEXT_AccountName)).setText(user.getKakaoAccount().getProfile().getNickname());
+                    findViewById(R.id.BTN_GoLogin).setVisibility(View.GONE);
+                    findViewById(R.id.BTN_GoLogout).setVisibility(View.VISIBLE);
                 }
                 else{
                     this.isLoggedIn = false;
@@ -224,6 +205,16 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         }
         else {
             this.isLoggedIn = false;
+        }
+    }
+    
+    public void checkFirstRun(){
+        prefs = getSharedPreferences("Pref", MODE_PRIVATE);
+        boolean isFirstRun = prefs.getBoolean("isFirstRun",true);
+        if(isFirstRun){
+            Intent i = new Intent(getApplicationContext(), ActivityPermissionCheck.class);
+            startActivityForResult(i, 0);
+            prefs.edit().putBoolean("isFirstRun",false).apply();
         }
     }
     
