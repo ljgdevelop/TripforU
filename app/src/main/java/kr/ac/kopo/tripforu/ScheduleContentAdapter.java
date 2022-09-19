@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class ScheduleContentAdapter extends RecyclerView.Adapter<ScheduleContentAdapter.ItemViewHolder>
 implements ItemTouchHelperListener, PageAdepter{
     private Context mContext;
@@ -45,13 +47,29 @@ implements ItemTouchHelperListener, PageAdepter{
                 View v2 = pageAdepter.SetAppBarAction(0, true, "취소");
                 v1.setOnClickListener(v3 -> {
                     Toast.makeText(mContext, "삭제 버튼 클릭", Toast.LENGTH_SHORT).show();
-                    for (Schedule schedule:ScheduleController.remainingSchedule) {
+                    int remainingScheduleSize = ScheduleController.remainingSchedule.size();
+                    Schedule schedule = new Schedule(0,"","",0,"",0);
+                    for (int i = 0 ; i < remainingScheduleSize; i++){
+                        schedule = ScheduleController.remainingSchedule.get(i);
                         View v = parent.findViewWithTag("schItem: "+schedule.GetId());
                         CheckBox check = v.findViewById(R.id.CHB_ScheduleList);
-                        /*if (check.isChecked() == true){
-                            ScheduleController.remainingSchedule.remove(schedule.GetId());
-                        }*/
+                        if (check.isChecked() == true){
+                            Log.d("TAG", "schedule.GetId(): "+schedule.GetId());
+                            ScheduleController.remainingSchedule.remove(schedule);
+                            i = i - 1;
+                            remainingScheduleSize = remainingScheduleSize - 1;
+                        }
                     }
+
+                    notifyDataSetChanged();
+                    chb_AllScheduleList.setVisibility(View.GONE);
+                    text_AllScheduleList.setVisibility(View.GONE);
+                    for (Schedule schedule2:ScheduleController.remainingSchedule) {
+                        View v = parent.findViewWithTag("schItem: "+schedule2.GetId());
+                        v.findViewById(R.id.CHB_ScheduleList).setVisibility(View.GONE);
+                        v.findViewById(R.id.LAYOUT_ScrollHandle).setVisibility(View.GONE);
+                    }
+                    pageAdepter.ResetAppBar();
                 });
                 v2.setOnClickListener(v4 -> {
                     Toast.makeText(mContext, "취소 버튼 클릭", Toast.LENGTH_SHORT).show();
