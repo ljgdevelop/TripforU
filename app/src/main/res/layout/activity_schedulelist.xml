@@ -15,16 +15,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:id="@+id/CHB_AllScheduleList">
+            android:orientation="vertical">
             <CheckBox
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="15dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="@drawable/allcheckbox_customizing"
-                android:button="@null" />
+                android:background="@drawable/checkbox_customizing"
+                android:button="@null"
+                android:visibility="gone"
+                android:id="@+id/CHB_AllScheduleList"/>
             <TextView
                 android:textSize="11sp"
                 android:textStyle="bold"
@@ -32,7 +32,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#527821"
-                android:text="전체"/>
+                android:text="전체"
+                android:visibility="gone"
+                android:id="@+id/TEXT_AllScheduleList"/>
         </LinearLayout>
         <androidx.core.widget.NestedScrollView
             android:background="#F9FCF8"
@@ -51,7 +53,6 @@
                 android:orientation="vertical">
 
                 //스케쥴
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/RECYCLEVIEW_Schedule"
                     android:layout_width="match_parent"
@@ -60,21 +61,5 @@
                     tools:listitem="@layout/layout_recycleviewschedule"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-        <LinearLayout
-            android:layout_marginBottom="56dp"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:layout_gravity="bottom"
-            android:id="@+id/BTN_ScheduleDelete">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="#527821"
-                android:drawableStart="@drawable/ic_star">
-            </Button>
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
