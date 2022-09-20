@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ActivityScheduleList"
     android:orientation="vertical"
-    android:background="#F9FCF8">
+    android:background="#F9FCF8"
+    android:layout_marginBottom="54dp">
 
     <LinearLayout
         android:layout_width="match_parent"
