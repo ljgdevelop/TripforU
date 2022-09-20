@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="115dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
@@ -54,6 +54,8 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:id="@+id/TEXT_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -71,6 +73,8 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:id="@+id/TEXT_Destination"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,19 +113,7 @@
                             android:textStyle="bold"/>
                     </LinearLayout>
 
-                    //기간
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/TEXT_StartDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/TEXT_Black"
-                            android:textSize="12sp"/>
-                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -173,6 +165,27 @@
                             android:textColor="@color/TEXT_Black"
                             android:textSize="14sp"
                             android:layout_gravity="bottom" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"/>
+                    //기간
+                    <LinearLayout
+                        android:layout_marginTop="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:id="@+id/TEXT_StartDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/TEXT_Black"
+                            android:textSize="12sp"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
