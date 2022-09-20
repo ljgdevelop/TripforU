@@ -54,22 +54,14 @@ implements ItemTouchHelperListener, PageAdepter{
                         View v = parent.findViewWithTag("schItem: "+schedule.GetId());
                         CheckBox check = v.findViewById(R.id.CHB_ScheduleList);
                         if (check.isChecked() == true){
-                            Log.d("TAG", "schedule.GetId(): "+schedule.GetId());
+                            check.setChecked(false);
                             ScheduleController.remainingSchedule.remove(schedule);
                             i = i - 1;
                             remainingScheduleSize = remainingScheduleSize - 1;
                         }
                     }
-
+                    chb_AllScheduleList.setChecked(false);
                     notifyDataSetChanged();
-                    chb_AllScheduleList.setVisibility(View.GONE);
-                    text_AllScheduleList.setVisibility(View.GONE);
-                    for (Schedule schedule2:ScheduleController.remainingSchedule) {
-                        View v = parent.findViewWithTag("schItem: "+schedule2.GetId());
-                        v.findViewById(R.id.CHB_ScheduleList).setVisibility(View.GONE);
-                        v.findViewById(R.id.LAYOUT_ScrollHandle).setVisibility(View.GONE);
-                    }
-                    pageAdepter.ResetAppBar();
                 });
                 v2.setOnClickListener(v4 -> {
                     Toast.makeText(mContext, "취소 버튼 클릭", Toast.LENGTH_SHORT).show();
@@ -94,6 +86,7 @@ implements ItemTouchHelperListener, PageAdepter{
                 String data = "";
                 int position = viewHolder.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
+
                 }
             }
         });
