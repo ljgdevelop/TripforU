@@ -23,7 +23,7 @@ public class editwaypoint extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), ActivityAddWaypoint.class);
+                Intent intent = new Intent(getApplicationContext(), LayoutAddWaypoint.class);
                 startActivity(intent);
             }
         });
