@@ -8,34 +8,34 @@
     android:background="?attr/selectableItemBackground"
     android:id="@+id/FRAMELAYOUT_RecyclerView">
 
-    //위치 이동하는 스크롤
-    //공유되면 왼쪽위에 공유된 표시 및 공유 수 표시
     //너무 길어지면 ...으로 표시하는 기능
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="115dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/background_white_rcorner_15"
-        android:backgroundTint="#43992a">
+        android:backgroundTint="@color/white"
+        android:elevation="4dp">
+
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:paddingLeft="10dp"
-            android:id="@+id/CHB_ScheduleList">
+            android:layout_height="match_parent">
+
                 <CheckBox
+                    android:layout_marginLeft="10dp"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
                     android:background="@drawable/checkbox_customizing"
-                    android:button="@null"/>
+                    android:button="@null"
+                    android:visibility="gone"
+                    android:id="@+id/CHB_ScheduleList"/>
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_weight="1"
@@ -54,15 +54,15 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:id="@+id/TEXT_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#F9FCF8"
+                    android:textColor="@color/TEXT_Black"
                     android:textSize="16sp"
                     android:textStyle="bold">
-
                 </TextView>
-
             </LinearLayout>
 
 
@@ -73,13 +73,14 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:id="@+id/TEXT_Destination"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#F9FCF8"
+                    android:textColor="@color/TEXT_Black"
                     android:textSize="14sp">
                 </TextView>
-
             </LinearLayout>
 
             <LinearLayout
@@ -107,29 +108,11 @@
                             android:id="@+id/TEXT_Grade"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#F9FCF8"
+                            android:textColor="@color/TEXT_Black"
                             android:textSize="14sp"
-                            android:textStyle="bold">
-
-                        </TextView>
-
+                            android:textStyle="bold"/>
                     </LinearLayout>
 
-                    //기간
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/TEXT_StartDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="#F9FCF8"
-                            android:textSize="12sp">
-                        </TextView>
-
-                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -157,10 +140,9 @@
                             android:layout_marginLeft="5dp"
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
-                            android:textColor="#F9FCF8"
+                            android:textColor="@color/TEXT_Black"
                             android:textSize="14sp"
                             android:layout_gravity="bottom" />
-
                     </LinearLayout>
 
                     //공유된 수
@@ -180,18 +162,33 @@
                             android:layout_marginLeft="5dp"
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
-                            android:textColor="#F9FCF8"
+                            android:textColor="@color/TEXT_Black"
                             android:textSize="14sp"
                             android:layout_gravity="bottom" />
-
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"/>
+                    //기간
+                    <LinearLayout
+                        android:layout_marginTop="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
 
+                        <TextView
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:id="@+id/TEXT_StartDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/TEXT_Black"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
                 </LinearLayout>
-
             </LinearLayout>
-
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -199,7 +196,9 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_gravity="right"
-            android:padding="15dp">
+            android:padding="15dp"
+            android:visibility="gone"
+            android:id="@+id/LAYOUT_ScrollHandle">
 
             <ImageView
                 android:layout_marginTop="10dp"
@@ -213,27 +212,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ic_baseline_expand_more_24"/>
-
         </LinearLayout>
-
-
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-        android:id="@+id/LAYOUT_SharedMark">
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_sharedmark"/>
-    </LinearLayout>
-
-
-
-
-
 </FrameLayout>
