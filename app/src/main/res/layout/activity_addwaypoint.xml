@@ -4,56 +4,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D7DDE9"
+    android:background="@color/APP_Accent"
     android:orientation="vertical"
     tools:context=".ActivityAddWaypoint">
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="15dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:layout_margin="15dp"
-            android:text="현재 일정 입니다."
-            android:textSize="18dp"
-            android:textColor="@color/black"/>
-
-
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/button1"
-            android:gravity="left"
-            android:drawableEnd="@drawable/dounarrow"
-            android:layout_marginBottom="15dp"
-            android:text="달맞이동산\n1시간 2분코스"
-            android:textColor="@color/black"
-            android:id="@+id/btnScroll1"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="15dp">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/button1"
-            android:gravity="left"
-            android:drawableEnd="@drawable/dounarrow"
-            android:layout_marginBottom="15dp"
-            android:text="청사포 조개구이촌\n1시간 41분코스"
-            android:textColor="@color/black"
-            android:id="@+id/btnScroll2"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:text="현재 일정 입니다."
+                android:textSize="18dp"
+                android:textColor="@color/black"/>
 
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button1"
+                android:gravity="left"
+                android:drawableEnd="@drawable/dounarrow"
+                android:layout_marginBottom="15dp"
+                android:text="달맞이동산\n1시간 2분코스"
+                android:textColor="@color/black"
+                android:id="@+id/btnScroll1"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/button1"
+                android:gravity="left"
+                android:drawableEnd="@drawable/dounarrow"
+                android:layout_marginBottom="15dp"
+                android:text="청사포 조개구이촌\n1시간 41분코스"
+                android:textColor="@color/black"
+                android:id="@+id/btnScroll2"/>
+
+        </LinearLayout>
 
 
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="wrap_content"
         android:gravity="center">
 
         <Button
@@ -61,7 +67,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button1"
             android:text="추가하기"
-            android:textColor="#8CBBF1"
+            android:textColor="@color/teal_200"
             android:id="@+id/AddButton"
             android:textSize="20dp">
 
@@ -69,5 +75,9 @@
 
 
     </LinearLayout>
+
+
+
+
     
 </LinearLayout>

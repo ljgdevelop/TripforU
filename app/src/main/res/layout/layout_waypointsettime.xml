@@ -4,13 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="330dp"
-        android:background="@drawable/moon"
-        android:orientation="vertical">
-
-    </LinearLayout>
+    <include
+        layout="@layout/layout_naver_map"
+        android:id="@+id/NaverMap"/>
 
     <LinearLayout
         android:layout_width="match_parent"
