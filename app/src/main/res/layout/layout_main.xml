@@ -11,7 +11,7 @@
         android:id="@+id/VIEW_MainPageTabPage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
+        android:scrollX="720dp"
         android:overScrollMode="never">
 
         <LinearLayout
@@ -62,12 +62,14 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/IMG_NAVicon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_view_list"
                 android:background="@color/transparent"/>
 
             <TextView
+                android:id="@+id/IMG_NAVtext"
                 android:layout_width="wrap_content"
                 android:layout_height="14dp"
                 android:text="List"
@@ -83,16 +85,20 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@id/IMG_NAVicon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_waypoint_home"
-                android:background="@color/transparent"/>
+                android:background="@color/transparent"
+                app:tint="@color/APP_Main" />
 
             <TextView
+                android:id="@id/IMG_NAVtext"
                 android:layout_width="wrap_content"
                 android:layout_height="14dp"
                 android:text="Home"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                app:tint="@color/APP_Main" />
         </LinearLayout>
 
         <LinearLayout
@@ -104,12 +110,14 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@id/IMG_NAVicon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_account"
                 android:background="@color/transparent"/>
 
             <TextView
+                android:id="@id/IMG_NAVtext"
                 android:layout_width="wrap_content"
                 android:layout_height="14dp"
                 android:text="Account"
