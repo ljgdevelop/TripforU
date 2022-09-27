@@ -183,7 +183,7 @@ public class ScheduleTicket extends FrameLayout {
         
         //공유하기 버튼 클릭시
         btn_schInfoShare.setOnClickListener(button -> {
-            Intent i = new Intent(getContext(), ActivityUserShare.class);
+            Intent i = new Intent(getContext(), UserShare.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra("putSchedule", schedule);
             context.startActivity(i);
