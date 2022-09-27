@@ -50,16 +50,20 @@ interface PageAdepter{
 public class PageController extends AppCompatActivity implements OnBackPressedListener, PageAdepter{
     private static ArrayList<Page> pageStack = new ArrayList<>();
     public boolean isLoggedIn = false;
-    byte TYPE_ACTIVITY = 0;
-    byte TYPE_VIEW = 1;
+    final static byte TYPE_ACTIVITY = 0;
+    final static byte TYPE_VIEW = 1;
     byte TYPE_HIDEANDSHOW = 2;
     public SharedPreferences prefs;
     
-    protected FrameLayout fullView = null;
+    protected static FrameLayout fullView = null;
     
     public static void AddPage(Page page){
         pageStack.add(page);
     }
+    public static void AddPage(View page, byte type){
+        pageStack.add(new Page(page, TYPE_VIEW));
+    }
+    public static void AddPage(Activity activity){ pageStack.add(new Page(activity, TYPE_ACTIVITY)); }
     public static void PopPage(){
         pageStack.remove(pageStack.size() - 1);
     }
