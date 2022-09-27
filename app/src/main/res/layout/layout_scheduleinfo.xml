@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LAYOUT_SchInfo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="20dp"
-    android:maxWidth="300dp"
-    android:orientation="vertical">
+    android:maxWidth="330dp"
+    android:orientation="vertical"
+    android:alpha="50"
+    android:background="#80F9FCF8">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/BTN_SchFAB"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="-48dp"
+        android:layout_gravity="bottom|right"/>
 
     <ScrollView
         android:id="@+id/VIEW_SchInfoScroll"
@@ -17,127 +28,336 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="32dp"
+            android:clipToPadding="false"
             android:orientation="vertical">
 
             <View
-                android:id="@+id/VIEW_ScrollMargin1"
+                android:id="@+id/VIEW_ScrollMargin"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"/>
+                android:layout_height="1dp"/>
 
             <LinearLayout
+                android:id="@+id/LAYOUT_SchInfoTop"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="30dp"
-                android:paddingHorizontal="30dp"
-                android:paddingBottom="20dp"
+                android:layout_height="60sp"
+                android:elevation="32dp"
+                android:outlineProvider="bounds"
+                android:backgroundTint="@color/APP_Secondary"
+                android:paddingHorizontal="16dp"
                 android:background="@drawable/background_scheduleinfo_top">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="#fdfdff"
-                    android:text="여행지"/>
 
                 <TextView
                     android:id="@+id/TEXT_SchInfoName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:textColor="#fdfdff"
-                    android:text="여행지 정보 영역"
-                    android:textStyle="bold"/>
+                    android:layout_height="match_parent"
+                    android:text="Trip Pass : "
+                    android:ellipsize="marquee"
+                    android:includeFontPadding="true"
+                    android:singleLine="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:textColor="@color/white"
+                    android:gravity="center_vertical"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LAYOUT_SchInfoMiddle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="16dp"
+                android:paddingBottom="20dp"
+                android:elevation="32dp"
+                android:outlineProvider="bounds"
+                android:background="@drawable/background_scheduleinfo_mid">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="30dp"
+                    android:gravity="center_vertical"
+                    android:weightSum="15"
                     android:layout_marginBottom="15dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_weight="6"
+                        android:layout_gravity="left">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:id="@+id/TEXT_SchInfoUpperLoc"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:textColor="#fdfdff"
-                            android:text="출발일"/>
+                            android:textSize="12sp"
+                            android:textColor="@color/APP_Main"
+                            android:gravity="center_horizontal"
+                            android:text="지역상위"/>
+
+
+                        <TextView
+                            android:id="@+id/TEXT_SchInfoSpecLoc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="24sp"
+                            android:textColor="@color/TEXT_Black"
+                            android:textStyle="bold"
+                            android:gravity="center_horizontal"
+                            android:text="지역하위"/>
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="@color/TEXT_Gray"
+                            android:gravity="center_horizontal"
+                            android:text="Departing"/>
 
                         <TextView
                             android:id="@+id/TEXT_SchInfoStartDate"
-                            android:layout_width="100dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
-                            android:textColor="#fdfdff"
-                            android:textStyle="bold"
-                            android:text="가나다"/>
+                            android:textSize="14sp"
+                            android:textColor="@color/TEXT_Gray"
+                            android:gravity="center_horizontal"
+                            android:text="00. 00 Sat"/>
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1"/>
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="9">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="9">
 
-                        <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:textColor="#fdfdff"
-                            android:text="숙박일 수"/>
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"/>
 
-                        <TextView
-                            android:id="@+id/TEXT_SchInfoEndDate"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:textSize="24sp"
-                            android:textColor="#fdfdff"
-                            android:textStyle="bold"
-                            android:text="가나다"/>
-                    </LinearLayout>
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="7.5"
+                                android:background="@drawable/background_dotted_line_2dp"/>
+                        </LinearLayout>
 
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="2"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="9">
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="24dp"
+                                android:layout_weight="3"
+                                android:layout_marginBottom="12dp"
+                                android:layout_gravity="center|left"
+                                android:src="@drawable/ic_waypoint_pin"
+                                android:elevation="2dp"
+                                android:background="@color/transparent"/>
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_weight="6"/>
+                        </LinearLayout>
+                    </FrameLayout>
                 </LinearLayout>
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="#fdfdff"
-                    android:text="인원 수"/>
-
-                <TextView
-                    android:id="@+id/TEXT_SchInfoNum"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:textColor="#fdfdff"
-                    android:textStyle="bold"
-                    android:text="人"/>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/VIEW_SchInfoWPContainer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingHorizontal="30dp"
-                android:paddingVertical="30dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_scheduleinfo_bot"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="16dp"
+                android:paddingBottom="20dp"
+                android:elevation="32dp"
+                android:outlineProvider="bounds"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="3"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:textColor="@color/TEXT_Black"
+                            android:gravity="center_horizontal"
+                            android:textStyle="bold"
+                            android:text="인원"/>
+
+                        <TextView
+                            android:id="@+id/TEXT_SchInfoNum"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textSize="14sp"
+                            android:textColor="@color/TEXT_Gray"
+                            android:gravity="center_horizontal"
+                            android:text="1"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:textColor="@color/TEXT_Black"
+                            android:gravity="center_horizontal"
+                            android:textStyle="bold"
+                            android:text="숙박일"/>
+
+                        <TextView
+                            android:id="@+id/TEXT_SchInfoEndDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textSize="14sp"
+                            android:textColor="@color/TEXT_Gray"
+                            android:gravity="center_horizontal"
+                            android:text="1"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="1dp"
+                            android:padding="0dp"
+                            android:text="공유하기"
+                            android:textColor="@color/APP_Secondary"
+                            android:textStyle="bold"
+                            android:textSize="14sp"
+                            android:background="@drawable/background_outline_button"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_marginTop="32dp"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:text="전달하기"
+                    android:textColor="@color/TEXT_Gray"
+                    android:textSize="14sp"/>
+
+                <ImageView
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/background_sample_qr"
+                    android:background="@color/white"/>
+
+                <TextView style="@style/divideLine"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="32dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:background="@drawable/background_vertical_line"
+                        android:backgroundTint="@color/TEXT_Black"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="15dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/IMG_WaypointIcon"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_waypoint_circle"
+                                android:background="@color/white"/>
+
+                            <TextView
+                                android:layout_width="230dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:gravity="center_vertical"
+                                android:singleLine="true"
+                                android:text="여행 출발"
+                                android:textSize="18sp"
+                                android:textColor="@color/TEXT_Black"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/VIEW_SchInfoWPContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="8dp"
+                                android:src="@drawable/ic_waypoint_circle"
+                                android:background="@color/white"/>
+
+                            <TextView
+                                android:layout_width="230dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="8dp"
+                                android:gravity="center_vertical"
+                                android:singleLine="true"
+                                android:text="여행 종료"
+                                android:textSize="18sp"
+                                android:textColor="@color/TEXT_Black"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </FrameLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+</FrameLayout>
