@@ -4,13 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/layout_app_bar"/>
-
-    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,13 +18,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                />
 
             <CalendarView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                />
+
 
         </LinearLayout>
 

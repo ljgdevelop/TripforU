@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TripforU">
         <activity
-            android:name=".ActivityWaypoint"
+            android:name=".ActivityCreateWaypoint"
             android:exported="false" />
         <activity
             android:name=".ActivityCreateSch"
