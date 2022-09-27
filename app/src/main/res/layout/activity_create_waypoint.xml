@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ActivityWaypoint">
+    tools:context=".ActivityCreateWaypoint">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -13,16 +13,6 @@
         android:orientation="vertical"
         android:id="@+id/FrameLayout_content">
 
-        <SearchView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_margin="15dp"
-            android:iconifiedByDefault="true"
-            android:paddingTop="5dp"
-            android:background="@drawable/background_searchview">
-
-        </SearchView>
 
     </FrameLayout>
 

@@ -34,16 +34,6 @@ public class LayoutAddWaypoint extends AppCompatActivity {
         AddButton = (Button) findViewById(R.id.AddButton);
 
 
-
-        btnScroll1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(getApplicationContext(), DateSelecetion.class);
-                startActivity(intent);
-            }
-        });
-
         btnScroll2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,15 +42,6 @@ public class LayoutAddWaypoint extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        AddButton.setOnClickListener((new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(getApplicationContext(), LayoutWaypointSearch.class);
-                startActivity(intent);
-            }
-        }));
 
     }
 
