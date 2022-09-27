@@ -1,77 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:clickable="false">
+    android:layout_height="wrap_content"
+    android:clipToPadding="false">
 
     <LinearLayout
-        android:id="@+id/BTN_SchTicket"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="15dp"
-        android:layout_margin="2dp"
-        android:background="@drawable/background_white_rcorner_15"
-        android:backgroundTint="@color/white"
-        android:elevation="2dp"
-        android:clickable="false"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="16dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/TEXT_SchTicket_Course"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/TEXT_Black"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            android:text="여행 코스 영역"/>
+            android:layout_height="64sp"
+            android:background="@drawable/background_scheduleinfo_top"
+            android:backgroundTint="#10000000">
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/TEXT_SchTicket_Title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/TEXT_Black"
-            android:textSize="16sp"
-            android:text="제목 영역"/>
-
-        <TextView
-            android:id="@+id/TEXT_SchTicket_Count"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/TEXT_Black"
-            android:textSize="12sp"
-            android:text="인원 수 영역"
-            android:visibility="gone"/>
-
-        <TextView
-            android:id="@+id/TEXT_SchTicket_Days"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/TEXT_Black"
-            android:textSize="12sp"
-            android:text="숙박일 수 영역"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/TEXT_SchTicket_Date"
-            android:gravity="right"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/TEXT_Black"
-            android:textSize="18sp"
-            android:text="여행 기간 영역"/>
+            android:layout_height="290sp"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/background_scheduleinfo_bot"
+            android:backgroundTint="#10000000"
+            android:clickable="false"
+            android:elevation="2dp"
+            android:orientation="vertical">
+        </LinearLayout>
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/BTN_simpleShare"
-        android:layout_gravity="right"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_margin="15dp"
-        android:elevation="4dp"
-        android:src="@drawable/ic_share"
-        android:background="@color/transparent"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="16dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="62sp"
+            android:background="@drawable/background_scheduleinfo_top"
+            android:backgroundTint="#22000000">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="290sp"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/background_scheduleinfo_bot"
+            android:backgroundTint="#22000000"
+            android:clickable="false"
+            android:elevation="2dp"
+            android:orientation="vertical">
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:elevation="2dp"
+            android:background="@drawable/background_scheduleinfo_top"
+            android:backgroundTint="@color/APP_Secondary">
+
+            <TextView
+                android:id="@+id/TEXT_SchTicket_Title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_marginHorizontal="16dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:text="Trip Pass : "/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/BTN_SchTicket"
+            android:layout_width="match_parent"
+            android:layout_height="290sp"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/background_scheduleinfo_bot"
+            android:backgroundTint="@color/white"
+            android:clickable="false"
+            android:elevation="2dp"
+            android:orientation="vertical">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:rowCount="2"
+                android:columnCount="2">
+
+                <TextView
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:layout_columnWeight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:textSize="14sp"
+                    android:textColor="@color/TEXT_Gray"/>
+
+                <TextView
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:layout_columnWeight="1"
+                    android:id="@+id/TEXT_SchTicket_Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/TEXT_Black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:text="출발일"
+                    android:layout_marginBottom="32dp"/>
+
+                <TextView
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Days"
+                    android:textSize="14sp"
+                    android:textColor="@color/TEXT_Gray"/>
+
+                <TextView
+                    android:id="@+id/TEXT_SchTicket_Days"
+                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/TEXT_Black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:text="숙박일"
+                    android:layout_marginBottom="32dp"/>
+            </GridLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Destination"
+                android:textSize="14sp"
+                android:textColor="@color/TEXT_Gray"/>
+
+            <TextView
+                android:id="@+id/TEXT_SchTicket_Course"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/TEXT_Black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:text="여행 목적지"
+                android:layout_marginBottom="32dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Owner"
+                android:textSize="14sp"
+                android:textColor="@color/TEXT_Gray"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/TEXT_Black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:text="원본 주인"/>
+        </LinearLayout>
+    </LinearLayout>
 </FrameLayout>
