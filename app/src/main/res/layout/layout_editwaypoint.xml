@@ -4,7 +4,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D7DDE9">
+    android:background="@color/APP_Accent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/layout_app_bar"/>
+
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,11 +25,11 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:layout_margin="15dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
             android:text="현재 일정 입니다."
-            android:textSize="18dp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="18dp" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -29,9 +39,9 @@
             <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/button1"
+                android:background="@drawable/background_add_edit_waypoint"
                 android:gravity="left"
-                android:drawableEnd="@drawable/dounarrow"
+                android:drawableEnd="@drawable/ic_up_down_arrow"
                 android:layout_marginBottom="15dp"
                 android:text="달맞이동산\n1시간 2분코스"
                 android:textColor="@color/black"
@@ -40,15 +50,34 @@
             <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/button1"
+                android:background="@drawable/background_add_edit_waypoint"
                 android:gravity="left"
-                android:drawableEnd="@drawable/dounarrow"
+                android:drawableEnd="@drawable/ic_up_down_arrow"
                 android:layout_marginBottom="15dp"
                 android:text="청사포 조개구이촌\n1시간 41분코스"
                 android:textColor="@color/black"
                 android:buttonTint="@color/black"/>
 
         </RadioGroup>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_add_edit_waypoint"
+            android:text="삭제하기"
+            android:textColor="@color/teal_200"
+            android:id="@+id/AddButton"
+            android:textSize="20dp">
+
+        </Button>
 
 
     </LinearLayout>

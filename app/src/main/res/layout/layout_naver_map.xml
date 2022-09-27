@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="330dp"
+    android:layout_height="match_parent"
     android:orientation="horizontal"
     android:name="com.naver.maps.map.MapFragment"
-    tools:context=".NaverMap">
+    tools:context=".LayoutNaverMap">
 
     <com.naver.maps.map.MapView
         android:layout_width="match_parent"

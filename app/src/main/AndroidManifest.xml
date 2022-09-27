@@ -17,8 +17,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TripforU"
-        >
+        android:theme="@style/Theme.TripforU">
+        <activity
+            android:name=".ActivityWaypoint"
+            android:exported="false" />
         <activity
             android:name=".ActivityCreateSch"
             android:exported="false" />
@@ -60,13 +62,14 @@
                     android:host="oauth"
                     android:scheme="kakao${KAKAO_API_KEY}" />
             </intent-filter>
-        </activity>
+        </activity> 
 
+        
+        
         <!-- 네이버 클라이언트 ID 및 암호 -->
         <meta-data
             android:name="3l42j6ptcl"
-            android:value="8EJqWaRsk95TIKBlK3l9eTIa0CYdFPeIJW4DQDTN">
-        </meta-data>
+            android:value="8EJqWaRsk95TIKBlK3l9eTIa0CYdFPeIJW4DQDTN" />
     </application>
 
 </manifest>

@@ -17,7 +17,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
-public class ActivityAddWaypoint extends AppCompatActivity {
+public class LayoutAddWaypoint extends AppCompatActivity {
 
     Button btnScroll1, btnScroll2, AddButton;
 
@@ -25,7 +25,7 @@ public class ActivityAddWaypoint extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addwaypoint);
+        setContentView(R.layout.layout_add_waypoint);
 
         getHashKey();
 
@@ -48,7 +48,7 @@ public class ActivityAddWaypoint extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), WaypointSettime.class);
+                Intent intent = new Intent(getApplicationContext(), LayoutWaypointSettime.class);
                 startActivity(intent);
             }
         });
@@ -57,7 +57,7 @@ public class ActivityAddWaypoint extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), WaypointSearch.class);
+                Intent intent = new Intent(getApplicationContext(), LayoutWaypointSearch.class);
                 startActivity(intent);
             }
         }));
