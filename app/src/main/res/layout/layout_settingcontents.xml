@@ -6,6 +6,7 @@
     android:paddingVertical="8dp"
     android:paddingHorizontal="16dp"
     android:layout_marginBottom="56dp"
+    android:animateLayoutChanges="true"
     android:orientation="vertical">
 
     <TextView
@@ -41,279 +42,316 @@
             android:layout_weight="1"/>
 
         <include
+            android:id="@+id/BTN_SettingAlarm"
             layout="@layout/layout_slidebutton"/>
     </LinearLayout>
 
     <TextView style="@style/divideLine"/>
 
     <LinearLayout
+        android:id="@+id/LAYOUT_AlarmSettings"
+        android:transformPivotY="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28dp"
+                android:textSize="18sp"
+                android:text="방해금지 설정"
+                android:textColor="@color/TEXT_Black"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <include
+                layout="@layout/layout_slidebutton"/>
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
-            android:textSize="18sp"
-            android:text="방해금지 모드"
-            android:textColor="@color/TEXT_Black"/>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
-
-        <include
-            layout="@layout/layout_slidebutton"/>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="28dp"
-        android:textSize="14sp"
-        android:textColor="@color/TEXT_Gray"
-        android:text="22:00 ~ 06:00"
-        android:layout_marginBottom="2dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="28dp"
-        android:textSize="14sp"
-        android:textColor="@color/TEXT_Gray"
-        android:text="설정한 시간동안 모든 알림이 오지 않습니다."
-        android:layout_marginBottom="8dp"/>
-
-    <TextView style="@style/divideLine"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            android:textSize="14sp"
+            android:textColor="@color/TEXT_Gray"
+            android:text="22:00 ~ 06:00"
+            android:layout_marginBottom="2dp"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
-            android:textSize="18sp"
-            android:text="D-day 알림"
-            android:textColor="@color/TEXT_Black"/>
+            android:textSize="14sp"
+            android:textColor="@color/TEXT_Gray"
+            android:text="설정한 시간동안 모든 알림이 오지 않습니다."
+            android:layout_marginBottom="8dp"/>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
+        <TextView style="@style/divideLine"/>
 
-        <include
-            layout="@layout/layout_slidebutton"/>
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <TextView style="@style/divideLine"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28dp"
+                android:textSize="18sp"
+                android:text="D-day 알림"
+                android:textColor="@color/TEXT_Black"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <View
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <include
+                layout="@layout/layout_slidebutton"/>
+        </LinearLayout>
+
+        <TextView style="@style/divideLine"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28dp"
+                android:textSize="18sp"
+                android:text="여행 추천"
+                android:textColor="@color/TEXT_Black"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <include
+                layout="@layout/layout_slidebutton"/>
+        </LinearLayout>
+
+        <TextView style="@style/divideLine"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28dp"
+                android:textSize="18sp"
+                android:text="전체화면 설정"
+                android:textColor="@color/TEXT_Black"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <include
+                layout="@layout/layout_slidebutton"/>
+        </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
-            android:textSize="18sp"
-            android:text="여행 추천"
-            android:textColor="@color/TEXT_Black"/>
+            android:textSize="16sp"
+            android:textColor="@color/TEXT_Gray"
+            android:text="알림이 전체 화면으로 나타납니다. off시 푸쉬 알림으로 제공됩니다."
+            android:layout_marginBottom="8dp"/>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
-
-        <include
-            layout="@layout/layout_slidebutton"/>
     </LinearLayout>
-
-    <TextView style="@style/divideLine"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@color/APP_Accent"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:textSize="16sp"
+            android:text="권한"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/APP_Main"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_folder"
+                android:layout_marginRight="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="저장공간"
+                android:textColor="@color/TEXT_Black"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <include
+                layout="@layout/layout_slidebutton"
+                android:id="@+id/SETTING_Storage"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
-            android:textSize="18sp"
-            android:text="전체화면 설정"
-            android:textColor="@color/TEXT_Black"/>
+            android:textSize="14sp"
+            android:textColor="@color/TEXT_Gray"
+            android:text="일정 정보와 멋진 추억을 저장하기 위해 저장공간 권한이 필요합니다."
+            android:layout_marginBottom="8dp"/>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
+        <TextView style="@style/divideLine"/>
 
-        <include
-            layout="@layout/layout_slidebutton"/>
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="28dp"
-        android:textSize="16sp"
-        android:textColor="@color/TEXT_Gray"
-        android:text="알림이 전체 화면으로 나타납니다. off시 푸쉬 알림으로 제공됩니다."
-        android:layout_marginBottom="8dp"/>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_waypoint_pin"
+                android:layout_marginRight="8dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:textSize="16sp"
-        android:text="권한"
-        android:layout_marginBottom="16dp"
-        android:textColor="@color/APP_Main"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="위치 엑세스"
+                android:textColor="@color/TEXT_Black"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <View
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_folder"
-            android:layout_marginRight="8dp"/>
+            <include
+                layout="@layout/layout_slidebutton"
+                android:id="@+id/SETTING_Location"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:textSize="14sp"
+            android:textColor="@color/TEXT_Gray"
+            android:text="길안내 기능 및 더 정확한 지도 검색을 위해 위치 접근 권한이 필요합니다."
+            android:layout_marginBottom="8dp"/>
+
+        <TextView style="@style/divideLine"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_alarm"
+                android:layout_marginRight="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="알림"
+                android:textColor="@color/TEXT_Black"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <include
+                layout="@layout/layout_slidebutton"
+                android:id="@+id/SETTING_Alarm"/>
+        </LinearLayout>
+
+        <TextView style="@style/divideLine"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="저장공간"
-            android:textColor="@color/TEXT_Black"/>
+            android:layout_marginTop="32dp"
+            android:textSize="16sp"
+            android:text="기타"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/APP_Main"/>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <include
-            layout="@layout/layout_slidebutton"
-            android:id="@+id/SETTING_Storage"/>
-    </LinearLayout>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_info"
+                android:layout_marginRight="8dp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="28dp"
-        android:textSize="14sp"
-        android:textColor="@color/TEXT_Gray"
-        android:text="일정 정보와 멋진 추억을 저장하기 위해 저장공간 권한이 필요합니다."
-        android:layout_marginBottom="8dp"/>
-
-    <TextView style="@style/divideLine"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_waypoint_pin"
-            android:layout_marginRight="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="앱 정보"
+                android:textColor="@color/TEXT_Black"/>
+        </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="위치 엑세스"
-            android:textColor="@color/TEXT_Black"/>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
-
-        <include
-            layout="@layout/layout_slidebutton"
-            android:id="@+id/SETTING_Location"/>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="28dp"
-        android:textSize="14sp"
-        android:textColor="@color/TEXT_Gray"
-        android:text="길안내 기능 및 더 정확한 지도 검색을 위해 위치 접근 권한이 필요합니다."
-        android:layout_marginBottom="8dp"/>
-
-    <TextView style="@style/divideLine"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_alarm"
-            android:layout_marginRight="8dp"/>
+            android:layout_marginLeft="28dp"
+            android:textSize="14sp"
+            android:textColor="@color/TEXT_Gray"
+            android:text="앱 버전 : 1.0"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="알림"
-            android:textColor="@color/TEXT_Black"/>
+            android:layout_marginLeft="28dp"
+            android:textSize="14sp"
+            android:textColor="@color/TEXT_Gray"
+            android:text="아이콘 출처 : icons8.kr"
+            android:layout_marginBottom="8dp"/>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
-
-        <include
-            layout="@layout/layout_slidebutton"
-            android:id="@+id/SETTING_Alarm"/>
-    </LinearLayout>
-
-    <TextView style="@style/divideLine"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:textSize="16sp"
-        android:text="기타"
-        android:layout_marginBottom="16dp"
-        android:textColor="@color/APP_Main"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_info"
-            android:layout_marginRight="8dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="앱 정보"
-            android:textColor="@color/TEXT_Black"/>
     </LinearLayout>
 </LinearLayout>
