@@ -32,6 +32,12 @@
             android:name=".ActivityPermissionCheck"
             android:exported="false" />
         <activity
+            android:name=".ActivityUserShare"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityUserShareContents"
+            android:exported="false" />
+        <activity
             android:name=".ActivityMain"
             android:exported="true">
             <intent-filter>
