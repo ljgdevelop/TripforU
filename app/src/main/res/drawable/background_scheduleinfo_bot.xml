@@ -1,5 +1,5 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
+    <!--<item
         android:id="@+id/BG_TopLeft"
         android:width="100dp"
         android:height="100dp"
@@ -11,7 +11,7 @@
             android:width="100dp">
             <path
                 android:fillColor="@color/white"
-                android:pathData="M0,8 C0,3 3,0 8,0 L8,8 L0,8z"/>
+                android:pathData="M0,5 C2,5 5,2 5,0 L5,5 L0,5z"/>
         </vector>
     </item>
 
@@ -27,39 +27,7 @@
             android:width="100dp">
             <path
                 android:fillColor="@color/white"
-                android:pathData="M42,0 C47,0 50,3 50,8 L50,8 L42,8z"/>
-        </vector>
-    </item>
-
-    <item
-        android:id="@+id/BG_BottomRight"
-        android:width="100dp"
-        android:height="100dp"
-        android:gravity="bottom|right">
-        <vector
-            android:height="100dp"
-            android:viewportHeight="50"
-            android:viewportWidth="50"
-            android:width="100dp">
-            <path
-                android:fillColor="@color/white"
-                android:pathData="M50,45 C48,45 45,48 45,50 L45,50 L45,45z"/>
-        </vector>
-    </item>
-
-    <item
-        android:id="@+id/BG_BottomLeft"
-        android:width="100dp"
-        android:height="100dp"
-        android:gravity="bottom|left">
-        <vector
-            android:height="100dp"
-            android:viewportHeight="50"
-            android:viewportWidth="50"
-            android:width="100dp">
-            <path
-                android:fillColor="@color/white"
-                android:pathData="M5,50 C5,48 2,45 0,45 L5,45z"/>
+                android:pathData="M45,0 C45,2 48,5 50,5 L50,5 L45,5z"/>
         </vector>
     </item>
 
@@ -78,8 +46,8 @@
         android:id="@+id/BG_Top"
         android:gravity="top"
         android:height="10dp"
-        android:left="16dp"
-        android:right="16dp">
+        android:left="10dp"
+        android:right="10dp">
         <shape>
             <solid android:color="@color/white"/>
         </shape>
@@ -89,7 +57,7 @@
         android:id="@+id/BG_Right"
         android:gravity="right"
         android:width="10dp"
-        android:top="16dp"
+        android:top="10dp"
         android:bottom="10dp">
         <shape>
             <solid android:color="@color/white"/>
@@ -99,9 +67,7 @@
     <item
         android:id="@+id/BG_Bottom"
         android:gravity="bottom"
-        android:height="10dp"
-        android:left="10dp"
-        android:right="10dp">
+        android:height="10dp">
         <shape>
             <solid android:color="@color/white"/>
         </shape>
@@ -111,10 +77,15 @@
         android:id="@+id/BG_Left"
         android:gravity="left"
         android:width="10dp"
-        android:top="16dp"
+        android:top="10dp"
         android:bottom="10dp">
         <shape>
             <solid android:color="@color/white"/>
         </shape>
+    </item>-->
+    <item>
+        <rotate
+            android:drawable="@drawable/background_scheduleinfo_top"
+            android:fromDegrees="180"/>
     </item>
 </layer-list>

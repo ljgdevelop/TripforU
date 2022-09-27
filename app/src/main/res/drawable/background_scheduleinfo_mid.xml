@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/BG_TopLeft"
@@ -11,7 +12,7 @@
             android:width="100dp">
             <path
                 android:fillColor="@color/white"
-                android:pathData="M0,8 C0,3 3,0 8,0 L8,8 L0,8z"/>
+                android:pathData="M0,5 C2,5 5,2 5,0 L5,5 L0,5z"/>
         </vector>
     </item>
 
@@ -27,7 +28,7 @@
             android:width="100dp">
             <path
                 android:fillColor="@color/white"
-                android:pathData="M42,0 C47,0 50,3 50,8 L50,8 L42,8z"/>
+                android:pathData="M45,0 C45,2 48,5 50,5 L50,5 L45,5z"/>
         </vector>
     </item>
 
@@ -78,8 +79,8 @@
         android:id="@+id/BG_Top"
         android:gravity="top"
         android:height="10dp"
-        android:left="16dp"
-        android:right="16dp">
+        android:left="10dp"
+        android:right="10dp">
         <shape>
             <solid android:color="@color/white"/>
         </shape>
@@ -89,7 +90,7 @@
         android:id="@+id/BG_Right"
         android:gravity="right"
         android:width="10dp"
-        android:top="16dp"
+        android:top="10dp"
         android:bottom="10dp">
         <shape>
             <solid android:color="@color/white"/>
@@ -111,10 +112,26 @@
         android:id="@+id/BG_Left"
         android:gravity="left"
         android:width="10dp"
-        android:top="16dp"
+        android:top="10dp"
         android:bottom="10dp">
         <shape>
             <solid android:color="@color/white"/>
+        </shape>
+    </item>
+
+    <item
+        android:id="@+id/BG_Perforation"
+        android:height="3dp"
+        android:gravity="bottom"
+        android:left="10dp"
+        android:right="10dp">
+        <shape android:shape="line">
+
+            <stroke
+                android:color="#8DD7DDE9"
+                android:dashWidth="10dp"
+                android:dashGap="10dp"
+                android:width="2dp"/>
         </shape>
     </item>
 </layer-list>

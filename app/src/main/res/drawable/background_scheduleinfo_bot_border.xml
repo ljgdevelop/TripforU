@@ -1,0 +1,11 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:left="2dp"
+        android:right="2dp"
+        android:top="2dp"
+        android:bottom="2dp">
+        <rotate
+            android:drawable="@drawable/background_scheduleinfo_top"
+            android:fromDegrees="180"/>
+    </item>
+</layer-list>
