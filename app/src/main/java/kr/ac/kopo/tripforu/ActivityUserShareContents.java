@@ -1,6 +1,7 @@
 package kr.ac.kopo.tripforu;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ public class ActivityUserShareContents extends PageController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usersharecontents);
+        Intent subIntent = getIntent();
+        Schedule putSchedule = (Schedule)subIntent.getSerializableExtra("putSchedule");
 
         View v1 = pageAdepter.SetAppBarAction(0, true, "이전");
         View v2 = pageAdepter.SetAppBarAction(1, false, "다음");
@@ -31,6 +34,7 @@ public class ActivityUserShareContents extends PageController {
         v2.setOnClickListener(v4 -> {
 
         });
+
     }
     @RequiresApi(api = Build.VERSION_CODES.N)
     private static void ReadWaypointInfo(View view, Schedule schedule){

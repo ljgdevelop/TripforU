@@ -27,6 +27,7 @@ public class ActivityUserShare extends PageController {
                 Intent intent = new Intent(view.getContext(), ActivityUserShareContents.class);
                 Intent subIntent = getIntent();
                 Schedule putSchedule = (Schedule)subIntent.getSerializableExtra("putSchedule");
+                intent.putExtra("putSchedule", putSchedule);
                 view.getContext().startActivity(intent);
             }
         });
