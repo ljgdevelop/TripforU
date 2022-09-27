@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,9 +12,54 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginHorizontal="16dp"
+        android:clipToPadding="false"
         android:paddingHorizontal="8dp"
         android:paddingTop="15dp"
         android:paddingBottom="30dp">
+
+        <TextView
+            android:id="@+id/TEXT_WelcomeText"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/TEXT_Black"
+            android:textSize="24sp"
+            android:text="님,"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/TEXT_Black"
+            android:textSize="24sp"
+            android:layout_marginBottom="24dp"
+            android:text="함께 여행을 떠나볼까요?"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/background_white_rcorner_8"
+            android:elevation="2dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/transparent"
+                android:paddingStart="16dp"
+                android:textSize="16sp"
+                android:hint="어디로 떠나 볼까요?"/>
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_cross"
+                android:background="@color/transparent"
+                android:layout_gravity="center|right"
+                app:tint="@color/TEXT_Gray" />
+        </FrameLayout>
+
+        <TextView style="@style/divideLine"
+            android:layout_marginVertical="16dp"/>
 
         <TextView
             android:textStyle="bold"
@@ -21,42 +67,45 @@
             android:layout_height="wrap_content"
             android:textColor="@color/TEXT_Black"
             android:textSize="18sp"
-            android:layout_marginBottom="10dp"
-            android:text="남은 여행"/>
+            android:layout_marginBottom="24dp"
+            android:text="남은 일정"/>
 
         <HorizontalScrollView
             android:id="@+id/VIEW_TicketScroll"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
             android:clickable="true"
+            android:focusable="true"
+            android:clipToPadding="false"
             android:layout_marginBottom="48dp"
+            android:paddingHorizontal="16dp"
             android:overScrollMode="never">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clipToPadding="false"
                 android:orientation="horizontal">
 
                 <include
                     android:id="@+id/LAYOUT_SchTicket1"
-                    android:layout_width="300dp"
-                    android:layout_height="200dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     layout="@layout/layout_main_scheduleticket"
-                    android:visibility="gone"/>
+                    android:visibility="visible"/>
 
                 <include
                     android:id="@+id/LAYOUT_SchTicket2"
-                    android:layout_width="300dp"
-                    android:layout_height="200dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     layout="@layout/layout_main_scheduleticket"
                     android:visibility="gone"/>
 
                 <include
                     android:id="@+id/LAYOUT_SchTicket3"
-                    android:layout_width="300dp"
-                    android:layout_height="200dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     layout="@layout/layout_main_scheduleticket"
                     android:visibility="gone"/>
             </LinearLayout>
@@ -64,22 +113,17 @@
 
         <View
             android:layout_width="1dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/BTN_CreateNewSch"
-            android:layout_marginHorizontal="32dp"
+        <Button
             android:layout_width="match_parent"
-            android:maxWidth="300dp"
-            android:layout_height="45dp"
-            android:background="@drawable/background_white_rcorner_8"
+            android:layout_height="48dp"
             android:backgroundTint="@color/APP_Secondary"
-            android:text="새 일정 만들기"
-            android:textSize="16sp"
-            android:layout_marginBottom="72dp"
-            android:paddingVertical="0dp"
-            android:textColor="@color/APP_Accent"
-            android:backgroundTintMode="src_over"/>
+            android:text="새 일정 추가"
+            android:textStyle="bold"
+            android:layout_marginBottom="56dp"
+            android:elevation="2dp"
+            android:layout_marginHorizontal="36dp"/>
     </LinearLayout>
 </LinearLayout>
