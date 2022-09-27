@@ -33,12 +33,12 @@ import com.kakao.sdk.user.UserApiClient;
 
 import org.json.simple.JSONObject;
 
+@RequiresApi(api = Build.VERSION_CODES.M)
 public class ActivityMain extends PageController implements OnBackPressedListener{
     @Override protected boolean useToolbar(){ return true; }
     
     static Context context;//this context
     
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +64,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         ScheduleController.syncJsonToObject(JsonController.ReadJson("json/schedule.json", getApplicationContext()),
                                             Schedule.class.toString());
         
-        //메인 화면의 남은 여행 일정을 표시
-        ShowScheduleTickets();
+        //layout_main_schedule_list 화면에 여행 일정 목록 표시
         ShowScheduleList();
         
         //탭 페이지 설정
@@ -103,9 +102,6 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         //스크롤 뷰를 터치를 통해 이동되지 않도록 오버라이드
         findViewById(R.id.VIEW_MainPageTabPage).setOnTouchListener((view, event) -> {return true;});
         
-        //메인 화면의 남은 일정 티켓에 스크롤 애니메이션 적용
-        AnimateHorizontalScroll(findViewById(R.id.VIEW_TicketScroll));
-        
         //권한 허용상태를 메인화면과 연동
         SyncPermissionIsChecked();
         
@@ -130,6 +126,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
             });
         });
         
+        //설정 - 알림 온 오프시
         findViewById(R.id.BTN_SettingAlarm).setOnClickListener(view -> {
             View alarmSettings = findViewById(R.id.LAYOUT_AlarmSettings);
             if(alarmSettings.getVisibility() == View.VISIBLE) {
@@ -194,45 +191,16 @@ public class ActivityMain extends PageController implements OnBackPressedListene
      * -> 함수 : 메인 페이지에서 남은 여행 일정의 티켓을 보여주는 함수
      * - 클릭시 해당 여행 일정의 상세 내용을 표시
      */
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @SuppressLint("ClickableViewAccessibility")
-    private void ShowScheduleTickets(){
-        int[] scheduleTickets = {R.id.LAYOUT_SchTicket1, R.id.LAYOUT_SchTicket2, R.id.LAYOUT_SchTicket3};
-        for(int i = 0; i < ScheduleController.remainingSchedule.size(); i ++){
-            if(i > 2)
-                return;
-            Schedule thisSchedule =  ScheduleController.remainingSchedule.get(i);
-            View ticket = findViewById(scheduleTickets[i]);
-            Member member = ScheduleController.GetMemberByID(thisSchedule.GetMemberGroupId());
-            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)ticket.getLayoutParams();
-    
-            Point size = new Point();
-            getWindowManager().getDefaultDisplay().getSize(size);
-            lp.width = size.x - ConvertDPtoPX(getApplicationContext(), 94);
-            lp.rightMargin = ConvertPXtoDP(getApplicationContext(),32);
-            
-            Log.d("TAG", "ShowScheduleTickets: " + lp.width);
-            
-            ticket.setLayoutParams(lp);
-            
-            ticket.setOnTouchListener((view, event) -> {
-                Log.d("TAG", "r: " + event);
-                if(event.getAction() == MotionEvent.ACTION_UP){
-                    ShowScheduleInfo(thisSchedule);
-                }
-                return false;
-            });
-            
-            ticket.setVisibility(View.VISIBLE);
-            
-            ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Title)).setText("Trip Pass : "+ thisSchedule.GetName());
-            ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Course)).setText(thisSchedule.GetDestination());
-            ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Days)).setText(thisSchedule.GetDays() + "일");
-            ((TextView)ticket.findViewById(R.id.TEXT_SchTicket_Date)).setText(getDateDay(thisSchedule.GetStartDate(), "EEE, MM. dd"));
+    private void ShowScheduleList(){
+        LinearLayout container = findViewById(R.id.LAYOUT_SchListContainer);
+        for (Schedule sch:ScheduleController.scheduleDictionary.values()) {
+            ScheduleTicket newTicket = new ScheduleTicket(getApplicationContext());
+            newTicket.setScheduleId(sch.GetId());
+            container.addView(newTicket);
         }
     }
     
-    public void ShowScheduleList() {
+    /*public void ShowScheduleList() {
         LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         LinearLayout layout_SharedContents = findViewById(R.id.LAYOUT_SharedContents);
@@ -248,7 +216,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         // isShared 상태에 맞게 공유표시 레이아웃 생기고 끄는 기능 구현해야됨
         
         mScheduleContentAdapter.setItems();
-    }
+    }*/
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

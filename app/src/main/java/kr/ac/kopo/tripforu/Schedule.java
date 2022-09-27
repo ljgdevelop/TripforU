@@ -16,7 +16,6 @@ class Schedule implements Serializable {
     private int memberGroupId;
     private byte likes;
     private boolean isShared;
-    private int number;
     private int sharedCount;
     
     //생성자 : wayPointList 포함
@@ -148,14 +147,6 @@ class Schedule implements Serializable {
     public int GetSharedCount(){ return this.sharedCount; }
     public void AddSharedCount(int i){ this.sharedCount++; }
     public void SetSharedCount(int i){ this.sharedCount = i; }
-    
-    //number 변수의 getter setter adder
-    public int GetNumber() {
-        return number;
-    }
-    public void SetNumber(int number) {
-        this.number = Short.parseShort(number + "");
-    }
     
     //ratimgBar 변수의 getter setter
     public double GetRatingBar() {
