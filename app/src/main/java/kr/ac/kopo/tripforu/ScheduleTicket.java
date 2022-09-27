@@ -2,6 +2,7 @@ package kr.ac.kopo.tripforu;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.AppCompatButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -111,6 +113,7 @@ public class ScheduleTicket extends FrameLayout {
         TextView txt_schCompanyNum = view.findViewById(R.id.TEXT_SchInfoNum);//일정의 참여자 수
         ScrollView layout_schScroll = view.findViewById(R.id.VIEW_SchInfoScroll);
         LinearLayout layout_schTicketMid = view.findViewById(R.id.LAYOUT_SchInfoMiddle);
+        AppCompatButton btn_schInfoShare = view.findViewById(R.id.BTN_SchInfoShare);
         
         //스케줄 객체의 정보를 자식뷰에 표시
         String schName = schedule.GetName();
@@ -176,6 +179,14 @@ public class ScheduleTicket extends FrameLayout {
                     Log.e("TAG", "ShowScheduleInfo: ", e);
                 }
             });
+        });
+        
+        //공유하기 버튼 클릭시
+        btn_schInfoShare.setOnClickListener(button -> {
+            Intent i = new Intent(getContext(), ActivityUserShare.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("putSchedule", schedule);
+            context.startActivity(i);
         });
         
         //뒤로기기키로 닫기 위해 페이지 등록
