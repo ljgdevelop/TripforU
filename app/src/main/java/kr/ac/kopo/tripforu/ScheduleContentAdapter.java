@@ -1,6 +1,7 @@
 package kr.ac.kopo.tripforu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class ScheduleContentAdapter extends RecyclerView.Adapter<ScheduleContentAdapter.ItemViewHolder>
-implements ItemTouchHelperListener, PageAdepter{
+        implements ItemTouchHelperListener, PageAdepter{
     private Context mContext;
 
     @NonNull
@@ -31,7 +31,6 @@ implements ItemTouchHelperListener, PageAdepter{
         view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                int position = viewHolder.getAdapterPosition();
                 TextView text_AllScheduleList = ((LinearLayout)parent.getParent().getParent().getParent()).findViewById(R.id.TEXT_AllScheduleList);
                 for (Schedule schedule:ScheduleController.remainingSchedule) {
                     View v = parent.findViewWithTag("schItem: "+schedule.GetId());
@@ -46,7 +45,6 @@ implements ItemTouchHelperListener, PageAdepter{
                 View v1 = pageAdepter.SetAppBarAction(2, false, "삭제");
                 View v2 = pageAdepter.SetAppBarAction(0, true, "취소");
                 v1.setOnClickListener(v3 -> {
-                    Toast.makeText(mContext, "삭제 버튼 클릭", Toast.LENGTH_SHORT).show();
                     int remainingScheduleSize = ScheduleController.remainingSchedule.size();
                     Schedule schedule = new Schedule(0,"","",0,"",0);
                     for (int i = 0 ; i < remainingScheduleSize; i++){
@@ -64,7 +62,6 @@ implements ItemTouchHelperListener, PageAdepter{
                     notifyDataSetChanged();
                 });
                 v2.setOnClickListener(v4 -> {
-                    Toast.makeText(mContext, "취소 버튼 클릭", Toast.LENGTH_SHORT).show();
                     pageAdepter.ResetAppBar();
                     chb_AllScheduleList.setVisibility(View.GONE);
                     layout_Scroll.setVisibility(View.GONE);
@@ -83,10 +80,12 @@ implements ItemTouchHelperListener, PageAdepter{
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String data = "";
                 int position = viewHolder.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-
+                    Intent intent = new Intent(view.getContext(), ActivityUserShare.class);
+                    Schedule schedule = ScheduleController.remainingSchedule.get(position);
+                    intent.putExtra("putSchedule", schedule);
+                    view.getContext().startActivity(intent);
                 }
             }
         });

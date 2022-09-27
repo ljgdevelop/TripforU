@@ -35,7 +35,6 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback{
 
     @Override
     public boolean isLongPressDragEnabled() {
-
         return true;
     }
 
@@ -43,5 +42,4 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback{
     public boolean  isItemViewSwipeEnabled() {
         return false;
     }
-
 }

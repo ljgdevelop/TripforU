@@ -4,63 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityScheduleList"
     android:orientation="vertical"
-    android:background="#F9FCF8"
-    android:layout_marginBottom="54dp">
-
+    android:background="#F9FCF8">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
+        <CheckBox
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/checkbox_customizing"
+            android:button="@null"
+            android:visibility="gone"
+            android:id="@+id/CHB_AllScheduleList"/>
+        <TextView
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="27dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <CheckBox
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="15dp"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/checkbox_customizing"
-                android:button="@null"
-                android:visibility="gone"
-                android:id="@+id/CHB_AllScheduleList"/>
-            <TextView
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:layout_marginLeft="27dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#527821"
-                android:text="전체"
-                android:visibility="gone"
-                android:id="@+id/TEXT_AllScheduleList"/>
-        </LinearLayout>
-        <androidx.core.widget.NestedScrollView
-            android:background="#F9FCF8"
-            android:layout_weight="1"
+            android:textColor="#527821"
+            android:text="전체"
+            android:visibility="gone"
+            android:id="@+id/TEXT_AllScheduleList"/>
+    </LinearLayout>
+    <androidx.core.widget.NestedScrollView
+        android:background="#F9FCF8"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:fillViewport="true"
+        android:layout_marginBottom="54dp">
+        //스케쥴
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RECYCLEVIEW_Schedule"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:fillViewport="true">
-
-
-
-            //스케쥴 리스트 레이아웃
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                //스케쥴
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/RECYCLEVIEW_Schedule"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:nestedScrollingEnabled="false"
-                    tools:listitem="@layout/layout_recycleviewschedule"/>
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
-    </LinearLayout>
+            android:nestedScrollingEnabled="false"
+            tools:listitem="@layout/layout_recycleviewschedule"/>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

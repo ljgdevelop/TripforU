@@ -1,8 +1,11 @@
 package kr.ac.kopo.tripforu;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-class Schedule{
+class Schedule implements Serializable {
     private int id;
     private String name;
     private String destination;

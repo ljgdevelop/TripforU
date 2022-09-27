@@ -35,16 +35,16 @@ public class othersetting extends AppCompatActivity {
                         btnBus.setVisibility(View.INVISIBLE);
                         btnSubway.setVisibility(View.INVISIBLE);
                         btnTrain.setVisibility(View.INVISIBLE);
-                        btnCar.setBackgroundResource(R.drawable.button4_sub);
-                        btnPublicTransport.setBackgroundResource(R.drawable.button5);
+                        btnCar.setBackgroundResource(R.drawable.btn_ohtersetting_left_sub);
+                        btnPublicTransport.setBackgroundResource(R.drawable.btn_ohtersetting_right);
                         break;
 
                     case R.id.btnPublicTransport:
                         btnBus.setVisibility(View.VISIBLE);
                         btnSubway.setVisibility(View.VISIBLE);
                         btnTrain.setVisibility(View.VISIBLE);
-                        btnPublicTransport.setBackgroundResource(R.drawable.button5_sub);
-                        btnCar.setBackgroundResource(R.drawable.button4);
+                        btnPublicTransport.setBackgroundResource(R.drawable.btn_ohtersetting_right_sub);
+                        btnCar.setBackgroundResource(R.drawable.btn_othersetting_left);
                         break;
                 }
             }

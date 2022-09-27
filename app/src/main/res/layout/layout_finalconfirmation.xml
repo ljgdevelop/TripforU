@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D7DDE9"
-    android:orientation="vertical"
-    tools:context=".ActivityFinalComfirmation">
+    android:background="@color/APP_Accent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +35,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/textview1"
+                    android:background="@drawable/background_finalconfirmation"
                     android:id="@+id/Textview1"
                     android:text="달맞이 공원\n1시간 2분코스 "
                     android:textColor="@color/black">
@@ -53,7 +52,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/textview2"
+                    android:background="@drawable/background_finalconfirmation"
                     android:id="@+id/Textview2"
                     android:text="청사포 조개구이촌\n1시간 41분코스"
                     android:textColor="@color/black"
@@ -87,7 +86,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/textview3"
+                    android:background="@drawable/background_finalconfirmation"
                     android:id="@+id/Textview3"
                     android:text="날짜:2022년 04월 04일 ~ 2022년 04월 08일\n인원수:3명\n이동수단:자가용"
                     android:textColor="@color/black">

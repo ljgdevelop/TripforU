@@ -18,7 +18,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_margin="15dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:gravity="center"
                 android:text="이동수단을 선택해 주세요"
                 android:textColor="@color/black"
@@ -37,7 +38,7 @@
                         android:id="@+id/btnCar"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@drawable/button4"
+                        android:background="@drawable/btn_othersetting_left"
                         android:padding="10dp"
                         android:text="자가용"
                         android:textColor="@color/black"
@@ -49,7 +50,7 @@
                         android:id="@+id/btnPublicTransport"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@drawable/button5"
+                        android:background="@drawable/btn_ohtersetting_right"
                         android:padding="10dp"
                         android:text="대중교통"
                         android:textColor="@color/black"
@@ -70,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="버스"
-                android:background="@drawable/button6"
+                android:background="@drawable/btn_ohtersetting_checkbox"
                 android:layout_marginBottom="5dp"
                 android:visibility="invisible">
             </CheckBox>
@@ -79,7 +80,7 @@
                 android:id="@+id/btnSubway"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button6"
+                android:background="@drawable/btn_ohtersetting_checkbox"
                 android:text="지하철"
                 android:layout_marginBottom="5dp"
                 android:visibility="invisible">
@@ -92,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="기차"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/button6"
+                android:background="@drawable/btn_ohtersetting_checkbox"
                 android:visibility="invisible">
             </CheckBox>
 
@@ -119,7 +120,7 @@
                     android:id="@+id/editText"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/search"
+                    android:background="@drawable/btn_ohtersetting_select_member"
                     android:hint="인원을 정해주세요"
                     android:maxLines="2"
                     android:digits="0123456789"

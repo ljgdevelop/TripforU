@@ -1,6 +1,8 @@
 package kr.ac.kopo.tripforu;
 
-class Waypoint{
+import java.io.Serializable;
+
+class Waypoint implements Serializable {
     private int id;
     private String name;
     private double posX;
