@@ -30,8 +30,6 @@ public class UserShare extends PageController {
             finish();
         });
 
-
-
         acbtn_AddContent.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override

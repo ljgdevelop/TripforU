@@ -5,39 +5,49 @@
     android:elevation="4dp"
     android:background="@drawable/btn_navigation_bar_parent"
     android:id="@+id/LAYOUT_UserShare">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/custom_ripple">
+        <ImageView
+            android:tag="default"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:visibility="visible"
+            android:src="@drawable/ic_waypoint_pin"
+            android:id="@+id/IMG_ShareIcon"/>
 
-    <ImageView
-        android:tag="default"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        android:visibility="visible"
-        android:id="@+id/IMG_ShareIcon"/>
+        <ImageView
+            android:tag="Tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:maxLength="16"
-        android:text="한국 폴리텍대학 반도체융합 캠퍼스 "
-        android:textSize="18sp"
-        android:textColor="@color/TEXT_Black"
-        android:layout_gravity="center_vertical"
-        android:layout_marginRight="16dp"
-        android:id="@+id/TEXT_ShareDestination"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:maxLength="16"
+            android:text="한국 폴리텍대학 반도체융합 캠퍼스 "
+            android:textSize="18sp"
+            android:textColor="@color/TEXT_Black"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16dp"
+            android:id="@+id/TEXT_ShareDestination"/>
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
-    <ImageButton
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/ic_menu"
-        android:background="@color/transparent"
-        android:layout_gravity="center_vertical"
-        android:layout_marginRight="16dp"
-        android:visibility="visible"/>
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_menu"
+            android:background="@color/transparent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16dp"
+            android:visibility="gone"/>
+    </LinearLayout>
 </LinearLayout>

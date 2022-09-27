@@ -36,7 +36,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="제목을 입력해 주세요."
+                    android:hint="제목을 입력해 주세요."
                     android:textStyle="bold"
                     android:textColor="@color/TEXT_Black"
                     android:textSize="22sp"
@@ -60,14 +60,14 @@
                     android:paddingHorizontal="16dp"
                     android:paddingTop="8dp"
                     android:paddingBottom="16dp"
-                    android:text="머릿글을 작성해 주세요."
+                    android:hint="머릿글을 작성해 주세요."
                     android:textSize="18sp"
                     android:textColor="@color/TEXT_Black"
                     android:id="@+id/EDT_Content"/>
-                <include
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    layout="@layout/layout_usershare_point_disc"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -85,5 +85,59 @@
         app:iconTint="@color/white"
         android:layout_gravity="bottom|right"
         android:id="@+id/ACBTN_AddContent"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:background="@color/APP_Accent"
+        android:id="@+id/LAYOUT_UserShareContents">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/APP_Accent"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:id="@+id/LAYOUT_UserShareContent">
+            <TextView
+                style="@style/divideLine"/>
+        </LinearLayout>
+    </ScrollView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/APP_Accent"
+        android:visibility="gone">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/layout_usershare_point_disc"
+                android:id="@+id/LAYOUT_ContentDetail"/>
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="568px"
+                android:background="#E2E2E2"
+                android:src="@drawable/ic_tempimagesize">
+            </ImageButton>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="top|left"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="16dp"
+                android:hint="설명을 추가해 주세요."
+                android:textSize="18sp"
+                android:textColor="@color/TEXT_Black">
+            </EditText>
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>
