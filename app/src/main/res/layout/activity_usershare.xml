@@ -7,21 +7,6 @@
     android:orientation="vertical"
     android:background="@color/APP_Accent">
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:stateListAnimator="@null"
-        android:backgroundTint="@color/teal_700"
-        android:text="설명 추가"
-        app:icon="@drawable/ic_plus"
-        app:iconSize="25dp"
-        app:iconGravity="textStart"
-        android:textColor="@color/white"
-        android:layout_margin="32dp"
-        app:iconTint="@color/white"
-        android:layout_gravity="bottom|right"
-        android:id="@+id/ACBTN_AddContent"/>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -34,7 +19,7 @@
             android:elevation="4dp">
 
             <ImageButton
-                android:layout_width="1080px"
+                android:layout_width="match_parent"
                 android:layout_height="568px"
                 android:background="#E2E2E2"
                 android:src="@drawable/ic_tempimagesize"
@@ -51,7 +36,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="제목을 입력해주세요."
+                    android:text="제목을 입력해 주세요."
                     android:textStyle="bold"
                     android:textColor="@color/TEXT_Black"
                     android:textSize="22sp"
@@ -79,7 +64,6 @@
                     android:textSize="18sp"
                     android:textColor="@color/TEXT_Black"
                     android:id="@+id/EDT_Content"/>
-
                 <include
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,4 +71,19 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:stateListAnimator="@null"
+        android:backgroundTint="@color/teal_700"
+        android:text="설명 추가"
+        app:icon="@drawable/ic_plus"
+        app:iconSize="25dp"
+        app:iconGravity="textStart"
+        android:textColor="@color/white"
+        android:layout_margin="32dp"
+        app:iconTint="@color/white"
+        android:layout_gravity="bottom|right"
+        android:id="@+id/ACBTN_AddContent"/>
+
 </FrameLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/APP_Accent"
+                android:id="@+id/LAYOUT_ContentsDetail">
+                <include
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    layout="@layout/layout_usershare_point_disc"/>
+            </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="568px">
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="568px"
+                    android:background="#E2E2E2"
+                    android:src="@drawable/ic_tempimagesize"/>
+            </FrameLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|left"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="16dp"
+                android:text="설명을 추가해 주세요."
+                android:textSize="18sp"
+                android:textColor="@color/TEXT_Black"
+                android:background="@null"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

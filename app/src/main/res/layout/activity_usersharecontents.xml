@@ -7,13 +7,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:backgroundTint="@color/APP_Accent">
+        android:backgroundTint="@color/APP_Accent"
+        android:background="?attr/selectableItemBackground">
         <include
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            layout="@layout/layout_usershare_point_disc"/>
+            layout="@layout/layout_usershare_point_disc"
+            android:id="@+id/LAYOUT_UserShareContent"/>
         <TextView
             style="@style/divideLine"/>
-
     </LinearLayout>
 </ScrollView>

@@ -3,23 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:elevation="4dp"
-    android:background="@drawable/btn_navigation_bar_parent">
+    android:background="@drawable/btn_navigation_bar_parent"
+    android:id="@+id/LAYOUT_UserShare">
 
     <ImageView
         android:tag="default"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/ic_waypoint_pin"
         android:scaleX="0.5"
         android:scaleY="0.5"
-        android:visibility="visible"/>
-
-    <ImageView
-        android:tag="img"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src=""
-        android:visibility="gone"/>
+        android:visibility="visible"
+        android:id="@+id/IMG_ShareIcon"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,7 +24,8 @@
         android:textSize="18sp"
         android:textColor="@color/TEXT_Black"
         android:layout_gravity="center_vertical"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginRight="16dp"
+        android:id="@+id/TEXT_ShareDestination"/>
 
     <View
         android:layout_width="0dp"
@@ -43,5 +38,6 @@
         android:src="@drawable/ic_menu"
         android:background="@color/transparent"
         android:layout_gravity="center_vertical"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginRight="16dp"
+        android:visibility="visible"/>
 </LinearLayout>

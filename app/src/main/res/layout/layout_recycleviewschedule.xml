@@ -8,8 +8,6 @@
     android:background="?attr/selectableItemBackground"
     android:id="@+id/FRAMELAYOUT_RecyclerView">
 
-    //너무 길어지면 ...으로 표시하는 기능
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
