@@ -28,7 +28,6 @@ import java.util.function.Consumer;
 
 public class ScheduleController extends Activity{
     public static HashMap<Integer, Schedule> scheduleDictionary = new HashMap<>();
-    public static ArrayList<Schedule> remainingSchedule = new ArrayList<>();
     public static ArrayList<Member> memberList = new ArrayList<>();
     public static ArrayList<Waypoint> waypointList = new ArrayList<>();
     static int wpc = 10000000;
@@ -70,7 +69,8 @@ public class ScheduleController extends Activity{
     
                 newObj = gson.fromJson(json.toString(), new TypeToken<ArrayList<Schedule>>(){}.getType());
                 for (int i = 0; i < newObj.size(); i++) {
-                    remainingSchedule.add((Schedule)newObj.get(i));
+                    Schedule newSch = (Schedule)newObj.get(i);
+                    scheduleDictionary.put(newSch.GetId(), newSch);
                 }
                 break;
             default:

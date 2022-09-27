@@ -74,6 +74,50 @@
           "rating": 46,
           "originLink": "google.com",
           "time": 120
+        },
+        {
+          "id": 200001,
+          "name": "Cafe나무",
+          "posX": 1.3,
+          "posY": 1.3,
+          "reviewCount": 123,
+          "type": 7,
+          "rating": 46,
+          "originLink": "google.com",
+          "time": 120
+        },
+        {
+          "id": 200001,
+          "name": "Cafe나무",
+          "posX": 1.3,
+          "posY": 1.3,
+          "reviewCount": 123,
+          "type": 7,
+          "rating": 46,
+          "originLink": "google.com",
+          "time": 120
+        },
+        {
+          "id": 200001,
+          "name": "Cafe나무",
+          "posX": 1.3,
+          "posY": 1.3,
+          "reviewCount": 123,
+          "type": 7,
+          "rating": 46,
+          "originLink": "google.com",
+          "time": 120
+        },
+        {
+          "id": 200001,
+          "name": "Cafe나무",
+          "posX": 1.3,
+          "posY": 1.3,
+          "reviewCount": 123,
+          "type": 7,
+          "rating": 46,
+          "originLink": "google.com",
+          "time": 120
         }
       ],
       "memberGroupId": 2,
@@ -84,7 +128,7 @@
     {
       "id": 3,
       "name": "겨울 여행",
-      "destination": "서울 특별시",
+      "destination": "서울특별시",
       "days": 3,
       "startDate": "2022-09-21",
       "wayPointList": [
@@ -130,7 +174,7 @@
     {
       "id": 4,
       "name": "여름 여행",
-      "destination": "부산 광역시",
+      "destination": "부산광역시",
       "days": 3,
       "startDate": "2022-09-22",
       "wayPointList": [
