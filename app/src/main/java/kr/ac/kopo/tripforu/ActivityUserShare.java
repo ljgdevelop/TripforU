@@ -1,9 +1,12 @@
 package kr.ac.kopo.tripforu;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -13,7 +16,7 @@ import androidx.annotation.RequiresApi;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
-public class UserShare extends PageController {
+public class ActivityUserShare extends PageController {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usershare);
@@ -29,7 +32,6 @@ public class UserShare extends PageController {
         v2.setOnClickListener(v4 -> {
             finish();
         });
-
         acbtn_AddContent.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -47,7 +49,7 @@ public class UserShare extends PageController {
                 });
                 v2.setOnClickListener(v4 -> {
                     layout_UserShareContent.setVisibility(View.GONE);
-                    View v5 = SetAppBarAction(2, false, "완료");
+                    View v5 = SetAppBarAction(1, false, "완료");
                     View v6 = SetAppBarAction(0, true, "취소");
                     v5.setOnClickListener(v7 -> {
 
@@ -68,10 +70,20 @@ public class UserShare extends PageController {
 
             View layoutWP = View.inflate(ActivityMain.context, R.layout.layout_usershare_point_disc, null);
             LinearLayout layout_UserShare = layoutWP.findViewById(R.id.LAYOUT_UserShare);
+            CheckBox chb_UserShareContent = layoutWP.findViewById(R.id.CHB_UserShareContent);
+            LinearLayout layout_UserShareStroke = layoutWP.findViewById(R.id.LAYOUT_UserShareStroke);
+
             layout_UserShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    if (chb_UserShareContent.isChecked() == false){
+                        chb_UserShareContent.setChecked(true);
+                        layout_UserShareStroke.setBackgroundColor(Color.parseColor("#527821"));
+                    }
+                    else{
+                        chb_UserShareContent.setChecked(false);
+                        layout_UserShareStroke.setBackgroundResource(android.R.color.white);
+                    }
                 }
             });
             final TextView wpName = (TextView) layoutWP.findViewById(R.id.TEXT_ShareDestination);

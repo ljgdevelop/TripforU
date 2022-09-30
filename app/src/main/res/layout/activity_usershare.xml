@@ -67,7 +67,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"/>
+                    android:orientation="vertical"
+                    android:background="@color/APP_Accent"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -96,12 +97,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="@color/APP_Accent"
-            android:background="?attr/selectableItemBackground"
             android:orientation="vertical"
             android:id="@+id/LAYOUT_UserShareContent">
-            <TextView
-                style="@style/divideLine"/>
         </LinearLayout>
     </ScrollView>
     <ScrollView
