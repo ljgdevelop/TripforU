@@ -121,6 +121,14 @@ public class ActivityMain extends PageController implements OnBackPressedListene
                 findViewById(R.id.LAYOUT_AlarmSettings).setVisibility(View.VISIBLE);
             }
         });
+    
+        
+        LayoutDialog dialog = new LayoutDialog(getApplicationContext());
+        dialog.setDialogTitle("제목 영역");
+        dialog.setDialogMessage("본문 영역");
+        dialog.addButton(R.color.TEXT_Gray, "닫기").setOnClickListener(view -> dialog.closeDialog());
+        dialog.addButton(R.color.TEXT_Black, "확인1");
+        dialog.addButton(R.color.APP_Main, "확인2");
     }
     
     /***
@@ -183,7 +191,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         container.removeAllViewsInLayout();
         int thisYear = 9999;
         for (Schedule sch:ScheduleController.getSortedScheduleByDate()) {
-            ScheduleTicket newTicket = new ScheduleTicket(getApplicationContext());
+            LayoutScheduleTicket newTicket = new LayoutScheduleTicket(getApplicationContext());
             newTicket.setScheduleId(sch.GetId());
             container.addView(newTicket);
             
@@ -218,7 +226,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
                         isSelectMode = false;
                         for (int i = container.getChildCount() - 1; i >= 0; i--) {
                             if(getTagFromView(container.getChildAt(i), "isSelected").equals("true")){
-                                ScheduleController.removeScheduleById(((ScheduleTicket)container.getChildAt(i)).getScheduleId(), getApplicationContext());
+                                ScheduleController.removeScheduleById(((LayoutScheduleTicket)container.getChildAt(i)).getScheduleId(), getApplicationContext());
                             }
                         }
                         container.removeAllViewsInLayout();

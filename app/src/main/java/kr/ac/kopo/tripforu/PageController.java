@@ -56,7 +56,7 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     public static void AddPage(Page page){
         pageStack.add(page);
     }
-    public static void AddPage(View page, byte type){
+    public static void AddPage(View page){
         pageStack.add(new Page(page, TYPE_VIEW));
     }
     public static void AddPage(Activity activity){ pageStack.add(new Page(activity, TYPE_ACTIVITY)); }
@@ -134,7 +134,7 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) activityContainer.getLayoutParams();
         if(useToolbar()){
             setSupportActionBar(toolbar);
-            lp.topMargin = ConvertPXtoDP(getApplicationContext(), 56);
+            lp.topMargin = ConvertDPtoPX(getApplicationContext(), 56);
             activityContainer.setLayoutParams(lp);
         } else {
             toolbar.setVisibility(View.GONE);
