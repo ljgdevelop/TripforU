@@ -27,34 +27,50 @@ public class ScheduleTicket extends FrameLayout {
     private Context context;
     private int scheduleId;//여행 일정의 ID
     public void setScheduleId(int id){this.scheduleId = id;}
-    public int getScheduleId(int id){return scheduleId;}
+    public int getScheduleId(){return scheduleId;}
     
-    public ScheduleTicket(Context context){
-        this(context, null);
-    }
-    
-    public ScheduleTicket(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-    
+    /**
+     * @author 이제경
+     * @param context
+     * @param attrs
+     * @param defStyleAttr
+     *
+     *      커스텀 뷰의 생성자
+     */
     public ScheduleTicket(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initalize(context);
     }
+    public ScheduleTicket(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+    public ScheduleTicket(Context context){
+        this(context, null);
+    }
+    
     
     /***
      * @author 이제경
-     * 커스텀 뷰(ScheduleTicket)가 생성되었을때 작동합니다.
+     *      커스텀 뷰(ScheduleTicket)가 생성되었을때 작동합니다.
      */
     private void initalize(Context context){
         this.context = context;
-        View fullView = inflate(getContext(), R.layout.layout_main_scheduleticket, this);
+        View fullView = inflate(getContext(), R.layout.layout_scheduleticket, this);
         fullView.setOnClickListener(this::OnTouch);
         fullView.post(this::SyncTicketText);
     }
     
     private void OnTouch(View view){
-        ShowScheduleInfo(context, ScheduleController.scheduleDictionary.get(scheduleId));
+        if(PageController.getTagFromView(this.getParent(), "isSelectMode").equals("true")) {
+            PageController.setTagToView(this, "isSelected", !PageController.getTagFromView(this, "isSelected").equals("true"));
+            Log.d("TAG", "OnTouch: isSelected: " + PageController.getTagFromView(this, "isSelected").equals("true"));
+            if(PageController.getTagFromView(this, "isSelected").equals("true"))
+                this.findViewById(R.id.LAYOUT_TicketBG).setBackground(getResources().getDrawable(R.drawable.background_ticket_selected));
+            else
+                this.findViewById(R.id.LAYOUT_TicketBG).setBackground(getResources().getDrawable(R.drawable.background_ticket_new));
+        }
+        else
+            ShowScheduleInfo(context, ScheduleController.scheduleDictionary.get(scheduleId));
     }
     
     /***
@@ -89,11 +105,12 @@ public class ScheduleTicket extends FrameLayout {
         }catch (Exception e){ Log.e("TAG", "syncTicketText: ", e); }
     }
     
-    /***
+    /**
      * @author 이제경
      * @param schedule - 보여질 일정 정보를 담고있는 Schedule 객체
      * @return 화면에 추가된 View
-     * -> 함수 : 일정의 세부내용을 보여주는 Schedule Info의 내용을 동기화 합니다.
+     *
+     *      일정의 세부내용을 보여주는 Schedule Info의 내용을 동기화 합니다.
      */
     @SuppressLint("ClickableViewAccessibility")
     public View ShowScheduleInfo(Context context, Schedule schedule){
@@ -132,7 +149,7 @@ public class ScheduleTicket extends FrameLayout {
         }
         String schStartDate = getFormattedDate(schedule.GetStartDate(), "MM. dd, EEE");
         String schDays = schedule.GetDays() + "";
-        Member member = ScheduleController.GetMemberByID(schedule.GetMemberGroupId());
+        Member member = ScheduleController.getMemberByID(schedule.GetMemberGroupId());
         String schCompanyNum = member.GetUserIdList().size() + "";
         txt_schName.setSelected(true);
         txt_schName.setText("Trip Pass : " + schName);
@@ -183,7 +200,7 @@ public class ScheduleTicket extends FrameLayout {
         
         //공유하기 버튼 클릭시
         btn_schInfoShare.setOnClickListener(button -> {
-            Intent i = new Intent(getContext(), UserShare.class);
+            Intent i = new Intent(getContext(), ActivityUserShare.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra("putSchedule", schedule);
             context.startActivity(i);
@@ -195,6 +212,11 @@ public class ScheduleTicket extends FrameLayout {
         return view;
     }
     
+    /***
+     * @author 이제경
+     *
+     *      ShowScheduleInfo <- 실행 중 관광지 정보를 추가하는 코드
+     */
     private static void AddWaypointInfo(View view, Schedule schedule){
         final LinearLayout wpContainer = view.findViewById(R.id.VIEW_SchInfoWPContainer);
         for(Waypoint waypoint : schedule.GetWayPointList()){
@@ -250,6 +272,12 @@ public class ScheduleTicket extends FrameLayout {
         }
     }
     
+    
+    /***
+     * @author 이제경
+     * @param date - 변환 할 날짜 값("0000-00-00")
+     * @param pattern - 원하는 날짜 형식
+     */
     public String getFormattedDate(String date, String pattern){
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
