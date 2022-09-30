@@ -130,7 +130,7 @@
       "name": "겨울 여행",
       "destination": "서울특별시",
       "days": 3,
-      "startDate": "2022-09-21",
+      "startDate": "2019-12-24",
       "wayPointList": [
         {
           "id": 100001,
@@ -176,7 +176,7 @@
       "name": "여름 여행",
       "destination": "부산광역시",
       "days": 3,
-      "startDate": "2022-09-22",
+      "startDate": "2021-07-18",
       "wayPointList": [
         {
           "id": 100001,
@@ -222,7 +222,7 @@
       "name": "봄 여행",
       "destination": "인천시",
       "days": 3,
-      "startDate": "2022-09-22",
+      "startDate": "2023-03-12",
       "wayPointList": [
         {
           "id": 100001,

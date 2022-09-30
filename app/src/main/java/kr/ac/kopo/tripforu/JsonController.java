@@ -2,13 +2,29 @@ package kr.ac.kopo.tripforu;
 
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.os.Environment;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,42 +34,77 @@ import org.json.simple.parser.ParseException;
 public class JsonController extends AppCompatActivity {
     
     /***
-     * -> 작성자 : 이제경
-     * -> 함수 : json확장자 파일을 url을 통해 접근하여 내용을 String으로 반환
-     * -> 인자 : fileUrl = JSON파일이 있는 경로
+     * @author 이제경
+     * @param objList - 저장할 데이터가 담긴 데이터 집합
+     * @param fileName - 저장할 Json 파일 위치
      */
-    public static void WriteJson(JSONObject obj, String fileUrl){
+    public static void saveJson(Collection objList, String fileName, Context context){
         try {
-            FileWriter file = new FileWriter(fileUrl);
-            file.write(obj.toJSONString());
-            file.flush();
-            file.close();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            
+            StringBuilder path = new StringBuilder(fileName);
+            path.append(".json");
+            
+            FileOutputStream fos = context.openFileOutput(path.toString(), Context.MODE_PRIVATE);
+            
+            JSONArray ja = new JSONArray();
+            ja.addAll(objList);
+            
+            fos.write(gson.toJson(ja).getBytes());
+    
+            fos.flush();
+            fos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.print(obj);
     }
     
     /***
-     * -> 작성자 : 이제경
-     * -> 함수 : 파일 경로에 있는 Json 파일을 읽어 JsonObject로 반환
-     * -> 인자 : fileUrl = JSON파일이 있는 경로
+     * @author 이제경
+     * @param context - applicationContext
      */
-    public static JSONArray ReadJson(String fileUrl, Context context) {
+    public static void saveJsonFromAssets(Context context){
+        ScheduleController.syncJsonToObject(JsonController.readJsonArrayFromAssets("json/member.json", context),
+            Member.class.toString());
+        ScheduleController.syncJsonToObject(JsonController.readJsonArrayFromAssets("json/waypoints.json", context),
+            Waypoint.class.toString());
+        ScheduleController.syncJsonToObject(JsonController.readJsonArrayFromAssets("json/schedule.json", context),
+            Schedule.class.toString());
+    
+        saveJson(ScheduleController.memberList, "member", context);
+        saveJson(ScheduleController.waypointList, "waypoints", context);
+        saveJson(ScheduleController.scheduleDictionary.values(), "schedule", context);
+    }
+    
+    /***
+     * @author 이제경
+     * @param context - 저장할 데이터가 담긴 데이터 집합
+     * @param fileName - 저장할 Json 파일 이름
+     */
+    public static JSONArray readJson(String fileName, Context context) {
+        String json = "";
         try {
-            InputStream is = context.getAssets().open(fileUrl);
-            int fileSize = is.available();
+            StringBuilder path = new StringBuilder(fileName);
+            path.append(".json");
+            
+            FileInputStream fis = context.openFileInput(path.toString());
+            StringBuffer buffer = new StringBuffer();
+            String data = null;
+            BufferedReader iReader = new BufferedReader(new InputStreamReader(fis));
+            
+            data = iReader.readLine();
+            while(data != null){
+                buffer.append(data);
+                data = iReader.readLine();
+            }
     
-            byte[] buffer = new byte[fileSize];
-            is.read(buffer);
-            is.close();
-    
-            String json = new String(buffer, "UTF-8");
+            json = buffer.toString();
             
             JSONParser parser = new JSONParser();
-            JSONObject obj = (JSONObject) parser.parse(json);
+            JSONArray jsonArray = (JSONArray) parser.parse(json);
+            //JSONObject obj = (JSONObject) parser.parse(json);
             
-            JSONArray jsonArray = (JSONArray) obj.get("items");
+            //JSONArray jsonArray = (JSONArray) obj.get("items");
     
             return jsonArray;
         
@@ -64,18 +115,47 @@ public class JsonController extends AppCompatActivity {
     }
     
     /***
-     * -> 작성자 : 이제경
-     * -> 함수 : 파일 경로에 있는 Json 파일을 읽어 JsonObject로 반환
-     * -> 인자 : fileUrl = JSON파일이 있는 경로
+     * @author 이제경
+     * @param context - 저장할 데이터가 담긴 데이터 집합
+     * @param filePath - 저장할 Json 파일 이름
      */
-    public static JSONObject ReadJsonObj(String fileUrl, Context context) {
+    public static JSONArray readJsonArrayFromAssets(String filePath, Context context) {
         try {
-            InputStream is = context.getAssets().open(fileUrl);
-            int fileSize = is.available();
+            InputStream fis = context.getResources().getAssets().open(filePath);
+            int fileSize = fis.available();
+        
+            byte[] buffer = new byte[fileSize];
+            fis.read(buffer);
+            fis.close();
+        
+            String json = new String(buffer, "UTF-8");
+        
+            JSONParser parser = new JSONParser();
+            JSONObject obj = (JSONObject) parser.parse(json);
+        
+            JSONArray jsonArray = (JSONArray) obj.get("items");
+        
+            return jsonArray;
+        
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /***
+     * @author 이제경
+     * @param context - 저장할 데이터가 담긴 데이터 집합
+     * @param filePath - 저장할 Json 파일 이름
+     */
+    public static JSONObject readJsonObjFromAssets(String filePath, Context context) {
+        try {
+            InputStream fis = context.getResources().getAssets().open(filePath);
+            int fileSize = fis.available();
             
             byte[] buffer = new byte[fileSize];
-            is.read(buffer);
-            is.close();
+            fis.read(buffer);
+            fis.close();
             
             String json = new String(buffer, "UTF-8");
             

@@ -71,7 +71,7 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        if(pageStack.size() > 1) {
+        if(pageStack.size() > 0) {
             Page lastPage = pageStack.get(pageStack.size() - 1);
             switch (lastPage.GetPageType()) {
                 case 0:
@@ -131,10 +131,15 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         super.setContentView(fullView);
     
         Toolbar toolbar = fullView.findViewById(R.id.LAYOUT_AppBar);
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) activityContainer.getLayoutParams();
         if(useToolbar()){
             setSupportActionBar(toolbar);
+            lp.topMargin = ConvertPXtoDP(getApplicationContext(), 56);
+            activityContainer.setLayoutParams(lp);
         } else {
             toolbar.setVisibility(View.GONE);
+            lp.topMargin = 0;
+            activityContainer.setLayoutParams(lp);
         }
     }
 
@@ -196,53 +201,11 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     
     ObjectAnimator scrollAnimator;
     static int scrollTime = 0;
-    int oldX = 0;
-    @SuppressLint("ClickableViewAccessibility")
-    protected void AnimateHorizontalScroll(HorizontalScrollView horizontalScrollView){
-        horizontalScrollView.setTag(0);
-        horizontalScrollView.setOnTouchListener((view, motionEvent) -> {
-            ViewParent vp = view.getParent();
-            vp.requestDisallowInterceptTouchEvent(true);
-            if(motionEvent.getAction() == MotionEvent.ACTION_MOVE ){
-                scrollTime++;
-                if(scrollTime < 2)
-                    oldX = (int)motionEvent.getX();
-            }
-            else if((motionEvent.getAction() == MotionEvent.ACTION_UP || motionEvent.getAction() == MotionEvent.ACTION_CANCEL)
-                     && scrollTime > 5){
-                //스크롤 뷰 속 컨테이너의 X좌표 가져오기
-                scrollTime = 0;
-                int count = 0;
-                ArrayList<Integer> posX = new ArrayList<>();
-                LinearLayout parent = ((LinearLayout)horizontalScrollView.getChildAt(0));
-                for(int i = 0; i < parent.getChildCount(); i++){
-                    if(parent.getChildAt(i).getVisibility() == View.VISIBLE) {
-                        parent.getChildAt(i).setTag(count++);
-                        posX.add(parent.getChildAt(i).getLeft());
-                    }
-                }
-                if(oldX - (int)motionEvent.getX() > 50 &&
-                    (int)horizontalScrollView.getTag() < count - 1){//오른쪽으로 이동
-                    horizontalScrollView.setTag((int)horizontalScrollView.getTag() + 1);
-                }
-                else if(oldX - (int)motionEvent.getX() < -50 &&
-                    (int)horizontalScrollView.getTag() > 0){//왼쪽으로 이동
-                    horizontalScrollView.setTag((int)horizontalScrollView.getTag() - 1);
-                }
-                if(scrollAnimator != null && scrollAnimator.isRunning())
-                    scrollAnimator.end();
-                scrollAnimator = ObjectAnimator.ofInt(horizontalScrollView, "ScrollX", posX.get((int)horizontalScrollView.getTag()));
-                scrollAnimator.setDuration(400);
-                scrollAnimator.start();
-            }
-            else if(motionEvent.getAction() == MotionEvent.ACTION_UP){
-                Log.d("TAG", "a: " + ((ViewGroup)((ViewGroup)view).getChildAt(0)).getChildAt((int)horizontalScrollView.getTag()).dispatchTouchEvent(motionEvent));
-                return false;
-            }
-            return true;
-        });
-    }
-    
+    /**
+     * @author 이제경
+     * @param horizontalScrollView - HorizontalScrollView
+     * @param index - 스크롤 할 위치(뷰의 순서 기준)
+     */
     protected void TabHorizontalScroll(HorizontalScrollView horizontalScrollView, int index){
         scrollTime = 0;
         int count = 0;
@@ -264,7 +227,9 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     
     /***
      * @author 이제경
-     * -> 함수 : 사용자가 로그인 상태인지, 또 사용자의 정보를 가져올 수 있는 상태인지 확인
+     *
+     *      카카오톡으로 로그인 되어있는지 확인한 후,
+     *      로그인 상태라면 사용자 설정 화면에 로그인 정보 표시
      */
     protected void CheckClientHasToken(){
         if (AuthApiClient.getInstance().hasToken()) {
@@ -283,7 +248,6 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
                     Log.i("TAG", "프로필사진: " + user.getKakaoAccount().getProfile().getProfileImageUrl());*/
                     Glide.with(this).load(user.getKakaoAccount().getProfile().getProfileImageUrl()).into((ImageView) findViewById(R.id.IMG_Profile));
                     ((TextView)findViewById(R.id.TEXT_AccountName)).setText(user.getKakaoAccount().getProfile().getNickname());
-                    String welcomeText = user.getKakaoAccount().getProfile().getNickname() + "님";
                     findViewById(R.id.BTN_GoLogin).setVisibility(View.GONE);
                     findViewById(R.id.BTN_GoLogout).setVisibility(View.VISIBLE);
                 }
@@ -300,13 +264,29 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         }
     }
     
+    /***
+     * @author 이제경
+     *
+     *      앱을 처음 실행하는지 확인.
+     *      처음 실행시 권한 동의화면으로 이동
+     */
     public void checkFirstRun(){
         prefs = getSharedPreferences("Pref", MODE_PRIVATE);
         boolean isFirstRun = prefs.getBoolean("isFirstRun",true);
         if(isFirstRun){
             Intent i = new Intent(getApplicationContext(), ActivityPermissionCheck.class);
             startActivityForResult(i, 0);
+            JsonController.saveJsonFromAssets(getApplicationContext());
             prefs.edit().putBoolean("isFirstRun",false).apply();
+        }
+        else{
+            //Json형식의 데이터 동기화
+            ScheduleController.syncJsonToObject(JsonController.readJson("member", getApplicationContext()),
+                Member.class.toString());
+            ScheduleController.syncJsonToObject(JsonController.readJson("waypoints", getApplicationContext()),
+                Waypoint.class.toString());
+            ScheduleController.syncJsonToObject(JsonController.readJson("schedule", getApplicationContext()),
+                Schedule.class.toString());
         }
     }
     
@@ -324,6 +304,16 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         return Math.round(dp);
     }
     
+    /***
+     * @author 이제경
+     * @param view - 태그를 적용 할 view
+     * @param tag - 태그의 이름
+     * @param value - 저장할 값
+     *
+     *      <p>view에 key-value 쌍으로 되어있는 Json형태의 데이터로 tag-value 저장</p>
+     *      <p/>
+     *      <p>HashMap처럼 여러개의 태그 저장 가능, 이미 있는 태그 이름으로 시도할 시 value를 덮어씌웁니다.</p>
+     */
     public static void setTagToView(Object view, String tag, Object value){
         View v = ((View) view);
         if(v.getTag() == null || v.getTag().toString().isEmpty())
@@ -343,10 +333,17 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
                 result.append(afterTag.split(",")[1]);
                 
             v.setTag(result);
-            Log.d("TAG", "setTagToView: " + v.getTag().toString());
         }
     }
     
+    /***
+     * @author 이제경
+     * @param view - 태그를 적용 할 view
+     * @param tag - 태그의 이름
+     * @return (String) 저장된 값
+     *
+     *      <p>view에 저장된 tag를 key로 갖는 value를 가져옵니다.</p>
+     */
     public static String getTagFromView(Object view, String tag){
         View v = ((View) view);
         if(v.getTag() == null || !v.getTag().toString().contains(tag))
