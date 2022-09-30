@@ -44,7 +44,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="32dp"
                 android:textSize="18sp"
-                android:text="이름"/>
+                android:text=""/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/BTN_GoLogout"
