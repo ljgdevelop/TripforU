@@ -323,4 +323,34 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         float dp = px * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return Math.round(dp);
     }
+    
+    public static void setTagToView(Object view, String tag, Object value){
+        View v = ((View) view);
+        if(v.getTag() == null || v.getTag().toString().isEmpty())
+            v.setTag("\"" + tag + "\":" + value);
+        else if(!v.getTag().toString().contains("\"" + tag + "\":")){
+            v.setTag(v.getTag() + ", \"" + tag + "\":" + value);
+        }
+        else{
+            String afterTag = v.getTag().toString().split("\"" + tag + "\":")[1];
+            StringBuilder result = new StringBuilder();
+            result.append(v.getTag().toString().split("\"" + tag + "\":")[0]);
+            result.append("\"");
+            result.append(tag);
+            result.append("\":");
+            result.append(value);
+            if(afterTag.contains(","))
+                result.append(afterTag.split(",")[1]);
+                
+            v.setTag(result);
+            Log.d("TAG", "setTagToView: " + v.getTag().toString());
+        }
+    }
+    
+    public static String getTagFromView(Object view, String tag){
+        View v = ((View) view);
+        if(v.getTag() == null || !v.getTag().toString().contains(tag))
+            return "";
+        return v.getTag().toString().split("\"" + tag + "\":")[1].split(",")[0];
+    }
 }
