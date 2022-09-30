@@ -28,7 +28,7 @@
             android:name=".ActivityPermissionCheck"
             android:exported="false" />
         <activity
-            android:name=".UserShare"
+            android:name=".ActivityUserShare"
             android:exported="false" />
         <activity
             android:name=".ActivityMain"

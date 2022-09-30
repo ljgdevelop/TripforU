@@ -1,53 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:elevation="4dp"
-    android:background="@drawable/btn_navigation_bar_parent"
-    android:id="@+id/LAYOUT_UserShare">
+    android:layout_height="65dp"
+    android:orientation="vertical"
+    android:background="@color/white">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background_ticket_new">
-        <ImageView
-            android:tag="default"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleX="0.5"
-            android:scaleY="0.5"
-            android:visibility="visible"
-            android:src="@drawable/ic_waypoint_pin"
-            android:id="@+id/IMG_ShareIcon"/>
+        android:layout_height="60dp"
+        android:orientation="vertical"
+        android:id="@+id/LAYOUT_UserShareStroke"
+        android:background="@color/white"
+        android:layout_marginVertical="2dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="vertical"
+            android:background="@drawable/custom_ripple"
+            android:id="@+id/LAYOUT_UserShare"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:checked="false"
+                android:id="@+id/CHB_UserShareContent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:tag="default"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
+                    android:visibility="visible"
+                    android:src="@drawable/ic_waypoint_pin"
+                    android:id="@+id/IMG_ShareIcon"/>
 
-        <ImageView
-            android:tag="Tag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+                <ImageView
+                    android:tag="Tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:maxLength="16"
-            android:text="한국 폴리텍대학 반도체융합 캠퍼스 "
-            android:textSize="18sp"
-            android:textColor="@color/TEXT_Black"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="16dp"
-            android:id="@+id/TEXT_ShareDestination"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:maxLength="16"
+                    android:text="한국 폴리텍대학 반도체융합 캠퍼스 "
+                    android:textSize="18sp"
+                    android:textColor="@color/TEXT_Black"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="16dp"
+                    android:id="@+id/TEXT_ShareDestination"/>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
 
-        <ImageButton
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_menu"
-            android:background="@color/transparent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="16dp"
-            android:visibility="gone"/>
+                <ImageButton
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_menu"
+                    android:background="@color/transparent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="16dp"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
