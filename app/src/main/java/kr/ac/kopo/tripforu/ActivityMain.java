@@ -1,13 +1,8 @@
 package kr.ac.kopo.tripforu;
 
-import androidx.annotation.NonNull;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -17,9 +12,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.View;
 
 import android.content.Context;
@@ -44,7 +37,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         super.onCreate(savedInstanceState);
         
         //카카오 SDK 초기화
-        JSONObject obj = JsonController.ReadJsonObj("json/appKey.json", getApplicationContext());
+        JSONObject obj = JsonController.readJsonObjFromAssets("json/appKey.json", getApplicationContext());
         String kakao_app_key = obj.get("key").toString();
         KakaoSdk.init(this, kakao_app_key);
         
@@ -55,14 +48,6 @@ public class ActivityMain extends PageController implements OnBackPressedListene
     
         //첫 실행시 권한 요구 화면으로 이동
         checkFirstRun();
-        
-        //Json형식의 데이터 동기화
-        ScheduleController.syncJsonToObject(JsonController.ReadJson("json/member.json", getApplicationContext()),
-                                            Member.class.toString());
-        ScheduleController.syncJsonToObject(JsonController.ReadJson("json/waypoints.json", getApplicationContext()),
-                                            Waypoint.class.toString());
-        ScheduleController.syncJsonToObject(JsonController.ReadJson("json/schedule.json", getApplicationContext()),
-                                            Schedule.class.toString());
         
         //layout_main_schedule_list 화면에 여행 일정 목록 표시
         ShowScheduleList();
@@ -139,9 +124,10 @@ public class ActivityMain extends PageController implements OnBackPressedListene
     }
     
     /***
-     * -> 작성자 : 이제경
-     * -> 함수 : 메인 화면에서 설정 내용 속 권한 습득여부를 표시해주는 함수
-     * - 습득되어있으면 스위치 버튼을 체크 상태로, 안되어있으면 터치를 통해 해당 화면으로 이동할 수 있도록 유도
+     * @author 이제경
+     *
+     *      <p>앱 사용자가 권한을 허용했는지 확인하고</p>
+     *      <p>허용되어있지 않은 권한은 사용자 설정 화면에서 다시 설정할 수 있도록 활성화 합니다.</p>
      */
     @SuppressLint("ClickableViewAccessibility")
     private void SyncPermissionIsChecked(){
@@ -187,37 +173,69 @@ public class ActivityMain extends PageController implements OnBackPressedListene
     
     
     /***
-     * -> 작성자 : 이제경
-     * -> 함수 : 메인 페이지에서 남은 여행 일정의 티켓을 보여주는 함수
-     * - 클릭시 해당 여행 일정의 상세 내용을 표시
+     * @author 이제경
+     *
+     *      목록 화면에 여행 일정들을 표시합니다.
      */
+    boolean isSelectMode = false;
     private void ShowScheduleList(){
         LinearLayout container = findViewById(R.id.LAYOUT_SchListContainer);
-        for (Schedule sch:ScheduleController.scheduleDictionary.values()) {
+        container.removeAllViewsInLayout();
+        int thisYear = 9999;
+        for (Schedule sch:ScheduleController.getSortedScheduleByDate()) {
             ScheduleTicket newTicket = new ScheduleTicket(getApplicationContext());
             newTicket.setScheduleId(sch.GetId());
             container.addView(newTicket);
+            
+            //년도가 바뀔때마나 표시
+            int scheduleYear = Integer.parseInt(sch.GetStartDate().split("-")[0]);
+            if(thisYear > scheduleYear){
+                thisYear = scheduleYear;
+                newTicket.findViewById(R.id.TEXT_TicketDateHeader).setVisibility(View.VISIBLE);
+                ((TextView)newTicket.findViewById(R.id.TEXT_TicketDateHeader)).setText(thisYear + "년");
+            }
+            
+            //길게 터치시 선택모드 진입
+            newTicket.setOnLongClickListener(view -> {
+                if(!isSelectMode) {
+                    isSelectMode = true;
+                    setTagToView(container, "isSelectMode", true);
+                    setTagToView(newTicket, "isSelected", true);
+                    newTicket.findViewById(R.id.LAYOUT_TicketBG).setBackground(getResources().getDrawable(R.drawable.background_ticket_selected));
+                    
+                    //선택모드 진입 시 취소, 삭제 버튼 출력
+                    SetAppBarAction(0, true, "취소").setOnClickListener(v -> {
+                        setTagToView(container, "isSelectMode", false);
+                        isSelectMode = false;
+                        for (int i = 0; i < container.getChildCount(); i ++) {
+                            setTagToView(container.getChildAt(i), "isSelected", false);
+                            container.getChildAt(i).findViewById(R.id.LAYOUT_TicketBG).setBackground(getResources().getDrawable(R.drawable.background_ticket_new));
+                        }
+                        ResetAppBar();
+                    });
+                    SetAppBarAction(2, false, "삭제").setOnClickListener(v -> {
+                        setTagToView(container, "isSelectMode", false);
+                        isSelectMode = false;
+                        for (int i = container.getChildCount() - 1; i >= 0; i--) {
+                            if(getTagFromView(container.getChildAt(i), "isSelected").equals("true")){
+                                ScheduleController.removeScheduleById(((ScheduleTicket)container.getChildAt(i)).getScheduleId(), getApplicationContext());
+                            }
+                        }
+                        container.removeAllViewsInLayout();
+                        ShowScheduleList();
+                        ResetAppBar();
+                    });
+                }
+                return true;
+            });
         }
     }
     
-    /*public void ShowScheduleList() {
-        LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext());
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        LinearLayout layout_SharedContents = findViewById(R.id.LAYOUT_SharedContents);
-        ScheduleContentAdapter mScheduleContentAdapter = new ScheduleContentAdapter();
-        RecyclerView mRecyclerView_Schedule = (RecyclerView) findViewById(R.id.RECYCLEVIEW_Schedule);
-        mRecyclerView_Schedule.setLayoutManager(manager);
-        mRecyclerView_Schedule.setAdapter(mScheduleContentAdapter);
-        
-        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(mScheduleContentAdapter));
-        mItemTouchHelper.attachToRecyclerView(mRecyclerView_Schedule);
-        
-        
-        // isShared 상태에 맞게 공유표시 레이아웃 생기고 끄는 기능 구현해야됨
-        
-        mScheduleContentAdapter.setItems();
-    }*/
-    
+    /***
+     * @author 이제경
+     *
+     *      startActivityForResult 실행시 결과를 받아오는 곳
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
