@@ -66,13 +66,13 @@ public class LayoutDialog extends LinearLayout {
     }
     
     private void onShow(){
-        ValueAnimator va = ValueAnimator.ofInt(0, 100);
+        syncContext();
+        ValueAnimator va = ValueAnimator.ofInt(0, 50);
         va.setDuration(100);
         va.addUpdateListener(anim -> {
             fullView.findViewById(R.id.LAYOUT_DialogContainer).setTranslationY(-1 * (Integer) anim.getAnimatedValue());
         });
         va.start();
-        syncContext();
         PageController.AddPage(this);
     }
     
@@ -90,12 +90,12 @@ public class LayoutDialog extends LinearLayout {
     }
     
     public void closeDialog(){
-        ValueAnimator va = ValueAnimator.ofInt(0, 100);
+        ValueAnimator va = ValueAnimator.ofInt(0, 50);
         va.setDuration(100);
         va.addUpdateListener(anim -> {
             if(fullView.findViewById(R.id.LAYOUT_DialogContainer) != null) {
                 fullView.findViewById(R.id.LAYOUT_DialogContainer).setTranslationY((Integer) anim.getAnimatedValue());
-                if ((Integer) anim.getAnimatedValue() > 95)
+                if ((Integer) anim.getAnimatedValue() > 48)
                     ((ViewGroup) this).removeAllViews();
             }
         });
