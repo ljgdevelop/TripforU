@@ -9,7 +9,6 @@
     app:track="@drawable/slidebuttontrack"
     android:textOn=""
     android:textOff=""
-    android:soundEffectsEnabled="false"
-    tools:context=".SlideButton">
+    android:soundEffectsEnabled="false">
 
 </androidx.appcompat.widget.SwitchCompat>
