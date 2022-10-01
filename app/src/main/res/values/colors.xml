@@ -15,5 +15,6 @@
     <color name="APP_Point">#364A59</color>
     <color name="APP_Accent">#F9FCF8</color>
     <color name="point_color">#60db79</color>
+    <color name="TEXT_Red">#ff8888</color>
     <color name="transparent">#00000000</color>
 </resources>

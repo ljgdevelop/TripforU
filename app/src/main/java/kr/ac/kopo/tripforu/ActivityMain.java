@@ -183,7 +183,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         container.removeAllViewsInLayout();
         int thisYear = 9999;
         for (Schedule sch:ScheduleController.getSortedScheduleByDate()) {
-            ScheduleTicket newTicket = new ScheduleTicket(getApplicationContext());
+            LayoutScheduleTicket newTicket = new LayoutScheduleTicket(getApplicationContext());
             newTicket.setScheduleId(sch.GetId());
             container.addView(newTicket);
             
@@ -214,16 +214,23 @@ public class ActivityMain extends PageController implements OnBackPressedListene
                         ResetAppBar();
                     });
                     SetAppBarAction(2, false, "삭제").setOnClickListener(v -> {
-                        setTagToView(container, "isSelectMode", false);
-                        isSelectMode = false;
-                        for (int i = container.getChildCount() - 1; i >= 0; i--) {
-                            if(getTagFromView(container.getChildAt(i), "isSelected").equals("true")){
-                                ScheduleController.removeScheduleById(((ScheduleTicket)container.getChildAt(i)).getScheduleId(), getApplicationContext());
+                        //삭제 확인 출력
+                        LayoutDialog dialog = new LayoutDialog(getApplicationContext());
+                        dialog.setDialogTitle("삭제하시겠습니까?");
+                        dialog.setDialogMessage("이 작업은 되돌릴 수 없습니다.");
+                        dialog.addButton(R.color.TEXT_Gray, "취소").setOnClickListener(v2 -> dialog.closeDialog());
+                        dialog.addButton(R.color.TEXT_Red, "삭제").setOnClickListener(v2 -> {
+                            setTagToView(container, "isSelectMode", false);
+                            isSelectMode = false;
+                            for (int i = container.getChildCount() - 1; i >= 0; i--) {
+                                if(getTagFromView(container.getChildAt(i), "isSelected").equals("true")){
+                                    ScheduleController.removeScheduleById(((LayoutScheduleTicket)container.getChildAt(i)).getScheduleId(), getApplicationContext());
+                                }
                             }
-                        }
-                        container.removeAllViewsInLayout();
-                        ShowScheduleList();
-                        ResetAppBar();
+                            container.removeAllViewsInLayout();
+                            ShowScheduleList();
+                            ResetAppBar();
+                        });
                     });
                 }
                 return true;

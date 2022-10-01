@@ -23,7 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
-public class ScheduleTicket extends FrameLayout {
+public class LayoutScheduleTicket extends FrameLayout {
     private Context context;
     private int scheduleId;//여행 일정의 ID
     public void setScheduleId(int id){this.scheduleId = id;}
@@ -37,14 +37,14 @@ public class ScheduleTicket extends FrameLayout {
      *
      *      커스텀 뷰의 생성자
      */
-    public ScheduleTicket(Context context, AttributeSet attrs, int defStyleAttr) {
+    public LayoutScheduleTicket(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initalize(context);
+        init(context);
     }
-    public ScheduleTicket(Context context, AttributeSet attrs) {
+    public LayoutScheduleTicket(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
-    public ScheduleTicket(Context context){
+    public LayoutScheduleTicket(Context context){
         this(context, null);
     }
     
@@ -53,7 +53,7 @@ public class ScheduleTicket extends FrameLayout {
      * @author 이제경
      *      커스텀 뷰(ScheduleTicket)가 생성되었을때 작동합니다.
      */
-    private void initalize(Context context){
+    private void init(Context context){
         this.context = context;
         View fullView = inflate(getContext(), R.layout.layout_scheduleticket, this);
         fullView.setOnClickListener(this::OnTouch);
