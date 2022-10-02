@@ -336,7 +336,6 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
                 
             v.setTag(result);
         }
-        Log.d("TT", "setTagToView: " + v.getTag());
     }
     
     /***
