@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.RequiresApi;
-import androidx.core.view.GravityCompat;
 
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
@@ -77,7 +76,7 @@ public class ActivityLogin extends PageController {
         if (oAuthToken != null) {
             Log.i("[카카오] 로그인", "성공");
             updateKakaoLogin();
-            CheckClientHasToken();
+            checkClientHasToken();
             Intent intent = getIntent();
             finish();
             startActivity(intent);
