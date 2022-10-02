@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -328,11 +329,14 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
             result.append(tag);
             result.append("\":");
             result.append(value);
-            if(afterTag.contains(","))
+            if(afterTag.contains(",")) {
+                result.append(",");
                 result.append(afterTag.split(",")[1]);
+            }
                 
             v.setTag(result);
         }
+        Log.d("TT", "setTagToView: " + v.getTag());
     }
     
     /***
