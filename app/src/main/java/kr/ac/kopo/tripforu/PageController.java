@@ -1,8 +1,6 @@
 package kr.ac.kopo.tripforu;
 
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,14 +8,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -31,13 +23,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kakao.sdk.auth.AuthApiClient;
 import com.kakao.sdk.user.UserApiClient;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 interface OnBackPressedListener {
     void onBackPressed();
@@ -197,8 +186,6 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         fullView.findViewById(R.id.IMG_AppBarRight).setVisibility(View.VISIBLE);
     }
     
-    
-    
     ObjectAnimator scrollAnimator;
     static int scrollTime = 0;
     /**
@@ -231,7 +218,7 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
      *      카카오톡으로 로그인 되어있는지 확인한 후,
      *      로그인 상태라면 사용자 설정 화면에 로그인 정보 표시
      */
-    protected void CheckClientHasToken(){
+    protected void checkClientHasToken(){
         if (AuthApiClient.getInstance().hasToken()) {
             UserApiClient.getInstance().me((user, throwable) -> {
                 if(throwable != null){
@@ -262,6 +249,18 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         else {
             this.isLoggedIn = false;
         }
+    }
+    
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    protected void logoutKakao(){
+        UserApiClient.getInstance().logout(throwable -> {
+            if(throwable == null){
+                Intent i = new Intent(this, ActivityMain.class);
+                finish();
+                startActivity(i);
+            }
+            return null;
+        });
     }
     
     /***
