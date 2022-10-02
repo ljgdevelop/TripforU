@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-@RequiresApi(api = Build.VERSION_CODES.M)
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class LayoutScheduleTicket extends FrameLayout {
     private Context context;
     private int scheduleId;//여행 일정의 ID
@@ -51,6 +51,7 @@ public class LayoutScheduleTicket extends FrameLayout {
     
     /***
      * @author 이제경
+     *
      *      커스텀 뷰(ScheduleTicket)가 생성되었을때 작동합니다.
      */
     private void init(Context context){
@@ -149,7 +150,7 @@ public class LayoutScheduleTicket extends FrameLayout {
         }
         String schStartDate = getFormattedDate(schedule.GetStartDate(), "MM. dd, EEE");
         String schDays = schedule.GetDays() + "";
-        Member member = ScheduleController.getMemberByID(schedule.GetMemberGroupId());
+        Member member = ScheduleController.getMemberByID(schedule.getMemberGroupId());
         String schCompanyNum = member.GetUserIdList().size() + "";
         txt_schName.setSelected(true);
         txt_schName.setText("Trip Pass : " + schName);
