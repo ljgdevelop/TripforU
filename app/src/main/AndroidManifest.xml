@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TripforU">
         <activity
+            android:name=".ActivityRecommend"
+            android:exported="false" />
+        <activity
             android:name=".ActivityCreateWaypoint"
             android:exported="false" />
         <activity
@@ -53,11 +56,7 @@
                     android:host="oauth"
                     android:scheme="kakao${KAKAO_API_KEY}" />
             </intent-filter>
-        </activity> 
-
-        
-        
-        <!-- 네이버 클라이언트 ID 및 암호 -->
+        </activity> <!-- 네이버 클라이언트 ID 및 암호 -->
         <meta-data
             android:name="3l42j6ptcl"
             android:value="8EJqWaRsk95TIKBlK3l9eTIa0CYdFPeIJW4DQDTN" />
