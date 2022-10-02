@@ -5,12 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:name="com.naver.maps.map.MapFragment"
-    tools:context=".LayoutNaverMap">
+    android:name="com.naver.maps.map.MapFragment">
 
     <com.naver.maps.map.MapView
         android:layout_width="match_parent"
-        android:layout_height="330dp"
+        android:layout_height="match_parent"
         android:id="@+id/map_View"/>
 
 
