@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+//캘린더 복제하는 자바 코드
+for (int i = 0; i < 6; i ++){
+    LayoutCalendar c = new LayoutCalendar(getApplicationContext());
+    c.setDate(LocalDate.now().plusMonths(i));
+    ((LinearLayout)findViewById(R.id.LAYOUT_CC)).addView(c);
+}
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityRecommend"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/LAYOUT_CC">
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
