@@ -12,42 +12,32 @@ class Schedule implements Serializable {
     private int days;
     private String startDate;
     private ArrayList<Waypoint> wayPointList = new ArrayList<>();
-    private double ratingBar;
     private int memberGroupId;
-    private byte likes;
     private boolean isShared;
-    private int sharedCount;
     
     //생성자 : wayPointList 포함
     public Schedule(int id, String name, String destination, int days, String startDate,
-                    ArrayList<Waypoint> wayPointList, int memberGroupId){
+                    ArrayList<Waypoint> wayPointList){
         this.id = id;
         this.name = name;
         this.destination = destination;
         this.days = days;
         this.startDate = startDate;
         this.wayPointList = wayPointList;
-        this.memberGroupId = memberGroupId;
-        this.likes = 0;
         this.isShared = false;
-        this.sharedCount = 0;
     }
     //생성자 : wayPointList 미포함
-    public Schedule(int id, String name, String destination, int days, String startDate,
-                    int memberGroupId){
+    public Schedule(int id, String name, String destination, int days, String startDate){
         this.id = id;
         this.name = name;
         this.destination = destination;
         this.days = days;
         this.startDate = startDate;
-        this.memberGroupId = memberGroupId;
-        this.likes = 0;
         this.isShared = false;
-        this.sharedCount = 0;
     }
     //생성자 : JSON Object 입력
     public Schedule(Object id, Object name, Object destination, Object days, Object startDate,
-                    Object wayPointString, Object memberGroupId){
+                    Object wayPointString){
         this.id = (int)id;
         this.name = (String)name;
         this.destination = (String)destination;
@@ -61,10 +51,7 @@ class Schedule implements Serializable {
                 }
             }
         }
-        this.memberGroupId = (int)memberGroupId;
-        this.likes = 0;
         this.isShared = false;
-        this.sharedCount = 0;
     }
     
     //id 변수의 getter setter
@@ -127,32 +114,14 @@ class Schedule implements Serializable {
         this.wayPointList.clear();
     }
     
-    //memberGroup 변수의 getter setter
-    public int GetMemberGroupId(){
-        return this.memberGroupId;
-    }
-    public void SetMemberGroupId(int id){
-        this.memberGroupId =  id;
-    }
-    
-    //likes 변수의 getter setter
-    public double GetLikes(){ return (this.likes); }
-    public void SetLikes(double value){ this.likes = (byte)(value*10); }
-    
     //isShared 변수의 getter setter
     public boolean CheckIsShared(){ return this.isShared; }
     public void SetSharedState(boolean isShared){ this.isShared = isShared; }
     
-    //sharedCount 변수의 getter setter adder
-    public int GetSharedCount(){ return this.sharedCount; }
-    public void AddSharedCount(int i){ this.sharedCount++; }
-    public void SetSharedCount(int i){ this.sharedCount = i; }
-    
-    //ratimgBar 변수의 getter setter
-    public double GetRatingBar() {
-        return ratingBar;
+    public int getMemberGroupId() {
+        return memberGroupId;
     }
-    public void SetRatingBar(double ratingBar) {
-        this.ratingBar = ratingBar;
+    public void setMemberGroupId(int memberGroupId) {
+        this.memberGroupId = memberGroupId;
     }
 }
