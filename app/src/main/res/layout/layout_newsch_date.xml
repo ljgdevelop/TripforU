@@ -6,6 +6,7 @@ for (int i = 0; i < 6; i ++){
     c.setDate(LocalDate.now().plusMonths(i));
     ((LinearLayout)findViewById(R.id.LAYOUT_CC)).addView(c);
 }
+//선택한 날짜 가져오는거는 이 자바 코드 집어넣을때 물어봐
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
