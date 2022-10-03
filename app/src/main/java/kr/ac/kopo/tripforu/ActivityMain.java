@@ -85,8 +85,8 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         });
         
         //일정 추가하기
-        Intent i = new Intent(this, ActivityRecommend.class);
-        startActivity(i);
+        /*Intent i = new Intent(this, ActivityRecommend.class);
+        startActivity(i);*/
     }
     
     /***
