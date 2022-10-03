@@ -7,13 +7,48 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/APP_Accent">
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/APP_Shade">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="58dp"
+            android:orientation="vertical"
+            android:background="@color/APP_Accent"
+            android:id="@+id/LAYOUT_UserShare">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:tag="default"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
+                    android:visibility="visible"
+                    android:src="@drawable/ic_waypoint_pin"
+                    android:id="@+id/IMG_ShareIcon"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:maxLength="20"
+                    android:text="/"
+                    android:textSize="18sp"
+                    android:textColor="@color/TEXT_Black"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,10 +56,14 @@
         android:text="+ 추가하기"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:gravity="right"
+        android:id="@+id/BTN_AddSchedule"
         android:layout_margin="32dp">
 
     </com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/LAYOUT_WayPointSCHContainer"
+        android:orientation="vertical" />
 
 </FrameLayout>
