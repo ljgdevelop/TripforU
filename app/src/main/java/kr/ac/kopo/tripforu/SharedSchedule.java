@@ -18,6 +18,7 @@ public class SharedSchedule {
                           ArrayList<WaypointDescription> descriptionList){
 
         this.scheduleId = scheduleId;
+        this.ownerId = ownerId;
         this.rating = rating;
         if (likes < Byte.MAX_VALUE)
             this.likes = Byte.parseByte(likes + "");
@@ -28,10 +29,8 @@ public class SharedSchedule {
         this.descriptionList = descriptionList;
     }
 
-    public void addWaypoint(int waypoint_id, String waypoint_name, int waypoint_type,
-                            int waypoint_img, String waypoint_content){
-        WaypointDescription w = new WaypointDescription(waypoint_id, waypoint_name, waypoint_type,
-                                                        waypoint_img, waypoint_content);
+    public void addWaypoint(int waypoint_id, int waypoint_img, String waypoint_content){
+        WaypointDescription w = new WaypointDescription(waypoint_id, waypoint_img, waypoint_content);
         descriptionList.add(w);
     }
 
@@ -77,7 +76,7 @@ public class SharedSchedule {
         this.titleImgId = titleImgID;
     }
 
-    public String GettitleText() {
+    public String GetTitleText() {
         return titleText;
     }
     public void SetTitleText(String titleText) {
@@ -100,55 +99,35 @@ public class SharedSchedule {
 
     public class WaypointDescription{
         private int waypointId;
-        private String waypointName;
-        private int waypointType;
         private int waypointImgId;
         private String waypointContent;
 
-        public WaypointDescription(int waypointId, String waypointName, int waypointType,
-                                   int waypointImgId, String waypointContent){
+        public WaypointDescription(int waypointId, int waypointImgId, String waypointContent){
             this.waypointId = waypointId;
-            this.waypointName = waypointName;
-            this.waypointType = waypointType;
             this.waypointImgId = waypointImgId;
             this.waypointContent = waypointContent;
         }
 
-        public int getWaypointId() {
+        public int GetWaypointId() {
             return waypointId;
         }
-        public void setWaypointId(int waypointId) {
+        public void SetWaypointId(int waypointId) {
             this.waypointId = waypointId;
         }
 
-        public String getWaypointName() {
-            return waypointName;
-        }
-        public void setWaypointName(String waypointName) {
-            this.waypointName = waypointName;
-        }
-
-        public int getWaypointType() {
-            return waypointType;
-        }
-        public void setWaypointType(int waypointType) {
-            this.waypointType = waypointType;
-        }
-
-        public int getWaypointImgId() {
+        public int GetWaypointImgId() {
             return waypointImgId;
         }
-        public void setWaypointImgId(int waypointImgId) {
+        public void SetWaypointImgId(int waypointImgId) {
             this.waypointImgId = waypointImgId;
         }
 
-        public String getWaypointContent() {
+        public String GetWaypointContent() {
             return waypointContent;
         }
-        public void setWaypointContent(String waypointContent) {
+        public void SetWaypointContent(String waypointContent) {
             this.waypointContent = waypointContent;
         }
     }
-
 }
 
