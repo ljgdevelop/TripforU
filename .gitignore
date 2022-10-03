@@ -15,4 +15,4 @@
 .cxx
 local.properties
 app/src/main/assets/json/appKey.json
-app/src/main/assets/json/awsS3Key.json
+app/src/main/assets/json/awsS3.json
