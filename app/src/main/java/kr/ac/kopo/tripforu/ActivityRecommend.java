@@ -19,10 +19,8 @@ public class ActivityRecommend extends PageController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommend);
         
-        /*LayoutRecommendBanner banner = new LayoutRecommendBanner(getApplicationContext());
+        LayoutRecommendBanner banner = new LayoutRecommendBanner(getApplicationContext());
         ((ViewGroup)findViewById(R.id.LAYOUT_Recommend_Container)).addView(banner);
     
-        LayoutRecommendBanner smallbanner = new LayoutRecommendBanner(getApplicationContext(), 1);
-        ((ViewGroup)findViewById(R.id.LAYOUT_Recommend_Container)).addView(smallbanner);*/
     }
 }

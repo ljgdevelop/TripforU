@@ -61,9 +61,9 @@ public class JsonController extends AppCompatActivity {
         ScheduleController.syncJsonToObject(JsonController.readJsonArrayFromAssets("json/schedule.json", context),
             Schedule.class.toString());
     
-        saveJson(ScheduleController.memberList, "member", context);
-        saveJson(ScheduleController.waypointList, "waypoints", context);
-        saveJson(ScheduleController.scheduleDictionary.values(), "schedule", context);
+        saveJson(ScheduleController.getInstance().getMemberList(), "member", context);
+        saveJson(ScheduleController.getInstance().getWaypointList(), "waypoints", context);
+        saveJson(ScheduleController.getInstance().getAllScheduleValue(), "schedule", context);
     }
     
     /***

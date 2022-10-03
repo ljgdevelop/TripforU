@@ -45,7 +45,7 @@ class Schedule implements Serializable {
         this.startDate = (String)startDate;
         String[] wpStrSplitted = wayPointString.toString().split("/");
         for (String wpId: wpStrSplitted) {
-            for (Waypoint wp:ScheduleController.waypointList) {
+            for (Waypoint wp:ScheduleController.getInstance().getWaypointList()) {
                 if(wp.GetId() == Integer.parseInt(wpId)){
                     this.wayPointList.add(wp);
                 }

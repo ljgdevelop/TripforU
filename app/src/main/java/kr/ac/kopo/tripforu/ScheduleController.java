@@ -14,11 +14,14 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class ScheduleController extends Activity{
-    public static HashMap<Integer, Schedule> scheduleDictionary = new HashMap<>();
-    public static ArrayList<Member> memberList = new ArrayList<>();
-    public static ArrayList<Waypoint> waypointList = new ArrayList<>();
+    private static ScheduleController instance;
     
-    public final int IC_HOME = 1;
+    private HashMap<Integer, Schedule> scheduleDictionary = new HashMap<>();
+    private ArrayList<Member> memberList = new ArrayList<>();
+    private ArrayList<Waypoint> waypointList = new ArrayList<>();
+    private ArrayList<SharedSchedule> sharedSchedules = new ArrayList<>();
+    
+    public final static int IC_HOME = 1;
     public final static int IC_CIRCLE = 2;
     public final static int IC_SUBWAY = 3;
     public final static int IC_TRAIN = 4;
@@ -27,17 +30,18 @@ public class ScheduleController extends Activity{
     public final static int IC_RESTAURANT = 7;
     public final static int IC_PIN = 8;
     
-    /***
-     * @author 이제경
-     * @param id - 제거할 일정의 ID
-     *
-     *      ID값으로 scheduleDictionary에서 Schedule을 제거하고
-     *      assets/json/schedule.json에 결과를 저장합니다
-     */
-    public static void removeScheduleById(int id, Context context){
-        scheduleDictionary.remove(id);
-        JsonController.saveJson(scheduleDictionary.values(), "schedule", context);
+    
+    private ScheduleController(){
+        instance = this;
     }
+    
+    public static ScheduleController getInstance(){
+        if(instance == null){
+            return new ScheduleController();
+        }else
+            return instance;
+    }
+    
     
     /***
      * @author 이제경
@@ -49,7 +53,7 @@ public class ScheduleController extends Activity{
         try {
             SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
     
-            Collection<Schedule> tempArray = scheduleDictionary.values();
+            Collection<Schedule> tempArray = getInstance().getAllScheduleValue();
             ArrayList<Schedule> result = new ArrayList<>();
     
             //버블 정렬
@@ -97,21 +101,21 @@ public class ScheduleController extends Activity{
                     newObj = gson.fromJson(json.toString(), new TypeToken<ArrayList<Waypoint>>() {
                     }.getType());
                     for (int i = 0; i < newObj.size(); i++)
-                        waypointList.add((Waypoint) newObj.get(i));
+                        getInstance().addWaypointToList((Waypoint) newObj.get(i));
                     break;
                 case "class kr.ac.kopo.tripforu.Member":
             
                     newObj = gson.fromJson(json.toString(), new TypeToken<ArrayList<Member>>() {
                     }.getType());
                     for (int i = 0; i < newObj.size(); i++) {
-                        memberList.add((Member) newObj.get(i));
+                        getInstance().addMemberToList((Member) newObj.get(i));
                     }
                     break;
                 case "class kr.ac.kopo.tripforu.Schedule":
                     newObj = gson.fromJson(json.toString(), new TypeToken<ArrayList<Schedule>>() {}.getType());
                     for (int i = 0; i < newObj.size(); i++) {
                         Schedule newSch = (Schedule) newObj.get(i);
-                        scheduleDictionary.put(newSch.getId(), newSch);
+                        getInstance().addScheduleToDictionary(newSch);
                     }
                     break;
                 default:
@@ -125,11 +129,64 @@ public class ScheduleController extends Activity{
     }
     
     public static Member getMemberByID(int id){
-        for(int i = 0; i < memberList.size(); i ++){
-            if(memberList.get(i).GetId() == id)
-                return memberList.get(i);
+        for(int i = 0; i < getInstance().getMemberList().size(); i ++){
+            if(getInstance().getMemberList().get(i).GetId() == id)
+                return getInstance().getMemberList().get(i);
         }
         return null;
+    }
+    
+    public ArrayList<Schedule> getAllScheduleValue(){
+        return new ArrayList<>(getInstance().scheduleDictionary.values());
+    }
+    public Schedule getScheduleById(int id){
+        return getInstance().scheduleDictionary.get(id);
+    }
+    public HashMap<Integer, Schedule> getAllSchedule(){
+        return getInstance().scheduleDictionary;
+    }
+    public void removeScheduleById(int id){
+        getInstance().scheduleDictionary.remove(id);
+        JsonController.saveJson(getAllScheduleValue(), "schedule", getApplicationContext());
+    }
+    public void removeScheduleBySchedule(Schedule schedule){
+        getInstance().scheduleDictionary.remove(schedule.getId());
+        JsonController.saveJson(getAllScheduleValue(), "schedule", getApplicationContext());
+    }
+    public void addScheduleToDictionary(int id, Schedule schedule){
+        getInstance().scheduleDictionary.put(id, schedule);
+        JsonController.saveJson(getAllScheduleValue(), "schedule", getApplicationContext());
+    }
+    public void addScheduleToDictionary(Schedule schedule){
+        getInstance().scheduleDictionary.put(schedule.getId(), schedule);
+        JsonController.saveJson(getAllScheduleValue(), "schedule", getApplicationContext());
+    }
+    
+    public ArrayList<Member> getMemberList(){
+        return getInstance().memberList;
+    }
+    public void addMemberToList(Member member){
+        getInstance().memberList.add(member);
+    }
+    public void setMemberList(ArrayList<Member> memberList){
+        getInstance().memberList = memberList;
+    }
+    
+    public ArrayList<Waypoint> getWaypointList() {
+        return getInstance().waypointList;
+    }
+    public void addWaypointToList(Waypoint waypoint) {
+        getInstance().waypointList.add(waypoint);
+    }
+    public void setWaypointList(ArrayList<Waypoint> waypointList) {
+        getInstance().waypointList = waypointList;
+    }
+    
+    public ArrayList<SharedSchedule> getSharedSchedules() {
+        return getInstance().sharedSchedules;
+    }
+    public void setSharedSchedules(ArrayList<SharedSchedule> sharedSchedules) {
+        getInstance().sharedSchedules = sharedSchedules;
     }
 }
 

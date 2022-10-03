@@ -52,6 +52,8 @@ public class LayoutRecommendBanner extends LinearLayout {
         fullView.setClipToOutline(true);
         fullView.findViewById(R.id.IMG_RecommandBanner).setClipToOutline(true);
         
+        ScheduleController.getInstance().getSharedSchedules();
+        
         ((TextView)fullView.findViewById(R.id.TEXT_RecommendBannerTitle)).setText(sharedSchedule.getTitleText());
         ((TextView)fullView.findViewById(R.id.TEXT_RecommendBannerDesc)).setText(sharedSchedule.getDesctriptionText());
         ((TextView)fullView.findViewById(R.id.TEXT_RecommendBannerRating)).setText(sharedSchedule.getRating() + "");
