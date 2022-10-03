@@ -17,13 +17,20 @@
             android:orientation="vertical"
             android:clipToPadding="false"
             android:elevation="4dp">
-
-            <ImageButton
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="568px"
-                android:background="#E2E2E2"
-                android:src="@drawable/ic_tempimagesize"
-                android:id="@+id/IMGBTN_TitleImage"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/FRAMELAYOUT_TitleImage">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#E2E2E2"
+                    android:src="@drawable/ic_tempimage"/>
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/IMGBTN_TitleImage"/>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -116,14 +123,21 @@
             android:orientation="vertical"
             android:id="@+id/LAYOUT_UserShare_Waypoint">
         </LinearLayout>
-
-        <ImageButton
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="568px"
-            android:background="#E2E2E2"
-            android:src="@drawable/ic_tempimagesize"
-            android:id="@+id/IMGBTN_ContentImage">
-        </ImageButton>
+            android:id="@+id/FRAMELAYOUT_ContentImage">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#E2E2E2"
+                android:src="@drawable/ic_tempimagesize"/>
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/IMGBTN_ContentImage">
+            </ImageButton>
+        </FrameLayout>
 
         <EditText
             android:layout_width="match_parent"
