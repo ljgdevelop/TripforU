@@ -1,8 +1,12 @@
 package kr.ac.kopo.tripforu;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -13,8 +17,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-public class ScheduleController extends Activity{
+@RequiresApi(api = Build.VERSION_CODES.N)
+public class ScheduleController extends Application {
     private static ScheduleController instance;
+    private Context context;
     
     private HashMap<Integer, Schedule> scheduleDictionary = new HashMap<>();
     private ArrayList<Member> memberList = new ArrayList<>();
@@ -33,6 +39,7 @@ public class ScheduleController extends Activity{
     
     private ScheduleController(){
         instance = this;
+        context = ActivityMain.context;
     }
     
     public static ScheduleController getInstance(){
@@ -97,20 +104,20 @@ public class ScheduleController extends Activity{
             ArrayList<Object> newObj;
             switch (className) {
                 case "class kr.ac.kopo.tripforu.Waypoint":
-            
                     newObj = gson.fromJson(json.toString(), new TypeToken<ArrayList<Waypoint>>() {
                     }.getType());
                     for (int i = 0; i < newObj.size(); i++)
                         getInstance().addWaypointToList((Waypoint) newObj.get(i));
                     break;
+                    
                 case "class kr.ac.kopo.tripforu.Member":
-            
                     newObj = gson.fromJson(json.toString(), new TypeToken<ArrayList<Member>>() {
                     }.getType());
                     for (int i = 0; i < newObj.size(); i++) {
                         getInstance().addMemberToList((Member) newObj.get(i));
                     }
                     break;
+                    
                 case "class kr.ac.kopo.tripforu.Schedule":
                     newObj = gson.fromJson(json.toString(), new TypeToken<ArrayList<Schedule>>() {}.getType());
                     for (int i = 0; i < newObj.size(); i++) {
@@ -118,9 +125,15 @@ public class ScheduleController extends Activity{
                         getInstance().addScheduleToDictionary(newSch);
                     }
                     break;
-                default:
                     
-                    System.out.println("Schedule");
+                case "class kr.ac.kopo.tripforu.SharedSchedule":
+                    newObj = gson.fromJson(json.toString(), new TypeToken<ArrayList<SharedSchedule>>() {}.getType());
+                    for (int i = 0; i < newObj.size(); i++) {
+                        getInstance().addSharedSchedule((SharedSchedule) newObj.get(i));
+                    }
+                    break;
+                    
+                default:
                     break;
             }
         }catch (Exception e) {
@@ -147,19 +160,19 @@ public class ScheduleController extends Activity{
     }
     public void removeScheduleById(int id){
         getInstance().scheduleDictionary.remove(id);
-        JsonController.saveJson(getAllScheduleValue(), "schedule", getApplicationContext());
+        JsonController.saveJson(getAllScheduleValue(), "schedule", context);
     }
     public void removeScheduleBySchedule(Schedule schedule){
         getInstance().scheduleDictionary.remove(schedule.getId());
-        JsonController.saveJson(getAllScheduleValue(), "schedule", getApplicationContext());
+        JsonController.saveJson(getAllScheduleValue(), "schedule", context);
     }
     public void addScheduleToDictionary(int id, Schedule schedule){
         getInstance().scheduleDictionary.put(id, schedule);
-        JsonController.saveJson(getAllScheduleValue(), "schedule", getApplicationContext());
+        JsonController.saveJson(getAllScheduleValue(), "schedule", context);
     }
     public void addScheduleToDictionary(Schedule schedule){
         getInstance().scheduleDictionary.put(schedule.getId(), schedule);
-        JsonController.saveJson(getAllScheduleValue(), "schedule", getApplicationContext());
+        JsonController.saveJson(getAllScheduleValue(), "schedule", context);
     }
     
     public ArrayList<Member> getMemberList(){
@@ -184,6 +197,9 @@ public class ScheduleController extends Activity{
     
     public ArrayList<SharedSchedule> getSharedSchedules() {
         return getInstance().sharedSchedules;
+    }
+    public void addSharedSchedule(SharedSchedule sharedSchedule) {
+        getInstance().sharedSchedules.add(sharedSchedule);
     }
     public void setSharedSchedules(ArrayList<SharedSchedule> sharedSchedules) {
         getInstance().sharedSchedules = sharedSchedules;
