@@ -71,7 +71,7 @@ public class LayoutScheduleTicket extends FrameLayout {
                 this.findViewById(R.id.LAYOUT_TicketBG).setBackground(getResources().getDrawable(R.drawable.background_ticket_new));
         }
         else
-            ShowScheduleInfo(context, ScheduleController.scheduleDictionary.get(scheduleId));
+            ShowScheduleInfo(context, ScheduleController.getInstance().getScheduleById(scheduleId));
     }
     
     /***
@@ -80,7 +80,7 @@ public class LayoutScheduleTicket extends FrameLayout {
      */
     public void SyncTicketText(){
         try {
-            Schedule schedule = ScheduleController.scheduleDictionary.get(scheduleId);
+            Schedule schedule = ScheduleController.getInstance().getScheduleById(scheduleId);
             if (schedule == null)
                 return;
             
