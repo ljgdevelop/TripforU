@@ -1,21 +1,25 @@
 package kr.ac.kopo.tripforu;
 
 import android.graphics.Bitmap;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class SharedSchedule {
-    public int scheduleID;
-    public double rating;
-    public byte likes;
-    public int sharedCount;
-    public Bitmap titleIMG;
-    public String titleText;
-    public String desctiptionText;
-    public ArrayList<WaypointDescription> descriptionList = new ArrayList<>();
+    private int scheduleID;
+    private int ownerID;
+    private double rating;
+    private byte likes;
+    private int sharedCount;
+    private Bitmap titleIMG;
+    private String titleText;
+    private String desctiptionText;
+    private ArrayList<WaypointDescription> descriptionList = new ArrayList<>();
 
-    public SharedSchedule(int scheduleID, double rating, int likes, int sharedCount,
+    public SharedSchedule(int scheduleID, int ownerID, double rating, int likes, int sharedCount,
                           Bitmap titleIMG, String titleText, String desctiptionText,
                           ArrayList<WaypointDescription> descriptionList){
+
         this.scheduleID = scheduleID;
         this.rating = rating;
         if (likes < Byte.MAX_VALUE)
@@ -34,7 +38,70 @@ public class SharedSchedule {
         descriptionList.add(w);
     }
 
-    private class WaypointDescription{
+    public int GetScheduleID() {
+        return scheduleID;
+    }
+    public void SetScheduleID(int scheduleID) {
+        this.scheduleID = scheduleID;
+    }
+
+    public int GetOwnerID() {
+        return ownerID;
+    }
+    public void SetOwnerID(int ownerID) {
+        this.ownerID = ownerID;
+    }
+
+    public Double GetRating() {
+        return rating;
+    }
+    public void SetRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int GetLikes() {
+        return likes;
+    }
+    public void SetLikes(byte likes) {
+        this.likes = likes;
+    }
+
+    public int GetSharedCount() {
+        return sharedCount;
+    }
+    public void SetSharedCount(int sharedCount) {
+        this.sharedCount = sharedCount;
+    }
+
+    public Bitmap GetTitleIMG() {
+        return titleIMG;
+    }
+    public void SetTitleIMG(Bitmap titleIMG) {
+        this.titleIMG = titleIMG;
+    }
+
+    public String GettitleText() {
+        return titleText;
+    }
+    public void SetTitleText(String titleText) {
+        this.titleText = titleText;
+    }
+
+    public String GetDesctiptionText() {
+        return desctiptionText;
+    }
+    public void SetDesctiptionText(String desctiptionText) {
+        this.desctiptionText = desctiptionText;
+    }
+
+    public ArrayList<WaypointDescription> GetDescriptionList() {
+        return descriptionList;
+    }
+    public void SetDescriptionList(ArrayList<WaypointDescription> descriptionList) {
+        this.descriptionList = descriptionList;
+    }
+
+    public class WaypointDescription{
         private int waypoint_id;
         private String waypoint_name;
         private int waypoint_type;
