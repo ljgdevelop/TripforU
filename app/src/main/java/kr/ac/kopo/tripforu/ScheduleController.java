@@ -61,8 +61,8 @@ public class ScheduleController extends Activity{
                 }
                 //버블 삽입
                 for (int i = 0; i < result.size(); i++) {
-                    Date compareDate = transFormat.parse(result.get(i).GetStartDate());
-                    Date newSDate = transFormat.parse(sch.GetStartDate());
+                    Date compareDate = transFormat.parse(result.get(i).getStartDate());
+                    Date newSDate = transFormat.parse(sch.getStartDate());
                     if (compareDate.before(newSDate)) {
                         result.add(i, sch);
                         break;
@@ -111,7 +111,7 @@ public class ScheduleController extends Activity{
                     newObj = gson.fromJson(json.toString(), new TypeToken<ArrayList<Schedule>>() {}.getType());
                     for (int i = 0; i < newObj.size(); i++) {
                         Schedule newSch = (Schedule) newObj.get(i);
-                        scheduleDictionary.put(newSch.GetId(), newSch);
+                        scheduleDictionary.put(newSch.getId(), newSch);
                     }
                     break;
                 default:

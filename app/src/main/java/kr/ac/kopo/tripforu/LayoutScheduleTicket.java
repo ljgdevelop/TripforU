@@ -84,20 +84,20 @@ public class LayoutScheduleTicket extends FrameLayout {
             if (schedule == null)
                 return;
             
-            if(schedule.CheckIsShared())
+            if(schedule.checkIsShared())
                 findViewById(R.id.IMG_IsSharedIcon).setVisibility(VISIBLE);
             
-            ((TextView)findViewById(R.id.TEXT_TicketTitle)).setText(schedule.GetName());
+            ((TextView)findViewById(R.id.TEXT_TicketTitle)).setText(schedule.getName());
             
-            ((TextView)findViewById(R.id.TEXT_TicketStartDate)).setText(getFormattedDate(schedule.GetStartDate(), "MM. dd"));
+            ((TextView)findViewById(R.id.TEXT_TicketStartDate)).setText(getFormattedDate(schedule.getStartDate(), "MM. dd"));
         
-            ((TextView)findViewById(R.id.TEXT_TicketDateDelta)).setText(String.format("%dD", schedule.GetDays()));
+            ((TextView)findViewById(R.id.TEXT_TicketDateDelta)).setText(String.format("%dD", schedule.getDays()));
             
             SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date startDate = transFormat.parse(schedule.GetStartDate());
+            Date startDate = transFormat.parse(schedule.getStartDate());
             Calendar endDate = Calendar.getInstance();
             endDate.setTime(startDate);
-            endDate.add(Calendar.DATE, schedule.GetDays());
+            endDate.add(Calendar.DATE, schedule.getDays());
             StringBuilder formattedDate = new StringBuilder();
             formattedDate.append(endDate.get(Calendar.MONTH) + 1);
             formattedDate.append(". ");
@@ -134,8 +134,8 @@ public class LayoutScheduleTicket extends FrameLayout {
         AppCompatButton btn_schInfoShare = view.findViewById(R.id.BTN_SchInfoShare);
         
         //스케줄 객체의 정보를 자식뷰에 표시
-        String schName = schedule.GetName();
-        String Destination = schedule.GetDestination();
+        String schName = schedule.getName();
+        String Destination = schedule.getDestination();
         if(Destination.contains("시 ")) {
             txt_schUpperLoc.setText(Destination.split("시 ")[0] + "시");
             txt_schSpecLoc.setText(Destination.split("시 ")[1]);
@@ -148,8 +148,8 @@ public class LayoutScheduleTicket extends FrameLayout {
             txt_schUpperLoc.setText("대한민국");
             txt_schSpecLoc.setText(Destination);
         }
-        String schStartDate = getFormattedDate(schedule.GetStartDate(), "MM. dd, EEE");
-        String schDays = schedule.GetDays() + "";
+        String schStartDate = getFormattedDate(schedule.getStartDate(), "MM. dd, EEE");
+        String schDays = schedule.getDays() + "";
         Member member = ScheduleController.getMemberByID(schedule.getMemberGroupId());
         String schCompanyNum = member.GetUserIdList().size() + "";
         txt_schName.setSelected(true);
@@ -220,7 +220,7 @@ public class LayoutScheduleTicket extends FrameLayout {
      */
     private static void AddWaypointInfo(View view, Schedule schedule){
         final LinearLayout wpContainer = view.findViewById(R.id.VIEW_SchInfoWPContainer);
-        for(Waypoint waypoint : schedule.GetWayPointList()){
+        for(Waypoint waypoint : schedule.getWayPointList()){
             View layoutWP = View.inflate(ActivityMain.context, R.layout.layout_scheduleinfo_waypoint, null);
             
             final TextView wpName = (TextView) layoutWP.findViewById(R.id.TEXT_WaypointName);

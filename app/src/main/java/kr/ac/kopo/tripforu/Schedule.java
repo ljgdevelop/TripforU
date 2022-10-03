@@ -55,68 +55,68 @@ class Schedule implements Serializable {
     }
     
     //id 변수의 getter setter
-    public int GetId(){
+    public int getId(){
         return this.id;
     }
     
     //name 변수의 getter setter
-    public String GetName(){
+    public String getName(){
         return this.name;
     }
-    public void SetName(String name){
+    public void setName(String name){
         this.name = name;
     }
     
     //destination 변수의 getter setter
-    public String GetDestination(){
+    public String getDestination(){
         return this.destination;
     }
-    public void SetDestination(String destination){
+    public void setDestination(String destination){
         this.destination = destination;
     }
     
     //days 변수의 getter setter
-    public int GetDays(){
+    public int getDays(){
         return this.days;
     }
-    public void SetDays(byte days){
+    public void setDays(byte days){
         this.days = days;
     }
-    public void SetDays(int days){
+    public void setDays(int days){
         this.days = (byte)days;
     }
     
     //startDate 변수의 getter setter
-    public String GetStartDate(){
+    public String getStartDate(){
         return this.startDate;
     }
-    public void SetStartDate(){
+    public void setStartDate(){
         this.startDate = startDate;
     }
     
     //wayPointId 변수의 getter setter adder remover
-    public ArrayList<Waypoint> GetWayPointList(){
+    public ArrayList<Waypoint> getWayPointList(){
         return this.wayPointList;
     }
-    public Waypoint GetWayPointFromId(int i){
+    public Waypoint getWayPointFromId(int i){
         return this.wayPointList.get(i);
     }
-    public void AddWayPoint(Waypoint waypoint){
+    public void addWayPoint(Waypoint waypoint){
         this.wayPointList.add(waypoint);
     }
-    public void RemoveWayPointById(int id){
+    public void removeWayPointById(int id){
         for(int i = 0; i < wayPointList.size(); i ++){
             if(this.wayPointList.get(i).GetId() == id)
                 this.wayPointList.remove(i);
         }
     }
-    public void ClearWayPoint(){
+    public void clearWayPoint(){
         this.wayPointList.clear();
     }
     
     //isShared 변수의 getter setter
-    public boolean CheckIsShared(){ return this.isShared; }
-    public void SetSharedState(boolean isShared){ this.isShared = isShared; }
+    public boolean checkIsShared(){ return this.isShared; }
+    public void setSharedState(boolean isShared){ this.isShared = isShared; }
     
     public int getMemberGroupId() {
         return memberGroupId;

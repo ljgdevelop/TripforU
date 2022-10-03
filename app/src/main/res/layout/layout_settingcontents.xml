@@ -353,5 +353,14 @@
             android:text="아이콘 출처 : icons8.kr"
             android:layout_marginBottom="8dp"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:textSize="14sp"
+            android:textColor="@color/TEXT_Gray"
+            android:text="여행 이미지 : 사진제공(저작권자)-한국관광공사"
+            android:layout_marginBottom="8dp"/>
+
     </LinearLayout>
 </LinearLayout>
