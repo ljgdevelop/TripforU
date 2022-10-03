@@ -90,6 +90,11 @@ public class SharedSchedule {
         this.descriptionText = descriptionText;
     }
 
+    public ArrayList<WaypointDescription> getDescriptionList() {return descriptionList;}
+    public void setDescriptionList(ArrayList<WaypointDescription> descriptionList){
+        this.descriptionList = descriptionList;
+    }
+
 
     public class WaypointDescription{
         private int waypointId;
