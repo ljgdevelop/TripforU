@@ -20,12 +20,14 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/FRAMELAYOUT_TitleImage">
+                android:id="@+id/FRAMELAYOUT_TitleImage"
+                android:background="#E2E2E2">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#E2E2E2"
-                    android:src="@drawable/ic_tempimage"/>
+                    android:src="@drawable/ic_tempimage"
+                    android:id="@+id/IMGVIEW_TempIMG"
+                    android:scaleType="centerInside"/>
                 <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -131,7 +133,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#E2E2E2"
-                android:src="@drawable/ic_tempimagesize"/>
+                android:src="@drawable/ic_tempimage"
+                android:scaleType="centerInside"/>
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
