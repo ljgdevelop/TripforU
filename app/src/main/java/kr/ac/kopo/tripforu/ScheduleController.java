@@ -5,6 +5,10 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
@@ -17,25 +21,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-@RequiresApi(api = Build.VERSION_CODES.N)
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class ScheduleController extends Application {
     private static ScheduleController instance;
     private Context context;
     
     private HashMap<Integer, Schedule> scheduleDictionary = new HashMap<>();
-    private ArrayList<Member> memberList = new ArrayList<>();
-    private ArrayList<Waypoint> waypointList = new ArrayList<>();
+    private HashMap<Integer, Member> memberList = new HashMap<>();
+    private HashMap<Integer, Waypoint> waypointList = new HashMap<>();
     private ArrayList<SharedSchedule> sharedSchedules = new ArrayList<>();
-    
-    public final static int IC_HOME = 1;
-    public final static int IC_CIRCLE = 2;
-    public final static int IC_SUBWAY = 3;
-    public final static int IC_TRAIN = 4;
-    public final static int IC_CAR = 5;
-    public final static int IC_HOTEL = 6;
-    public final static int IC_RESTAURANT = 7;
-    public final static int IC_PIN = 8;
-    
     
     private ScheduleController(){
         instance = this;
@@ -141,13 +135,87 @@ public class ScheduleController extends Application {
         }
     }
     
-    public static Member getMemberByID(int id){
-        for(int i = 0; i < getInstance().getMemberList().size(); i ++){
-            if(getInstance().getMemberList().get(i).GetId() == id)
-                return getInstance().getMemberList().get(i);
+    /***
+     * @author 이제경
+     *
+     *      ShowScheduleInfo <- 실행 중 관광지 정보를 추가하는 코드
+     */
+    public int getWayPointIcon(Schedule schedule, int index){
+        int imgSrc = -1;
+        switch (schedule.getWayPointList().get(index).GetType()){
+            case 1:
+                imgSrc = R.drawable.ic_waypoint_home;
+                break;
+            case 2:
+                imgSrc = R.drawable.ic_waypoint_circle;
+                break;
+            case 3:
+                imgSrc = R.drawable.ic_waypoint_train;
+                break;
+            case 4:
+                imgSrc = R.drawable.ic_waypoint_subway;
+                break;
+            case 5:
+                imgSrc = R.drawable.ic_waypoint_car;
+                break;
+            case 6:
+                imgSrc = R.drawable.ic_waypoint_hotel;
+                break;
+            case 7:
+                imgSrc = R.drawable.ic_waypoint_restaurant;
+                break;
+            case 8:
+                imgSrc = R.drawable.ic_waypoint_pin;
+                break;
+            default:
+                imgSrc = R.drawable.ic_waypoint_pin;
+                break;
+        }
+        return imgSrc;
+    }
+    
+    public int getWayPointIcon(Waypoint waypoint){
+        int imgSrc = -1;
+        switch (waypoint.GetType()){
+            case 1:
+                imgSrc = R.drawable.ic_waypoint_home;
+                break;
+            case 2:
+                imgSrc = R.drawable.ic_waypoint_circle;
+                break;
+            case 3:
+                imgSrc = R.drawable.ic_waypoint_train;
+                break;
+            case 4:
+                imgSrc = R.drawable.ic_waypoint_subway;
+                break;
+            case 5:
+                imgSrc = R.drawable.ic_waypoint_car;
+                break;
+            case 6:
+                imgSrc = R.drawable.ic_waypoint_hotel;
+                break;
+            case 7:
+                imgSrc = R.drawable.ic_waypoint_restaurant;
+                break;
+            case 8:
+                imgSrc = R.drawable.ic_waypoint_pin;
+                break;
+            default:
+                imgSrc = R.drawable.ic_waypoint_pin;
+                break;
+        }
+        return imgSrc;
+    }
+    
+    public Member getMemberByID(int id){
+        for(int i = 0; i < getInstance().getAllMemberValues().size(); i ++){
+            if(getInstance().getAllMemberValues().get(i).GetId() == id)
+                return getInstance().getAllMemberValues().get(i);
         }
         return null;
     }
+    
     
     public ArrayList<Schedule> getAllScheduleValue(){
         return new ArrayList<>(getInstance().scheduleDictionary.values());
@@ -175,25 +243,34 @@ public class ScheduleController extends Application {
         JsonController.saveJson(getAllScheduleValue(), "schedule", context);
     }
     
-    public ArrayList<Member> getMemberList(){
-        return getInstance().memberList;
+    
+    public ArrayList<Member> getAllMemberValues() {
+        return (ArrayList<Member>) getInstance().memberList.values();
+    }
+    public Member getMemberById(int id){
+        return getInstance().memberList.get(id);
     }
     public void addMemberToList(Member member){
-        getInstance().memberList.add(member);
+        getInstance().memberList.put(member.GetId(), member);
     }
-    public void setMemberList(ArrayList<Member> memberList){
+    public void setMemberList(HashMap<Integer, Member> memberList){
         getInstance().memberList = memberList;
     }
     
-    public ArrayList<Waypoint> getWaypointList() {
-        return getInstance().waypointList;
+    
+    public ArrayList<Waypoint> getAllWaypointValues() {
+        return (ArrayList<Waypoint>) getInstance().waypointList.values();
+    }
+    public Waypoint getWaypointById(int id) {
+        return getInstance().waypointList.get(id);
     }
     public void addWaypointToList(Waypoint waypoint) {
-        getInstance().waypointList.add(waypoint);
+        getInstance().waypointList.put(waypoint.GetId(), waypoint);
     }
-    public void setWaypointList(ArrayList<Waypoint> waypointList) {
+    public void setWaypointList(HashMap<Integer, Waypoint> waypointList) {
         getInstance().waypointList = waypointList;
     }
+    
     
     public ArrayList<SharedSchedule> getSharedSchedules() {
         return getInstance().sharedSchedules;

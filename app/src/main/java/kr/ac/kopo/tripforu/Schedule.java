@@ -1,10 +1,15 @@
 package kr.ac.kopo.tripforu;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 class Schedule implements Serializable {
     private int id;
     private String name;
@@ -45,7 +50,7 @@ class Schedule implements Serializable {
         this.startDate = (String)startDate;
         String[] wpStrSplitted = wayPointString.toString().split("/");
         for (String wpId: wpStrSplitted) {
-            for (Waypoint wp:ScheduleController.getInstance().getWaypointList()) {
+            for (Waypoint wp:ScheduleController.getInstance().getAllWaypointValues()) {
                 if(wp.GetId() == Integer.parseInt(wpId)){
                     this.wayPointList.add(wp);
                 }

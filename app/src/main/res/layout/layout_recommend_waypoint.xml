@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/TEXT_RecommendWPIcon"
+            android:id="@+id/IMG_Recommend_WP_Icon"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:scaleX="0.5"
@@ -21,7 +21,7 @@
             android:src="@drawable/ic_waypoint_pin" />
 
         <TextView
-            android:id="@+id/TEXT_RecommendWPName"
+            android:id="@+id/TEXT_Recommend_WP_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -34,12 +34,14 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/IMG_Recommend_WP_Img"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:src="@drawable/ic_tempimage"
         android:scaleType="centerCrop"/>
 
     <TextView
+        android:id="@+id/TEXT_Recommend_WP_Desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"

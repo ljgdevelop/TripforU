@@ -2,7 +2,9 @@ package kr.ac.kopo.tripforu;
 
 
 import android.content.Context;
+import android.os.Build;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -21,6 +23,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class JsonController extends AppCompatActivity {
     
     /***
@@ -61,8 +64,8 @@ public class JsonController extends AppCompatActivity {
         ScheduleController.syncJsonToObject(JsonController.readJsonArrayFromAssets("json/schedule.json", context),
             Schedule.class.toString());
     
-        saveJson(ScheduleController.getInstance().getMemberList(), "member", context);
-        saveJson(ScheduleController.getInstance().getWaypointList(), "waypoints", context);
+        saveJson(ScheduleController.getInstance().getAllMemberValues(), "member", context);
+        saveJson(ScheduleController.getInstance().getAllWaypointValues(), "waypoints", context);
         saveJson(ScheduleController.getInstance().getAllScheduleValue(), "schedule", context);
     }
     

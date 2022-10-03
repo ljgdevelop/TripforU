@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-@RequiresApi(api = Build.VERSION_CODES.N)
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class LayoutScheduleTicket extends FrameLayout {
     private Context context;
     private int scheduleId;//여행 일정의 ID
@@ -150,7 +150,7 @@ public class LayoutScheduleTicket extends FrameLayout {
         }
         String schStartDate = getFormattedDate(schedule.getStartDate(), "MM. dd, EEE");
         String schDays = schedule.getDays() + "";
-        Member member = ScheduleController.getMemberByID(schedule.getMemberGroupId());
+        Member member = ScheduleController.getInstance().getMemberByID(schedule.getMemberGroupId());
         String schCompanyNum = member.GetUserIdList().size() + "";
         txt_schName.setSelected(true);
         txt_schName.setText("Trip Pass : " + schName);
@@ -237,37 +237,7 @@ public class LayoutScheduleTicket extends FrameLayout {
             }
             wpDisc.setText(disc);
             
-            int imgSrc = -1;
-            switch (waypoint.GetType()){
-                case 1:
-                    imgSrc = R.drawable.ic_waypoint_home;
-                    break;
-                case 2:
-                    imgSrc = R.drawable.ic_waypoint_circle;
-                    break;
-                case 3:
-                    imgSrc = R.drawable.ic_waypoint_train;
-                    break;
-                case 4:
-                    imgSrc = R.drawable.ic_waypoint_subway;
-                    break;
-                case 5:
-                    imgSrc = R.drawable.ic_waypoint_car;
-                    break;
-                case 6:
-                    imgSrc = R.drawable.ic_waypoint_hotel;
-                    break;
-                case 7:
-                    imgSrc = R.drawable.ic_waypoint_restaurant;
-                    break;
-                case 8:
-                    imgSrc = R.drawable.ic_waypoint_pin;
-                    break;
-                default:
-                    imgSrc = R.drawable.ic_waypoint_pin;
-                    break;
-            }
-            wpIcon.setImageResource(imgSrc);
+            wpIcon.setImageResource(ScheduleController.getInstance().getWayPointIcon(waypoint));
             
             wpContainer.addView(layoutWP);
         }

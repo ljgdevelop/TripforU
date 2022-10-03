@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -33,6 +34,7 @@ interface OnBackPressedListener {
     void onBackPressed();
 }
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class PageController extends AppCompatActivity implements OnBackPressedListener{
     private static ArrayList<Page> pageStack = new ArrayList<>();
     public boolean isLoggedIn = false;
@@ -252,7 +254,6 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         }
     }
     
-    @RequiresApi(api = Build.VERSION_CODES.M)
     protected void logoutKakao(){
         UserApiClient.getInstance().logout(throwable -> {
             if(throwable == null){

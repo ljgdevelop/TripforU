@@ -29,7 +29,7 @@ import org.json.simple.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@RequiresApi(api = Build.VERSION_CODES.N)
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class ActivityMain extends PageController implements OnBackPressedListener{
     @Override protected boolean useToolbar(){ return true; }
     
@@ -204,7 +204,6 @@ public class ActivityMain extends PageController implements OnBackPressedListene
      *      목록 화면에 여행 일정들을 표시합니다.
      */
     boolean isSelectMode = false;
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void showScheduleList(){
         LinearLayout container = findViewById(R.id.LAYOUT_SchListContainer);
         container.removeAllViewsInLayout();

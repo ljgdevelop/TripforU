@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/LAYOUT_Recommend_Detail">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,6 +27,7 @@
                     android:background="@color/white">
 
                     <ImageView
+                        android:id="@+id/IMG_Recommend_Detail_TitleImg"
                         android:layout_width="match_parent"
                         android:layout_height="220dp"
                         android:src="@drawable/ic_tempimage"
@@ -38,6 +40,7 @@
                         android:padding="16dp">
 
                         <TextView
+                            android:id="@+id/TEXT_Recommend_Detail_TitleText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="16dp"
@@ -50,6 +53,7 @@
                             android:text="@string/lorem"/>
 
                         <TextView
+                            android:id="@+id/TEXT_Recommend_Detail_TitleDesc"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
@@ -58,7 +62,7 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/IMG_RecommendProfile"
+                    android:id="@+id/IMG_Recommend_Detail_TitleProfile"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
@@ -68,6 +72,7 @@
                     android:background="@drawable/backgrount_profile"/>
 
                 <TextView
+                    android:id="@+id/TEXT_Recommend_Detail_TitleName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

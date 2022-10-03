@@ -1,14 +1,22 @@
 package kr.ac.kopo.tripforu;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 
 public class LayoutRecommendBanner extends LinearLayout {
     private Path path;
@@ -42,13 +50,17 @@ public class LayoutRecommendBanner extends LinearLayout {
         fullView.setClipToOutline(true);
         fullView.findViewById(R.id.IMG_RecommandBanner).setClipToOutline(true);
         
-        ScheduleController.getInstance().getSharedSchedules();
+        //메인 이미지 설정
+        StringBuilder url = new StringBuilder(JsonController.readJsonObjFromAssets("json/awsS3.json", context).get("baseUrl").toString());
+        url.append(sharedSchedule.getTitleImgId());
+        url.append(".jpg");
+        Glide.with(context).load(url.toString()).into((ImageView) fullView.findViewById(R.id.IMG_RecommandBanner));
         
         ((TextView)fullView.findViewById(R.id.TEXT_RecommendBannerTitle)).setText(sharedSchedule.getTitleText());
-        ((TextView)fullView.findViewById(R.id.TEXT_RecommendBannerDesc)).setText(sharedSchedule.getDesctriptionText());
+        ((TextView)fullView.findViewById(R.id.TEXT_RecommendBannerDesc)).setText(sharedSchedule.getDescriptionText());
         ((TextView)fullView.findViewById(R.id.TEXT_RecommendBannerRating)).setText(sharedSchedule.getRating() + "");
-        ((TextView)fullView.findViewById(R.id.TEXT_RecommendBannerSharedCount)).setText(sharedSchedule.getSharedCount());
-        ((TextView)fullView.findViewById(R.id.TEXT_RecommendBannerLikes)).setText(sharedSchedule.getLikes());
+        ((TextView)fullView.findViewById(R.id.TEXT_RecommendBannerSharedCount)).setText(sharedSchedule.getSharedCount() + "");
+        ((TextView)fullView.findViewById(R.id.TEXT_RecommendBannerLikes)).setText(sharedSchedule.getLikes() + "");
     }
     
     @Override
@@ -62,4 +74,6 @@ public class LayoutRecommendBanner extends LinearLayout {
         findViewById(R.id.IMG_RecommandBanner).setClipToOutline(true);
         super.dispatchDraw(canvas);
     }
+    
+    public SharedSchedule getSharedSchedule(){return this.sharedSchedule;}
 }
