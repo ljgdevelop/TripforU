@@ -22,9 +22,6 @@
             android:name=".ActivityRecommend"
             android:exported="false" />
         <activity
-            android:name=".ActivityCreateWaypoint"
-            android:exported="false" />
-        <activity
             android:name=".ActivityLogin"
             android:exported="false" />
         <activity
@@ -61,5 +58,4 @@
             android:name="3l42j6ptcl"
             android:value="8EJqWaRsk95TIKBlK3l9eTIa0CYdFPeIJW4DQDTN" />
     </application>
-
 </manifest>
