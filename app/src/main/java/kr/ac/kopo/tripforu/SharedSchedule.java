@@ -10,7 +10,7 @@ public class SharedSchedule {
     private int sharedCount;
     private int titleImgId;
     private String titleText;
-    private String desctriptionText;
+    private String descriptionText;
     private ArrayList<WaypointDescription> descriptionList = new ArrayList<>();
 
     public SharedSchedule(int scheduleId, int ownerId, double rating, int likes, int sharedCount,
@@ -25,7 +25,7 @@ public class SharedSchedule {
         this.sharedCount = sharedCount;
         this.titleImgId = titleImgId;
         this.titleText = titleText;
-        this.desctriptionText = desctriptionText;
+        this.descriptionText = desctriptionText;
         this.descriptionList = descriptionList;
     }
 
@@ -83,11 +83,11 @@ public class SharedSchedule {
         this.titleText = titleText;
     }
 
-    public String getDesctriptionText() {
-        return desctriptionText;
+    public String getDescriptionText() {
+        return descriptionText;
     }
-    public void setDesctriptionText(String desctriptionText) {
-        this.desctriptionText = desctriptionText;
+    public void setDescriptionText(String descriptionText) {
+        this.descriptionText = descriptionText;
     }
 
 
