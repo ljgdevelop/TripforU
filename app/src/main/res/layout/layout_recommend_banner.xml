@@ -16,7 +16,7 @@
         android:layout_height="200dp"
         android:src="@drawable/ic_tempimage"
         android:scaleType="centerCrop"
-        android:background="@drawable/background_banner_top_15"/>
+        android:background="@drawable/background_banner_top"/>
 
     <LinearLayout
         android:layout_width="match_parent"
