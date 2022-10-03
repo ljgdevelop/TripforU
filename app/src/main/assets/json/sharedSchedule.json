@@ -1,0 +1,21 @@
+{
+  "items": [
+    {
+      "scheduleId": 2,
+      "ownerId": 1,
+      "rating": 5.0,
+      "likes": 0,
+      "sharedCount": 1,
+      "titleImgId": 1,
+      "titleText": "제주 봄여행 추천 콧,",
+      "desctiptionText": "",
+      "descriptionList": [
+        {
+          "waypointId": 100001,
+          "waypointImgId": 1,
+          "waypointContent": "편안하고 좋은 숙소"
+        }
+      ]
+    }
+  ]
+}
