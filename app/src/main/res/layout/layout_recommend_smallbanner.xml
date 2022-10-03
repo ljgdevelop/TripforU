@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="32dp"
@@ -11,19 +11,18 @@
     android:background="@drawable/background_white_rcorner_15">
 
     <ImageView
-        android:id="@+id/IMG_RecommandBanner"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:id="@+id/IMG_RecommendBanner"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
         android:src="@drawable/ic_tempimage"
         android:scaleType="centerCrop"
-        android:background="@drawable/background_banner_top_15"/>
+        android:background="@drawable/background_banner_left_15"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="16dp"
+        android:layout_gravity="center_vertical"
+        android:paddingHorizontal="8dp"
         android:orientation="vertical"
         android:backgroundTint="@color/white">
 
@@ -40,12 +39,12 @@
             android:id="@+id/TEXT_RecommendBannerDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="2"
+            android:maxLines="1"
             android:text="머릿글"
             android:textSize="14sp"/>
 
         <TextView style="@style/divideLine"
-            android:layout_marginVertical="8dp"/>
+            android:layout_marginVertical="4dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
