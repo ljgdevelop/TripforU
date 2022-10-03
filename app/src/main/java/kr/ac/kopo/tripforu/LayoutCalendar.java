@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,6 +66,7 @@ public class LayoutCalendar extends LinearLayout {
         int weeks = 1;
         LocalDate lastDate = localDate.withDayOfMonth(localDate.lengthOfMonth());
         for(int i = 1; i <= lastDate.getDayOfMonth(); i ++){
+            Log.d("TAG", "showCalendarDate: ");
             LocalDate thisDate = LocalDate.of(localDate.getYear(), localDate.getMonthValue(), i);
             if(thisDate.getDayOfWeek().getValue() % 7 == 0)
                 weeks ++;
@@ -123,7 +125,14 @@ public class LayoutCalendar extends LinearLayout {
             gl.columnSpec = GridLayout.spec(column);
             gl.setGravity(Gravity.CENTER_HORIZONTAL);
             gl.bottomMargin = PageController.ConvertDPtoPX(context,16);
-            v.setLayoutParams(gl);
+            v.setLayoutParams(gl);v.post(()->{
+                LinearLayout.LayoutParams gp = (LayoutParams) v.findViewById(R.id.LAYOUT_Calendar_viewport).getLayoutParams();
+                gp.width = ((ViewGroup)v.getParent()).getChildAt(0).getWidth();
+                v.findViewById(R.id.LAYOUT_Calendar_viewport).setLayoutParams(gp);
+
+                Log.d("TAG", "setCalendarDate: "
+                        + v.findViewById(R.id.LAYOUT_Calendar_viewport).getWidth() + "  ;" + v.getLeft());
+            });
             v.setPadding(0,PageController.ConvertDPtoPX(context,16),0,PageController.ConvertDPtoPX(context,8));
             
             

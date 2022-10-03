@@ -35,6 +35,7 @@
             android:textStyle="bold"
             android:textAlignment="center"
             android:text="일"
+            android:background="@color/white"
             android:textColor="@color/TEXT_Red"/>
 
         <TextView
