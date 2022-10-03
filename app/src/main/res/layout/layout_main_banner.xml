@@ -2,77 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="330dp"
-    android:layout_height="wrap_content"
-    android:layout_margin="16dp">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@color/APP_Shade"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="#11000000"
-            android:orientation="horizontal"
-            android:paddingHorizontal="8dp"
-            android:gravity="center_vertical"
-            android:layout_gravity="bottom">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_rating"
-                android:scaleX="0.8"
-                android:scaleY="0.8"/>
-
-            <TextView
-                android:layout_width="72dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="4dp"
-                android:text="0.0"
-                android:textColor="@color/TEXT_Black"
-                android:gravity="center_vertical"
-                android:textSize="14sp"/>
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_share"
-                android:scaleX="0.8"
-                android:scaleY="0.8"
-                app:tint="@color/TEXT_Black" />
-
-            <TextView
-                android:layout_width="72dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="4dp"
-                android:text="0"
-                android:textColor="@color/TEXT_Black"
-                android:gravity="center_vertical"
-                android:textSize="14sp"/>
-        </LinearLayout>
-    </FrameLayout>
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:layout_marginVertical="4dp"
+    android:layout_marginHorizontal="16dp"
+    android:background="@drawable/background_ticket_new"
+    android:elevation="2dp">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:text="@string/lorem"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="16dp"
         android:textStyle="bold"
-        android:textSize="18sp"/>
+        android:textSize="20sp"
+        android:text="일정 추천받기"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="2"
-        android:text="@string/lorem"
-        android:textSize="14sp"
-        android:layout_marginBottom="8dp"/>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_arrow_right"
+        android:scaleType="centerInside"
+        app:tint="@color/TEXT_Gray" />
 </LinearLayout>

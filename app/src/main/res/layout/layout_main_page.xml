@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginHorizontal="16dp"
         android:clipToPadding="false"
+        android:layout_marginHorizontal="8dp"
         android:paddingTop="15dp"
         android:paddingBottom="30dp">
 
@@ -31,12 +31,12 @@
             android:id="@+id/LAYOUT_FirstSchedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"/>
 
-
-        </LinearLayout>
+        <include
+            android:id="@+id/LAYOUT_MainGotoRecommend"
+            layout="@layout/layout_main_banner"/>
     </LinearLayout>
-
 
     <View
         android:layout_width="1dp"

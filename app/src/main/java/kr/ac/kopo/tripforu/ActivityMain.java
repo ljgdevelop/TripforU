@@ -85,8 +85,10 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         });
         
         //일정 추가하기
-        /*Intent i = new Intent(this, ActivityRecommend.class);
-        startActivity(i);*/
+        findViewById(R.id.LAYOUT_MainGotoRecommend).setOnClickListener(view -> {
+            Intent i = new Intent(this, ActivityRecommend.class);
+            startActivity(i);
+        });
     }
     
     /***
@@ -257,7 +259,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
                             isSelectMode = false;
                             for (int i = container.getChildCount() - 1; i >= 0; i--) {
                                 if(getTagFromView(container.getChildAt(i), "isSelected").equals("true")){
-                                    ScheduleController.removeScheduleById(((LayoutScheduleTicket)container.getChildAt(i)).getScheduleId(), getApplicationContext());
+                                    ScheduleController.getInstance().removeScheduleById(((LayoutScheduleTicket)container.getChildAt(i)).getScheduleId());
                                 }
                             }
                             container.removeAllViewsInLayout();

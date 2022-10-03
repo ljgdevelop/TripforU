@@ -19,30 +19,20 @@ public class LayoutRecommendBanner extends LinearLayout {
     /**
      * @author 이제경
      * @param context
-     * @param attrs
-     * @param defStyleAttr
+     * @param size
+     * @param sharedSchedule
      *
      *      커스텀 뷰의 생성자
      */
-    public LayoutRecommendBanner(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
-    }
     public LayoutRecommendBanner(Context context, int size, SharedSchedule sharedSchedule){
         super(context, null, 0);
+        this.context = context;
         this.size = size;
         this.sharedSchedule = sharedSchedule;
         init(context);
     }
-    public LayoutRecommendBanner(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-    public LayoutRecommendBanner(Context context){
-        this(context, null);
-    }
     
     private void init(Context context){
-        this.context = context;
         View fullView = null;
         if(size == 0)
             fullView = inflate(getContext(), R.layout.layout_recommend_banner, this);
@@ -51,6 +41,8 @@ public class LayoutRecommendBanner extends LinearLayout {
         
         fullView.setClipToOutline(true);
         fullView.findViewById(R.id.IMG_RecommandBanner).setClipToOutline(true);
+        
+        ScheduleController.getInstance().getSharedSchedules();
         
         ((TextView)fullView.findViewById(R.id.TEXT_RecommendBannerTitle)).setText(sharedSchedule.getTitleText());
         ((TextView)fullView.findViewById(R.id.TEXT_RecommendBannerDesc)).setText(sharedSchedule.getDesctriptionText());
