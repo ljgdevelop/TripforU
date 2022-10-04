@@ -3,8 +3,11 @@ package kr.ac.kopo.tripforu;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,7 +18,7 @@ import com.bumptech.glide.Glide;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ActivityRecommend extends PageController {
-    LinearLayout recommendDetail;
+    FrameLayout recommendDetail;
     String baseImgUrl = "";
     
     @Override protected boolean useToolbar(){ return true; }
@@ -83,11 +86,15 @@ public class ActivityRecommend extends PageController {
         titleText.setText(sharedSchedule.getTitleText());
         titleDesc.setText(sharedSchedule.getDescriptionText());
         /*여기에 프로필 이미지와 이름 추가할 것.*/
+    
+        //배경의 체인
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) recommendDetail.findViewById(R.id.LAYOUT_Recommend_Detail_Chain1).getLayoutParams();
         
         //일정 정보
+        LinearLayout detailWP = null;
         for (SharedSchedule.WaypointDescription description :banner.getSharedSchedule().getDescriptionList()) {
-            LinearLayout detailWP = (LinearLayout) getLayoutInflater().inflate(R.layout.layout_recommend_waypoint,
-                                                                                        findViewById(R.id.LAYOUT_Recommend_Detail_Container), true);
+            detailWP = (LinearLayout) getLayoutInflater().inflate(R.layout.layout_recommend_waypoint,
+                                                                                        findViewById(R.id.LAYOUT_Recommend_Detail_Container), false);
             ImageView waypointIcon = detailWP.findViewById(R.id.IMG_Recommend_WP_Icon);
             ImageView waypointImg = detailWP.findViewById(R.id.IMG_Recommend_WP_Img);
             TextView waypointName = detailWP.findViewById(R.id.TEXT_Recommend_WP_Name);
@@ -103,7 +110,18 @@ public class ActivityRecommend extends PageController {
             
             waypointName.setText(ScheduleController.getInstance().getWaypointById(description.getWaypointId()).GetName());
             waypointDesc.setText(description.getWaypointContent());
+    
+            ((ViewGroup)findViewById(R.id.LAYOUT_Recommend_Detail_Container)).addView(detailWP);
         }
+        
+        //배경의 체인 높이 적용
+        LinearLayout finalDetailWP = detailWP;
+        detailWP.post(() -> {
+            lp.height = finalDetailWP.getTop();
+            Log.d("TAG", "onClick: " + finalDetailWP.getTop());
+            findViewById(R.id.LAYOUT_Recommend_Detail_Chain1).setLayoutParams(lp);
+            findViewById(R.id.LAYOUT_Recommend_Detail_Chain2).setLayoutParams(lp);
+        });
         
         //페이지 이동
         TabHorizontalScroll(findViewById(R.id.LAYOUT_Recommend), 1);

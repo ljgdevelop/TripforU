@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ActivityRecommend"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/APP_Accent">
 
     <HorizontalScrollView
         android:id="@+id/LAYOUT_Recommend"

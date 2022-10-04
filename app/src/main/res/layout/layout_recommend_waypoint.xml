@@ -3,13 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="32dp"
-    android:elevation="4dp"
+    android:layout_marginHorizontal="32dp"
+    android:layout_marginVertical="8dp"
+    android:elevation="8dp"
     android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/IMG_Recommend_WP_Icon"
@@ -38,12 +41,16 @@
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:src="@drawable/ic_tempimage"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:elevation="8dp"
+        android:background="@color/white"/>
 
     <TextView
         android:id="@+id/TEXT_Recommend_WP_Desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:background="@color/white"
         android:padding="16dp"
         android:textColor="@color/TEXT_Black"
         android:textSize="14sp"

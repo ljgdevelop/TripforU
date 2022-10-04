@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:left="-300000dp"
+        android:right="-300000dp">
+        <rotate
+            android:drawable="@drawable/background_dotted_line_2dp"
+            android:fromDegrees="90"
+            android:toDegrees="90"/>
+    </item>
+</layer-list>

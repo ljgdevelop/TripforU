@@ -334,7 +334,6 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
                 result.append(",");
                 result.append(afterTag.split(",")[1]);
             }
-                
             v.setTag(result);
         }
     }

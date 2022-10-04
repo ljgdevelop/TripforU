@@ -84,11 +84,11 @@ public class ActivityMain extends PageController implements OnBackPressedListene
             }
         });
         
-        /*//일정 추가하기
+        //일정 추가하기
         findViewById(R.id.LAYOUT_MainGotoRecommend).setOnClickListener(view -> {
             Intent i = new Intent(this, ActivityRecommend.class);
             startActivity(i);
-        });*/
+        });
     }
     
     /***

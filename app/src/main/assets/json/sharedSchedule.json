@@ -7,13 +7,23 @@
       "likes": 0,
       "sharedCount": 1,
       "titleImgId": 1,
-      "titleText": "제주 봄여행 추천 코스",
-      "descriptionText": "제주도 여행은 역시? 봄에 가야 제맛이지!",
+      "titleText": "제주 겨울여행 추천 코스",
+      "descriptionText": "제주도 여행은 역시? 겨울에 가야 제맛이지!",
       "descriptionList": [
         {
           "waypointId": 100001,
-          "waypointImgId": 3,
+          "waypointImgId": 5,
           "waypointContent": "편안하고 좋은 숙소"
+        },
+        {
+          "waypointId": 200001,
+          "waypointImgId": 3,
+          "waypointContent": "자연 뷰가 야무진 카페 '나무'"
+        },
+        {
+          "waypointId": 100002,
+          "waypointImgId": 2,
+          "waypointContent": "이쁜 겨울 바다"
         }
       ]
     }

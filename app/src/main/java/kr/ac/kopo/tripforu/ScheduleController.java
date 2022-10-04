@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ScheduleController extends Application {
+    
+    // singleton 객체
     private static ScheduleController instance;
     private Context context;
     
@@ -245,7 +247,7 @@ public class ScheduleController extends Application {
     
     
     public ArrayList<Member> getAllMemberValues() {
-        return (ArrayList<Member>) getInstance().memberList.values();
+        return new ArrayList<>(getInstance().memberList.values());
     }
     public Member getMemberById(int id){
         return getInstance().memberList.get(id);
@@ -259,7 +261,7 @@ public class ScheduleController extends Application {
     
     
     public ArrayList<Waypoint> getAllWaypointValues() {
-        return (ArrayList<Waypoint>) getInstance().waypointList.values();
+        return new ArrayList<>(getInstance().waypointList.values());
     }
     public Waypoint getWaypointById(int id) {
         return getInstance().waypointList.get(id);

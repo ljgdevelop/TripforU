@@ -1,8 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/LAYOUT_Recommend_Detail">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="32dp"
+        android:layout_marginHorizontal="40dp">
+
+        <View
+            android:id="@+id/LAYOUT_Recommend_Detail_Chain1"
+            android:layout_width="10dp"
+            android:layout_height="0dp"
+            android:elevation="4dp"
+            android:background="@drawable/background_vertical_line_dotted"
+            android:backgroundTint="@color/TEXT_Black"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <View
+            android:id="@+id/LAYOUT_Recommend_Detail_Chain2"
+            android:layout_width="10dp"
+            android:layout_height="0dp"
+            android:elevation="4dp"
+            android:layout_gravity="right"
+            android:background="@drawable/background_vertical_line_dotted"
+            android:backgroundTint="@color/TEXT_Black"/>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_margin="32dp"
-                    android:elevation="4dp"
+                    android:elevation="8dp"
                     android:background="@color/white">
 
                     <ImageView
@@ -68,7 +98,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="220dp"
                     android:scaleType="center"
-                    android:elevation="4dp"
+                    android:elevation="12dp"
+                    android:outlineProvider="paddedBounds"
                     android:background="@drawable/backgrount_profile"/>
 
                 <TextView
@@ -77,11 +108,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="288dp"
-                    android:elevation="4dp"
+                    android:elevation="8dp"
                     android:textSize="16sp"
                     android:text="이름"/>
 
             </FrameLayout>
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+</FrameLayout>
