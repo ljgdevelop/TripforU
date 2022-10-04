@@ -2,7 +2,184 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/APP_Accent"
+    android:id="@+id/LAYOUT_NEWSch_Setting">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/APP_Shade">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:orientation="vertical"
+            android:outlineProvider="bounds"
+            android:background="@drawable/background_scheduleinfo_mid">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="인원수"
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="16dp"
+                android:gravity="center|left"
+                android:elevation="32dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                        <ImageButton
+                            android:layout_width="24dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_account"
+                            android:background="@color/white"
+                            android:layout_weight="1.5"/>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="2.5"/>
+
+                        <ImageButton
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_remove"
+                            android:background="@color/white"
+                            android:layout_weight="1"/>
+
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"/>
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="1 명"
+                        android:textSize="24sp"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:layout_weight="1.5"/>
+
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"/>
+
+                    <ImageButton
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_plus"
+                        android:background="@color/white"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="330dp"
+            android:orientation="vertical"
+            android:background="@drawable/background_scheduleinfo_mid">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="이동수단"
+                android:textSize="20sp"
+                android:textColor="@color/black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="16dp"
+                android:gravity="center|left"
+                android:orientation="vertical"
+                android:elevation="32dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="자가용"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:gravity="center"/>
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="16dp"
+                        android:src="@drawable/ic_waypoint_car"
+                        android:background="@color/white">
+
+                    </ImageButton>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="대중교통"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:gravity="center"/>
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_waypoint_subway"
+                        android:layout_marginVertical="16dp"
+                        android:background="@color/white">
+
+                    </ImageButton>
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_waypoint_train"
+                        android:background="@color/white">
+
+                    </ImageButton>
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_waypoint_bus"
+                        android:paddingHorizontal="16dp"
+                        android:background="@color/white"
+                        android:layout_marginVertical="16dp">
+
+                    </ImageButton>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

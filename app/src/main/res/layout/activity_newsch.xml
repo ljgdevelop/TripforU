@@ -8,12 +8,57 @@
     android:id="@+id/FrameLayout_content"
     tools:context=".ActivityNewSchedule">
 
-    <LinearLayout
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/LAYOUT_NewSch_Container">
+        android:id="@+id/LAYOUT_SchScroll"
+        android:scrollX="720dp"
+        android:layout_weight="1"
+        android:overScrollMode="always">
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <include
+                layout="@layout/layout_newsch_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </include>
+
+            <include
+                layout="@layout/layout_newschdule_sch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/LAYOUT_NewSch_Container">
+
+            </LinearLayout>
+
+            <include
+                layout="@layout/layout_newsch_setting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </include>
+
+            <include
+                layout="@layout/layout_newsch_check"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </include>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
 </FrameLayout>
