@@ -352,6 +352,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
         });
     }
 
+    // 시작 셋팅
     private void StartSeting(){
         ImageButton imgbtn_TitleImage = findViewById(R.id.IMGBTN_TitleImage);
         ImageButton imgbtn_ContentImage = findViewById(R.id.IMGBTN_ContentImage);
@@ -375,6 +376,8 @@ public class ActivityUserShare extends PageController implements Cloneable{
         imgbtn_ContentImage.setImageBitmap(null);
         imgbtn_ContentImage.setBackgroundColor(00000000);
     }
+
+    // 삭제 버튼
     private void DeleteButtonSet(View view){
         view.setOnClickListener(new View.OnClickListener() {
             @Override
