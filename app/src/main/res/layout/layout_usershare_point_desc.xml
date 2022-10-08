@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:animateLayoutChanges="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="2dp"/>
@@ -56,19 +57,80 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
 
-                <ImageButton
+                <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:src="@drawable/ic_menu"
+                    android:src="@drawable/ic_tempimage"
                     android:background="@color/transparent"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="16dp"
                     android:visibility="gone"
-                    android:id="@+id/IMGBTN_Handle"/>
+                    android:scaleType="centerInside"
+                    android:id="@+id/IMG_Handle"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="2dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/LAYOUT_PointDescContent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/FRAMELAYOUT_PointDescGroup">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:id="@+id/IMG_PointDescImg3"
+                android:visibility="gone"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:id="@+id/IMG_PointDescImg2"
+                android:visibility="gone"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:id="@+id/IMG_PointDescImg1"
+                android:visibility="gone"/>
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_arrow_left"
+                android:layout_gravity="center_vertical|left"
+                android:id="@+id/IMGBTN_PointDescLeft"
+                android:background="#00000000"
+                android:scaleType="fitCenter"
+                android:visibility="gone"/>
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_arrow_right"
+                android:layout_gravity="center_vertical|right"
+                android:id="@+id/IMGBTN_PointDescRight"
+                android:background="#00000000"
+                android:scaleType="fitCenter"
+                android:visibility="gone"/>
+        </FrameLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="top|left"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
+            android:textSize="18sp"
+            android:textColor="@color/TEXT_Black"
+            android:id="@+id/TEXT_PointDescText"
+            android:visibility="gone"/>
+    </LinearLayout>
 </LinearLayout>
