@@ -29,7 +29,7 @@ public class SharedSchedule {
         this.descriptionList = descriptionList;
     }
 
-    public void addWaypoint(int waypoint_id, ArrayList<Integer> waypoint_img, String waypoint_content){
+    public void addWaypoint(int waypoint_id, int[] waypoint_img, String waypoint_content){
         WaypointDescription w = new WaypointDescription(waypoint_id, waypoint_img, waypoint_content);
         descriptionList.add(w);
     }
@@ -98,10 +98,10 @@ public class SharedSchedule {
 
     public class WaypointDescription{
         private int waypointId;
-        private ArrayList<Integer> waypointImgId = new ArrayList<>();
+        private int[] waypointImgId = new int[3];
         private String waypointContent;
 
-        public WaypointDescription(int waypointId, ArrayList<Integer> waypointImgId, String waypointContent){
+        public WaypointDescription(int waypointId, int[] waypointImgId, String waypointContent){
             this.waypointId = waypointId;
             this.waypointImgId = waypointImgId;
             this.waypointContent = waypointContent;
@@ -114,10 +114,10 @@ public class SharedSchedule {
             this.waypointId = waypointId;
         }
 
-        public ArrayList<Integer> getWaypointImgId() {
+        public int[] getWaypointImgId() {
             return waypointImgId;
         }
-        public void setWaypointImgId(ArrayList<Integer> waypointImgId) {
+        public void setWaypointImgId(int[] waypointImgId) {
             this.waypointImgId = waypointImgId;
         }
 
