@@ -1,8 +1,10 @@
 package kr.ac.kopo.tripforu;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -108,5 +110,37 @@ public class LayoutScheduleSearch extends PageController{
                 }
                 break;
         }
+    }
+    //검색창 버튼 클릭 기능
+    public void searchLayoutBtn(){
+        LayoutScheduleSearch layoutScheduleSearch = new LayoutScheduleSearch();
+        layoutScheduleSearch.textChangedListener(ScheduleController.getSortedScheduleByDate());
+        TextView text_TitleTextCriternion = findViewById(R.id.TEXT_TitleTextCriternion);
+        TextView text_DestinationCriternion = findViewById(R.id.TEXT_DestinationCriternion);
+        setTagToView(text_TitleTextCriternion, "state", true);
+        setTagToView(text_DestinationCriternion, "state", false);
+        fullView.findViewById(R.id.IMGBTN_SearchClose).setOnClickListener(view -> findViewById(R.id.LAYOUT_SchSearch).setVisibility(View.GONE));
+        text_TitleTextCriternion.setOnClickListener(view -> {
+            Log.d("TAG", "searchIconClick: 123");
+            if (getTagFromView(text_DestinationCriternion, "state").equals("true")){
+                setTagToView(text_TitleTextCriternion, "state", true);
+                setTagToView(text_DestinationCriternion, "state", false);
+                text_TitleTextCriternion.setTextColor(Color.parseColor("#527821"));
+                text_DestinationCriternion.setTextColor(Color.parseColor("#5E5E5E"));
+                findViewById(R.id.TEXT_TitleTextUnderline).setBackgroundResource(R.color.APP_Secondary);
+                findViewById(R.id.TEXT_DestinationUnderline).setBackgroundColor(Color.parseColor("#4DD7DDE9"));
+            }
+        });
+        text_DestinationCriternion.setOnClickListener(view -> {
+            Log.d("TAG", "searchIconClick: 123123");
+            if (getTagFromView(text_TitleTextCriternion, "state").equals("true")){
+                setTagToView(text_TitleTextCriternion, "state", false);
+                setTagToView(text_DestinationCriternion, "state", true);
+                text_TitleTextCriternion.setTextColor(Color.parseColor("#5E5E5E"));
+                text_DestinationCriternion.setTextColor(Color.parseColor("#527821"));
+                findViewById(R.id.TEXT_TitleTextUnderline).setBackgroundColor(Color.parseColor("#4DD7DDE9"));
+                findViewById(R.id.TEXT_DestinationUnderline).setBackgroundResource(R.color.APP_Secondary);
+            }
+        });
     }
 }
