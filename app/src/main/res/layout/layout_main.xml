@@ -38,8 +38,14 @@
                 layout="@layout/layout_main_account"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
         </LinearLayout>
     </HorizontalScrollView>
+    <include
+        android:id="@+id/LAYOUT_SchSearch"
+        layout="@layout/layout_schedule_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <LinearLayout
         android:id="@+id/LAYOUT_TABBUTTON"
