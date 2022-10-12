@@ -2,7 +2,85 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/APP_Accent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="여행 정보 입력"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/TEXT_Black"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="28dp"/>
+    <TextView
+        style="@style/divideLine"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="여행 제목"
+        android:textSize="18sp"
+        android:textColor="@color/TEXT_Black"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|left"
+        android:layout_margin="16dp"
+        android:hint="여행 제목을 입력해 주세요."
+        android:textSize="18sp"
+        android:textColor="@color/TEXT_Black"
+        android:id="@+id/EDT_NewSch_Title"
+        android:background="@null"/>
+    <TextView
+        style="@style/divideLine"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="20dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:text="인원 선택"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/TEXT_Black"/>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right|center">
+            <ImageButton
+                android:layout_width="36dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center"
+                android:background="@null"
+                android:id="@+id/BTN_NewSch_Minus"
+                android:src="@drawable/ic_minus"/>
+            <TextView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:text="1"
+                android:gravity="center"
+                android:textColor="@color/TEXT_Black"
+                android:textSize="18sp"
+                android:id="@+id/TEXT_NewSch_Strength"/>
+            <ImageButton
+                android:layout_width="36dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center"
+                android:background="@null"
+                android:id="@+id/BTN_NewSch_Plus"
+                android:src="@drawable/ic_plus"/>
+        </LinearLayout>
+    </FrameLayout>
+    <TextView
+        style="@style/divideLine"/>
 </LinearLayout>
