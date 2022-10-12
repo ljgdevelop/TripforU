@@ -115,8 +115,8 @@ public class LayoutScheduleSearch extends PageController{
     public void searchLayoutBtn(){
         LayoutScheduleSearch layoutScheduleSearch = new LayoutScheduleSearch();
         layoutScheduleSearch.textChangedListener(ScheduleController.getSortedScheduleByDate());
-        TextView text_TitleTextCriternion = findViewById(R.id.TEXT_TitleTextCriternion);
-        TextView text_DestinationCriternion = findViewById(R.id.TEXT_DestinationCriternion);
+        TextView text_TitleTextCriternion = fullView.findViewById(R.id.TEXT_TitleTextCriternion);
+        TextView text_DestinationCriternion = fullView.findViewById(R.id.TEXT_DestinationCriternion);
         setTagToView(text_TitleTextCriternion, "state", true);
         setTagToView(text_DestinationCriternion, "state", false);
         fullView.findViewById(R.id.IMGBTN_SearchClose).setOnClickListener(view -> findViewById(R.id.LAYOUT_SchSearch).setVisibility(View.GONE));
