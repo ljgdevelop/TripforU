@@ -197,7 +197,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
                     public void onClick(View view) {
                         LayoutDialog dialog = new LayoutDialog(getApplicationContext());
                         dialog.setDialogTitle("작성을 취소하시겠습니까?");
-                        dialog.setDialogMessage("작성하신 내용은 삭제됩니다.");
+                        dialog.setDialogMessage("이 작업은 되돌릴 수 없습니다.");
                         dialog.addButton(R.color.TEXT_Gray, "취소").setOnClickListener(v -> dialog.closeDialog());
                         dialog.addButton(R.color.Negative, "삭제").setOnClickListener(v -> {
                             dialog.closeDialog();
