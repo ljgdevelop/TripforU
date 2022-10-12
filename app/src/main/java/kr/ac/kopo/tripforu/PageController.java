@@ -28,7 +28,11 @@ import com.bumptech.glide.Glide;
 import com.kakao.sdk.auth.AuthApiClient;
 import com.kakao.sdk.user.UserApiClient;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 interface OnBackPressedListener {
     void onBackPressed();
@@ -351,5 +355,137 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         if(v.getTag() == null || !v.getTag().toString().contains(tag))
             return "";
         return v.getTag().toString().split("\"" + tag + "\":")[1].split(",")[0];
+    }
+
+    /***
+     * @author 이제경
+     * @param pastSchContainer - 지난 일정 컨테이너
+     * @param remainSchContainer - 남은 일정 컨테이너
+     *      목록 화면에 여행 일정들을 표시합니다.
+     */
+    boolean isSelectMode = false;
+    protected void showScheduleList(LinearLayout pastSchContainer, LinearLayout remainSchContainer){
+        pastSchContainer.removeAllViewsInLayout();
+        remainSchContainer.removeAllViewsInLayout();
+        int thisYear = 9999;
+        int mostCloseScheduleId = 0;
+        long mostCloseTime = 0;
+        for (Schedule sch:ScheduleController.getSortedScheduleByDate()) {
+            LayoutScheduleTicket newTicket = new LayoutScheduleTicket(ActivityMain.context);
+            newTicket.setScheduleId(sch.getId());
+            remainSchedule(sch, pastSchContainer, remainSchContainer, newTicket);
+
+            //년도가 바뀔때마나 표시
+            int scheduleYear = Integer.parseInt(sch.getStartDate().split("-")[0]);
+            if(thisYear > scheduleYear){
+                thisYear = scheduleYear;
+                newTicket.findViewById(R.id.TEXT_TicketDateHeader).setVisibility(View.VISIBLE);
+                ((TextView)newTicket.findViewById(R.id.TEXT_TicketDateHeader)).setText(thisYear + "년");
+            }
+
+            try {
+                SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = transFormat.parse(sch.getStartDate());
+                Date now = new Date();
+
+                if(now.getTime() - date.getTime() < mostCloseTime){
+                    mostCloseTime = now.getTime() - date.getTime();
+                    mostCloseScheduleId = sch.getId();
+                }
+
+            }catch (Exception e){
+                Log.e("TAG", "showScheduleList: ", e);
+            }
+
+            //길게 터치시 선택모드 진입
+            newTicket.setOnLongClickListener(view -> {
+                if(!isSelectMode) {
+                    isSelectMode = true;
+                    setTagToView(pastSchContainer, "isSelectMode", true);
+                    setTagToView(newTicket, "isSelected", true);
+                    newTicket.findViewById(R.id.LAYOUT_TicketBG).setBackground(getResources().getDrawable(R.drawable.background_ticket_selected));
+
+                    //선택모드 진입 시 취소, 삭제 버튼 출력
+                    SetAppBarAction(0, true, "취소").setOnClickListener(v -> cancelSelectMode());
+                    SetAppBarAction(2, false, "삭제").setOnClickListener(v -> {
+                        //삭제 확인 출력
+                        LayoutDialog dialog = new LayoutDialog(getApplicationContext());
+                        dialog.setDialogTitle("삭제하시겠습니까?");
+                        dialog.setDialogMessage("이 작업은 되돌릴 수 없습니다.");
+                        dialog.addButton(R.color.TEXT_Gray, "취소").setOnClickListener(v2 -> dialog.closeDialog());
+                        dialog.addButton(R.color.TEXT_Red, "삭제").setOnClickListener(v2 -> {
+                            setTagToView(pastSchContainer, "isSelectMode", false);
+                            isSelectMode = false;
+                            for (int i = pastSchContainer.getChildCount() - 1; i >= 0; i--) {
+                                if(getTagFromView(pastSchContainer.getChildAt(i), "isSelected").equals("true")){
+                                    ScheduleController.getInstance().removeScheduleById(((LayoutScheduleTicket)pastSchContainer.getChildAt(i)).getScheduleId());
+                                }
+                            }
+                            pastSchContainer.removeAllViewsInLayout();
+                            showScheduleList(pastSchContainer, remainSchContainer);
+                            ResetAppBar();
+                        });
+                    });
+                }
+                return true;
+            });
+        }
+    }
+
+    /***
+     * @author 이제경
+     *
+     *      선택 모드를 해제합니다.
+     */
+    public void cancelSelectMode(){
+        LinearLayout container = findViewById(R.id.LAYOUT_SchListContainer);
+        setTagToView(container, "isSelectMode", false);
+        isSelectMode = false;
+        for (int i = 0; i < container.getChildCount(); i ++) {
+            setTagToView(container.getChildAt(i), "isSelected", false);
+            container.getChildAt(i).findViewById(R.id.LAYOUT_TicketBG).setBackground(getResources().getDrawable(R.drawable.background_ticket_new));
+        }
+        ResetAppBar();
+    }
+
+    /***
+     * @author 정다빈
+     * @param schedule - 생성할 뷰의 스케쥴
+     * @param pastSchContainer - 지난 일정 담는 컨테이너 LinearLayout
+     * @param remainSchContainer - 남은 일정 담는 컨테이너 LinearLayout
+     * @param newTicket - 추가될 뷰
+     */
+    private void remainSchedule(Schedule schedule, LinearLayout pastSchContainer,
+                                LinearLayout remainSchContainer, LayoutScheduleTicket newTicket){
+        //메인 화면에 남은 일정 표시
+        Date date = new Date();
+        date = Calendar.getInstance().getTime();
+        SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.getDefault());
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MM", Locale.getDefault());
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+        int dayDate = Integer.parseInt(dayFormat.format(date));
+        int monthDate = Integer.parseInt(monthFormat.format(date));
+        int yearDate = Integer.parseInt(yearFormat.format(date));
+        String startDate = schedule.getStartDate();
+        int year = Integer.parseInt(startDate.substring(0,4));
+        int month = Integer.parseInt(startDate.substring(5,7));
+        int day = Integer.parseInt(startDate.substring(8,10));
+        if (year > yearDate){
+            remainSchContainer.addView(newTicket);
+        }else if (year < yearDate){
+            pastSchContainer.addView(newTicket);
+        } else {
+            if (month > monthDate){
+                remainSchContainer.addView(newTicket);
+            }else if (month < monthDate){
+                pastSchContainer.addView(newTicket);
+            }else{
+                if (day > dayDate){
+                    remainSchContainer.addView(newTicket);
+                }else {
+                    pastSchContainer.addView(newTicket);
+                }
+            }
+        }
     }
 }
