@@ -93,8 +93,12 @@ public class ActivityUserShare extends PageController implements Cloneable{
                 try {
                     ClipData clipData = data.getClipData();
                     if (requestCode == 0){
+                        ImageView img_TitleImage = findViewById(R.id.IMG_TitleImage);
                         ImageButton imgbtn_TitleImage = findViewById(R.id.IMGBTN_TitleImage);
-                        imgbtn_TitleImage.setImageBitmap(BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData())));
+                        img_TitleImage.setImageBitmap(BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData())));
+                        imgbtn_TitleImage.setImageBitmap(null);
+                        imgbtn_TitleImage.setBackgroundColor(00000000);
+                        img_TitleImage.bringToFront();
                     }else if(requestCode == 1){
                         if (clipData.getItemCount() > 3){
                             Toast.makeText(ActivityMain.context, "사진은 3장 이하로만 선택 가능합니다.",
@@ -137,8 +141,12 @@ public class ActivityUserShare extends PageController implements Cloneable{
             }
             else if (resultCode == RESULT_CANCELED){
                 if (requestCode == 0){
-                    ImageButton imgbtn_TitleImage = findViewById(R.id.IMGBTN_TitleImage);
-                    imgbtn_TitleImage.setImageBitmap(null);
+                    ImageView img_TitleImage = findViewById(R.id.IMG_TitleImage);
+                    img_TitleImage.setImageBitmap(null);
+                    ImageButton imgbtnTitleImage = findViewById(R.id.IMGBTN_TitleImage);
+                    imgbtnTitleImage.bringToFront();
+                    imgbtnTitleImage.setImageResource(R.drawable.ic_tempimage);
+                    imgbtnTitleImage.setBackgroundColor(Color.parseColor("#E2E2E2"));
                 }else if(requestCode == 1){
                     findViewById(R.id.IMGBTN_ContentImageRight).setVisibility(View.GONE);
                     findViewById(R.id.IMGBTN_ContentImageLeft).setVisibility(View.GONE);
@@ -541,13 +549,13 @@ public class ActivityUserShare extends PageController implements Cloneable{
 
     // 시작 셋팅
     private void StartSeting(){
+        ImageView img_TitleImage = findViewById(R.id.IMG_TitleImage);
         ImageButton imgbtn_TitleImage = findViewById(R.id.IMGBTN_TitleImage);
         ImgLayoutSize(findViewById(R.id.FRAMELAYOUT_TitleImage));
         ImgLayoutSize(findViewById(R.id.FRAMELAYOUT_ContentImageGroup));
 
         //이미지 초기화
-        imgbtn_TitleImage.setImageBitmap(null);
-        imgbtn_TitleImage.setBackgroundColor(00000000);
+        img_TitleImage.setImageBitmap(null);
         ContentImageReset();
 
         setTagToView(imgbtn_TitleImage, "ImgBtnId", "0");

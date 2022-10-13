@@ -17,21 +17,25 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:clipToPadding="false"
-            android:elevation="4dp">
+            android:elevation="4dp"
+            android:background="@color/APP_Accent">
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/FRAMELAYOUT_TitleImage"
-                android:background="#E2E2E2">
+                android:background="@color/APP_Accent">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_tempimage"
-                    android:scaleType="centerInside"/>
+                    android:scaleType="fitCenter"
+                    android:id="@+id/IMG_TitleImage"
+                    android:visibility="visible"/>
                 <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/IMGBTN_TitleImage"/>
+                    android:id="@+id/IMGBTN_TitleImage"
+                    android:src="@drawable/ic_tempimage"
+                    android:background="#E2E2E2"/>
             </FrameLayout>
 
             <LinearLayout
@@ -133,19 +137,19 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerInside"
+                    android:scaleType="fitCenter"
                     android:id="@+id/IMG_ContentImage3"
                     android:visibility="gone"/>
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerInside"
+                    android:scaleType="fitCenter"
                     android:id="@+id/IMG_ContentImage2"
                     android:visibility="gone"/>
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerInside"
+                    android:scaleType="fitCenter"
                     android:id="@+id/IMG_ContentImage1"
                     android:visibility="gone"/>
                 <ImageButton
