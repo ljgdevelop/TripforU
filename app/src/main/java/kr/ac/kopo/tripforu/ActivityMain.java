@@ -53,7 +53,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         checkFirstRun();
         
         //layout_main_schedule_list 화면에 여행 일정 목록 표시
-        showScheduleList();
+        showScheduleList(findViewById(R.id.LAYOUT_SchListContainer), findViewById(R.id.LAYOUT_FirstSchedule));
         
         //탭 페이지 설정
         settingTabPage();
@@ -180,103 +180,6 @@ public class ActivityMain extends PageController implements OnBackPressedListene
                 ResetAppBar();
             });
         }
-    }
-    
-    /***
-     * @author 이제경
-     *
-     *      선택 모드를 해제합니다.
-     */
-    private void cancelSelectMode(){
-        LinearLayout container = findViewById(R.id.LAYOUT_SchListContainer);
-        setTagToView(container, "isSelectMode", false);
-        isSelectMode = false;
-        for (int i = 0; i < container.getChildCount(); i ++) {
-            setTagToView(container.getChildAt(i), "isSelected", false);
-            container.getChildAt(i).findViewById(R.id.LAYOUT_TicketBG).setBackground(getResources().getDrawable(R.drawable.background_ticket_new));
-        }
-        ResetAppBar();
-    }
-    
-    /***
-     * @author 이제경
-     *
-     *      목록 화면에 여행 일정들을 표시합니다.
-     */
-    boolean isSelectMode = false;
-    private void showScheduleList(){
-        LinearLayout container = findViewById(R.id.LAYOUT_SchListContainer);
-        container.removeAllViewsInLayout();
-        int thisYear = 9999;
-        int mostCloseScheduleId = 0;
-        long mostCloseTime = 0;
-        for (Schedule sch:ScheduleController.getSortedScheduleByDate()) {
-            LayoutScheduleTicket newTicket = new LayoutScheduleTicket(getApplicationContext());
-            newTicket.setScheduleId(sch.getId());
-            container.addView(newTicket);
-            
-            //년도가 바뀔때마나 표시
-            int scheduleYear = Integer.parseInt(sch.getStartDate().split("-")[0]);
-            if(thisYear > scheduleYear){
-                thisYear = scheduleYear;
-                newTicket.findViewById(R.id.TEXT_TicketDateHeader).setVisibility(View.VISIBLE);
-                ((TextView)newTicket.findViewById(R.id.TEXT_TicketDateHeader)).setText(thisYear + "년");
-            }
-    
-            try {
-                SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = transFormat.parse(sch.getStartDate());
-                Date now = new Date();
-                
-                if(now.getTime() - date.getTime() < mostCloseTime){
-                    mostCloseTime = now.getTime() - date.getTime();
-                    mostCloseScheduleId = sch.getId();
-                }
-                
-            }catch (Exception e){
-                Log.e("TAG", "showScheduleList: ", e);
-            }
-            
-            //길게 터치시 선택모드 진입
-            newTicket.setOnLongClickListener(view -> {
-                if(!isSelectMode) {
-                    isSelectMode = true;
-                    setTagToView(container, "isSelectMode", true);
-                    setTagToView(newTicket, "isSelected", true);
-                    newTicket.findViewById(R.id.LAYOUT_TicketBG).setBackground(getResources().getDrawable(R.drawable.background_ticket_selected));
-                    
-                    //선택모드 진입 시 취소, 삭제 버튼 출력
-                    SetAppBarAction(0, true, "취소").setOnClickListener(v -> cancelSelectMode());
-                    SetAppBarAction(2, false, "삭제").setOnClickListener(v -> {
-                        //삭제 확인 출력
-                        LayoutDialog dialog = new LayoutDialog(getApplicationContext());
-                        dialog.setDialogTitle("삭제하시겠습니까?");
-                        dialog.setDialogMessage("이 작업은 되돌릴 수 없습니다.");
-                        dialog.addButton(R.color.TEXT_Gray, "취소").setOnClickListener(v2 -> dialog.closeDialog());
-                        dialog.addButton(R.color.TEXT_Red, "삭제").setOnClickListener(v2 -> {
-                            setTagToView(container, "isSelectMode", false);
-                            isSelectMode = false;
-                            for (int i = container.getChildCount() - 1; i >= 0; i--) {
-                                if(getTagFromView(container.getChildAt(i), "isSelected").equals("true")){
-                                    ScheduleController.getInstance().removeScheduleById(((LayoutScheduleTicket)container.getChildAt(i)).getScheduleId());
-                                }
-                            }
-                            container.removeAllViewsInLayout();
-                            showScheduleList();
-                            ResetAppBar();
-                        });
-                    });
-                }
-                return true;
-            });
-        }
-        if(mostCloseScheduleId == 0)
-            return;
-        
-        //메인 화면에 가장 가까운 여행 일정 표시
-        LayoutScheduleTicket newTicket = new LayoutScheduleTicket(getApplicationContext());
-        newTicket.setScheduleId(mostCloseScheduleId);
-        ((LinearLayout)findViewById(R.id.LAYOUT_FirstSchedule)).addView(newTicket);
     }
     
     /***
