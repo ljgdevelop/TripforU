@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/APP_Accent">
+    android:background="@color/APP_Accent"
+    android:id="@+id/LAYOUT_NEWSch_Setting">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
