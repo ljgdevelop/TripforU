@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/android/TripforU/app/src/main/res/drawable-v23/background_dotted_line_2dp.xml" value="0.2145" />
         <entry key="..\:/TripforU/app/src/main/res/drawable/background_stroke.xml" value="0.1685" />
         <entry key="..\:/TripforU/app/src/main/res/drawable/background_stroke_2dp.xml" value="0.1685" />
         <entry key="..\:/TripforU/app/src/main/res/drawable/background_stroke_2dp_clicked.xml" value="0.1235" />
@@ -29,10 +28,12 @@
         <entry key="..\:/TripforU/app/src/main/res/drawable/ic_photo.xml" value="0.1685" />
         <entry key="..\:/TripforU/app/src/main/res/drawable/ic_photosize.xml" value="0.1685" />
         <entry key="..\:/TripforU/app/src/main/res/drawable/ic_plussize.xml" value="0.1685" />
+        <entry key="..\:/TripforU/app/src/main/res/drawable/ic_remove.xml" value="0.146" />
         <entry key="..\:/TripforU/app/src/main/res/drawable/ic_setting.xml" value="0.1685" />
         <entry key="..\:/TripforU/app/src/main/res/drawable/ic_share.xml" value="0.1235" />
         <entry key="..\:/TripforU/app/src/main/res/drawable/ic_tempimagecolor.xml" value="0.1685" />
         <entry key="..\:/TripforU/app/src/main/res/drawable/ic_tempimagesize.xml" value="0.1685" />
+        <entry key="..\:/TripforU/app/src/main/res/drawable/ic_waypoint_bus.xml" value="0.146" />
         <entry key="..\:/TripforU/app/src/main/res/drawable/ic_waypoint_hotel.xml" value="0.1685" />
         <entry key="..\:/TripforU/app/src/main/res/drawable/ic_waypoint_restaurant.xml" value="0.1505" />
         <entry key="..\:/TripforU/app/src/main/res/drawable/ic_waypoint_subway.xml" value="0.1505" />
@@ -71,6 +72,7 @@
         <entry key="..\:/TripforU/app/src/main/res/layout/layout_usershare_point_desc.xml" value="0.264" />
         <entry key="..\:/TripforU/app/src/main/res/layout/layout_usershare_point_disc.xml" value="0.264" />
         <entry key="..\:/TripforU/app/src/main/res/layout/layout_usersharedetail.xml" value="0.1125" />
+        <entry key="..\:/android/TripforU/app/src/main/res/drawable-v23/background_dotted_line_2dp.xml" value="0.2145" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2495" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_banner_left_15.xml" value="0.2145" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_banner_top.xml" value="0.2145" />
@@ -82,9 +84,8 @@
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_roundcorner_15.xml" value="0.2495" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_scheduleinfo_top.xml" value="0.218" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_ticket.xml" value="0.21" />
-        <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_ticket_new.xml" value="0.33" />
-        <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_ticket_selected.xml" value="0.2145" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_ticket_new.xml" value="0.22" />
+        <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_ticket_selected.xml" value="0.2145" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_ticket_top.xml" value="0.2495" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_vertical_line.xml" value="0.2555" />
         <entry key="..\:/android/TripforU/app/src/main/res/drawable/background_vertical_line_dotted.xml" value="0.2325" />
@@ -171,18 +172,16 @@
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_recommend_banner.xml" value="0.33" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_recommend_description.xml" value="0.33" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_recommend_smallbanner.xml" value="0.3619791666666667" />
-        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_recommend_trip_banner.xml" value="0.5" />
-        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_recommend_waypoint.xml" value="0.33" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_recommend_trip_banner.xml" value="0.3016304347826087" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_recommend_waypoint.xml" value="0.33" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_recycleviewschedule.xml" value="0.20729166666666668" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_scheduleinfo.xml" value="0.20243433696348495" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_scheduleinfo_waypoint.xml" value="0.3619791666666667" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_scheduleticket.xml" value="0.3564102564102564" />
-        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_settingcontents.xml" value="0.33" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_settingcontents.xml" value="0.2957427536231884" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_slidebutton.xml" value="0.18489583333333334" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_usershare_point_disc.xml" value="0.3619791666666667" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_waypointsearch.xml" value="0.3619791666666667" />
-        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_settingcontents.xml" value="0.2957427536231884" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_waypointsettime.xml" value="0.2957427536231884" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/page_main.xml" value="0.2957427536231884" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/recommend_trip_banner.xml" value="0.2957427536231884" />
