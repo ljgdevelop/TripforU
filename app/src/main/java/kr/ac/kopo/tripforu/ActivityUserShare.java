@@ -230,28 +230,38 @@ public class ActivityUserShare extends PageController implements Cloneable{
                     }
                 });
                 // 첫 페이지 사진, 제목, 머릿글 값 가져오기
+                Intent subIntent = getIntent();
+                Schedule putSchedule = (Schedule)subIntent.getSerializableExtra("putSchedule");
                 ImageButton imgbtn_TitleImage = findViewById(R.id.IMGBTN_TitleImage);
                 EditText edt_TitleText = findViewById(R.id.EDT_TitleText);
                 EditText edt_ContentText = findViewById(R.id.EDT_ContentText);
-                String titleText = edt_TitleText.getText().toString();
-                String ContentText = edt_ContentText.getText().toString();
+                byte tempByte = 0;
+                sharedSchedule.setScheduleId(putSchedule.getId());
+                //sharedSchedule.setOwnerId();
+                sharedSchedule.setRating(0);
+                sharedSchedule.setLikes(tempByte);
+                sharedSchedule.setSharedCount(0);
+                sharedSchedule.setTitleText(edt_TitleText.getText().toString());
+                sharedSchedule.setDescriptionText(edt_ContentText.getText().toString());
+                sharedSchedule.setTitleImgId(0);
                 /*이미지 서버로 보낸 후 그 서버에서 이미지 불러올 때 주는 id값 저장 밑에 waypoint_IMG 값에 넣기 **********/
-                /*sharedSchedule.addWaypoint(
-                        Integer.parseInt(getTagFromView(v, "layout_WaypointId")),
-                        0,
-                        edt_ContentDetailText.getText().toString());*/
+                int[] tempImgId = {0,1,2};
                 EditText editText;
                 if (layout_SharedContent != null){
                     for (int a = 0; a < layout_SharedContent.getChildCount(); a++){
-                        Integer.parseInt(getTagFromView(layout_SharedContent.getChildAt(a), "layout_WaypointId"));
                         // 이미지 서버에 보낸 후 Id값 가져오기
                         editText = layout_SharedContent.getChildAt(a).findViewById(R.id.EDT_ContentDetailText);
-                        if (editText.equals(null)){
+                        if (editText.length() == 0){
                             String contentText = "";
+                            sharedSchedule.addWaypoint(
+                                    Integer.parseInt(getTagFromView(layout_SharedContent.getChildAt(a), "layout_WaypointId")),
+                                    tempImgId, contentText);
                         }else{
                             String contentText = editText.getText().toString();
+                            sharedSchedule.addWaypoint(
+                                    Integer.parseInt(getTagFromView(layout_SharedContent.getChildAt(a), "layout_WaypointId")),
+                                    tempImgId, contentText);
                         }
-
                     }
                 }
                 break;
