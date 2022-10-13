@@ -1,14 +1,10 @@
 package kr.ac.kopo.tripforu;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
@@ -208,6 +204,40 @@ public class ScheduleController extends Application {
                 break;
         }
         return imgSrc;
+    }
+    
+    public Drawable getWayPointDrawable(Waypoint waypoint){
+        int imgSrc = -1;
+        switch (waypoint.GetType()){
+            case 1:
+                imgSrc = R.drawable.ic_waypoint_home;
+                break;
+            case 2:
+                imgSrc = R.drawable.ic_waypoint_circle;
+                break;
+            case 3:
+                imgSrc = R.drawable.ic_waypoint_train;
+                break;
+            case 4:
+                imgSrc = R.drawable.ic_waypoint_subway;
+                break;
+            case 5:
+                imgSrc = R.drawable.ic_waypoint_car;
+                break;
+            case 6:
+                imgSrc = R.drawable.ic_waypoint_hotel;
+                break;
+            case 7:
+                imgSrc = R.drawable.ic_waypoint_restaurant;
+                break;
+            case 8:
+                imgSrc = R.drawable.ic_waypoint_pin;
+                break;
+            default:
+                imgSrc = R.drawable.ic_waypoint_pin;
+                break;
+        }
+        return getResources().getDrawable(imgSrc);
     }
     
     public Member getMemberByID(int id){
