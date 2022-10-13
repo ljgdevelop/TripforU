@@ -23,6 +23,14 @@ import org.json.simple.JSONObject;
 
 import kr.ac.kopo.tripforu.JsonController;
 
+
+/*
+* 사용법
+*   AwsS3.getInstance({Context}).uploadWithTransferUtilty({파일 이름}, {File 객체});
+* 예
+*   AwsS3.getInstance(getApplicationContext()).uploadWithTransferUtilty("6.jpg", file);
+*/
+
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class S3 {
     // Amazon-s3-sdk
