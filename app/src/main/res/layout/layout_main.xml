@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".LayoutMainPage">
+    android:orientation="vertical">
 
     <HorizontalScrollView
         android:id="@+id/VIEW_MainPageTabPage"
@@ -51,7 +50,7 @@
         android:id="@+id/LAYOUT_TABBUTTON"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:paddingVertical="8dp"
         android:weightSum="3"
         android:orientation="horizontal"
