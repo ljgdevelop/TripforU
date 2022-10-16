@@ -93,7 +93,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         
         //일정 추가하기
         findViewById(R.id.LAYOUT_MainGotoAdd).setOnClickListener(view -> {
-            Intent i = new Intent(this, ActivityRecommend.class);
+            Intent i = new Intent(this, ActivityNewSchedule.class);
             startActivity(i);
         });
     }

@@ -21,6 +21,9 @@
         android:theme="@style/Theme.TripforU"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ActivityNewSchedule"
+            android:exported="false" />
+        <activity
             android:name=".ActivityRecommend"
             android:exported="false" />
         <activity
