@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/LAYOUT_NewSch_Check"
     android:background="@color/APP_Shade">
 
     <ScrollView
