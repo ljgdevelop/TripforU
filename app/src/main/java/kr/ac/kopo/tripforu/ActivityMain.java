@@ -26,14 +26,15 @@ import com.kakao.sdk.common.KakaoSdk;
 
 import org.json.simple.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.function.Consumer;
+
+import kr.ac.kopo.tripforu.Retrofit.INetTask;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ActivityMain extends PageController implements OnBackPressedListener{
     @Override protected boolean useToolbar(){ return true; }
     
-    static Context context;//this context
+    public static Context context;//this context
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         
         context = this.getApplicationContext();
         AddPage(new Page(ActivityMain.this, TYPE_ACTIVITY));
-    
+        
         //첫 실행시 권한 요구 화면으로 이동
         checkFirstRun();
         
@@ -84,8 +85,14 @@ public class ActivityMain extends PageController implements OnBackPressedListene
             }
         });
         
-        //일정 추가하기
+        //일정 추천받기
         findViewById(R.id.LAYOUT_MainGotoRecommend).setOnClickListener(view -> {
+            Intent i = new Intent(this, ActivityRecommend.class);
+            startActivity(i);
+        });
+        
+        //일정 추가하기
+        findViewById(R.id.LAYOUT_MainGotoAdd).setOnClickListener(view -> {
             Intent i = new Intent(this, ActivityRecommend.class);
             startActivity(i);
         });
