@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-class Schedule implements Serializable {
+public class Schedule implements Serializable {
     private int id;
     private String name;
     private String destination;
