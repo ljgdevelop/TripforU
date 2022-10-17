@@ -12,7 +12,9 @@ public class SharedSchedule {
     private String titleText;
     private String descriptionText;
     private ArrayList<WaypointDescription> descriptionList = new ArrayList<>();
-
+    
+    public SharedSchedule(){}
+    
     public SharedSchedule(int scheduleId, int ownerId, double rating, int likes, int sharedCount,
                           int titleImgId, String titleText, String desctriptionText,
                           ArrayList<WaypointDescription> descriptionList){
@@ -100,7 +102,9 @@ public class SharedSchedule {
         private int waypointId;
         private int[] waypointImgId = new int[3];
         private String waypointContent;
-
+    
+        public WaypointDescription(){}
+        
         public WaypointDescription(int waypointId, int[] waypointImgId, String waypointContent){
             this.waypointId = waypointId;
             this.waypointImgId = waypointImgId;

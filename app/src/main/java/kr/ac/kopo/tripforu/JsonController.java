@@ -109,6 +109,22 @@ public class JsonController extends AppCompatActivity {
     
     /***
      * @author 이제경
+     * @param json - 읽어올 json 원본 Text
+     */
+    public static JSONArray convertStringTOJArray(String json) {
+        try {
+            JSONParser parser = new JSONParser();
+            JSONArray jsonArray = (JSONArray) parser.parse(json);
+            
+            return jsonArray;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /***
+     * @author 이제경
      * @param context - 저장할 데이터가 담긴 데이터 집합
      * @param filePath - 저장할 Json 파일 이름
      */

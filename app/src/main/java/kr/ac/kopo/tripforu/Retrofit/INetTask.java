@@ -1,28 +1,20 @@
 package kr.ac.kopo.tripforu.Retrofit;
 
-import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
-
-import org.json.simple.JSONValue;
+import com.kakao.sdk.user.model.User;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 
-import kr.ac.kopo.tripforu.ActivityMain;
-import kr.ac.kopo.tripforu.ScheduleController;
+import kr.ac.kopo.tripforu.Schedule;
 import kr.ac.kopo.tripforu.SharedSchedule;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,6 +71,77 @@ public class INetTask {
             return -1;
         }
     }
+    public void uploadUserInfo(User user){
+        try {
+            StringBuilder jsonString = new StringBuilder("{");
+            jsonString.append("\"uid\": ");
+            jsonString.append(user.getId());
+            jsonString.append(",\"name\": \"");
+            jsonString.append(user.getKakaoAccount().getProfile().getNickname());
+            jsonString.append("\",\"profileUrl\": \"");
+            jsonString.append(user.getKakaoAccount().getProfile().getProfileImageUrl());
+            jsonString.append("\"}");
+        
+            Post post = new Post();
+            post.setJsonObject(jsonString.toString());
+        
+            Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/user/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        
+            JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+            
+            Call<Post> call = jsonPlaceHolderApi.post(post);
+            call.enqueue(new Callback<Post>() {
+                @Override
+                public void onResponse(Call<Post> call, Response<Post> response) {
+        
+                }
+    
+                @Override
+                public void onFailure(Call<Post> call, Throwable t) {
+        
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void uploadSchedule(Schedule schedule){
+        try {
+            Gson gson = new Gson();
+            String jsonString = gson.toJson(schedule);
+    
+            Log.d("TAG", "uploadSchedule: "+ jsonString);
+            
+            Post post = new Post();
+            post.setJsonObject(jsonString);
+            
+            Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/schedule/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+            
+            JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+            
+            Call<Post> call = jsonPlaceHolderApi.post(post);
+            call.enqueue(new Callback<Post>() {
+                @Override
+                public void onResponse(Call<Post> call, Response<Post> response) {
+            
+                }
+        
+                @Override
+                public void onFailure(Call<Post> call, Throwable t) {
+            
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     
     public void uploadSharedSchedule(SharedSchedule schedule){
         try {
@@ -89,16 +152,66 @@ public class INetTask {
             post.setJsonObject(jsonString);
     
             Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/")
+                .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/sharedschedule/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     
             JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
             
             Call<Post> call = jsonPlaceHolderApi.post(post);
-            call.enqueue(null);
+            call.enqueue(new Callback<Post>() {
+                @Override
+                public void onResponse(Call<Post> call, Response<Post> response) {
+            
+                }
+        
+                @Override
+                public void onFailure(Call<Post> call, Throwable t) {
+            
+                }
+            });
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+    
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public ArrayList<SharedSchedule> getRecommendScheduleList(){
+        CompletableFuture<List<GetRecommend>> future = CompletableFuture.supplyAsync(() -> {
+            try {
+                Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/recommend/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            
+                JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+            
+                Call<List<GetRecommend>> call = jsonPlaceHolderApi.getBody();
+            
+                return call.execute().body();
+            }catch (IOException e){
+                e.printStackTrace();
+                return null;
+            }
+        });
+        try {
+            
+            Gson gson = new Gson();
+    
+            ArrayList<SharedSchedule> newObj = new ArrayList<>();
+            //JSONArray json = JsonController.convertStringTOJArray();
+            StringBuilder json = new StringBuilder();
+            List<GetRecommend> jsonList = future.get();
+            for (GetRecommend recommend:jsonList) {
+                json.append(recommend.getRecommendSchedule());
+                newObj.add(recommend.getRecommendSchedule());
+            }
+            
+            return newObj;
+            
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
