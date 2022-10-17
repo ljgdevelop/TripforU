@@ -96,6 +96,14 @@ public class ActivityMain extends PageController implements OnBackPressedListene
             Intent i = new Intent(this, ActivityNewSchedule.class);
             startActivity(i);
         });
+        
+        /*ScheduleController.syncJsonToObject(JsonController.readJsonArrayFromAssets("json/sharedSchedule.json", getApplicationContext()),
+            SharedSchedule.class.toString());
+        ServerController.getInstance().uploadSchedule(
+            ScheduleController.getInstance().getSharedSchedules().get(0),
+            ScheduleController.getInstance().getScheduleById(2),
+            null
+        );*/
     }
     
     /***

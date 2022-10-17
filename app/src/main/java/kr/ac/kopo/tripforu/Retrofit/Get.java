@@ -6,10 +6,10 @@ public class Get {
     @SerializedName("body")
     private String jsonString;
     
-    public void setJsonObject(String jsonString) {
+    public void setJsonString(String jsonString) {
         this.jsonString = jsonString;
     }
-    public String getJsonObject() {
+    public String getJsonString() {
         return this.jsonString;
     }
 }

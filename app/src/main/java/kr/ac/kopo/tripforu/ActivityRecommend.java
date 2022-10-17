@@ -7,10 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import kr.ac.kopo.tripforu.Retrofit.INetTask;
 
 import androidx.annotation.RequiresApi;
 
@@ -29,6 +30,9 @@ public class ActivityRecommend extends PageController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommend);
     
+        //추천 일정 목록 받아오기
+        
+        
         //서버의 이미지를 가져오기 위한 baseUrl
         baseImgUrl = JsonController.readJsonObjFromAssets("json/awsS3.json", getApplicationContext()).get("baseUrl").toString();
         
@@ -43,11 +47,11 @@ public class ActivityRecommend extends PageController {
         ((View)findViewById(R.id.LAYOUT_Recommend_WPContainer).getParent()).setLayoutParams(lp);
         
         //추천 여행 일정 받아오기
-        ScheduleController.syncJsonToObject(JsonController.readJsonArrayFromAssets("json/sharedSchedule.json", getApplicationContext()),
-            SharedSchedule.class.toString());
+        /*ScheduleController.syncJsonToObject(JsonController.readJsonArrayFromAssets("json/sharedSchedule.json", getApplicationContext()),
+            SharedSchedule.class.toString());*/
         
         //추천 여행 일정 보여주기
-        for (SharedSchedule sharedSchedule:ScheduleController.getInstance().getSharedSchedules()) {
+        for (SharedSchedule sharedSchedule : INetTask.getInstance().getRecommendScheduleList()) {
             LayoutRecommendBanner banner = new LayoutRecommendBanner(getApplicationContext(), 0, sharedSchedule);
             ((ViewGroup) findViewById(R.id.LAYOUT_Recommend_Container)).addView(banner);
             banner.setOnClickListener(this::onClick);
@@ -104,7 +108,7 @@ public class ActivityRecommend extends PageController {
             waypointIcon.setImageResource(iconRes);
             
             url = new StringBuilder(baseImgUrl);
-            url.append(description.getWaypointImgId());
+            url.append(description.getWaypointImgId()[0]);
             url.append(".jpg");
             Glide.with(getApplicationContext()).load(url.toString()).into(waypointImg);
             

@@ -12,17 +12,17 @@
       "descriptionList": [
         {
           "waypointId": 100001,
-          "waypointImgId": 5,
+          "waypointImgId": [5, 5, 5],
           "waypointContent": "편안하고 좋은 숙소"
         },
         {
           "waypointId": 200001,
-          "waypointImgId": 3,
+          "waypointImgId": [3, 3, 3],
           "waypointContent": "자연 뷰가 야무진 카페 '나무'"
         },
         {
           "waypointId": 100002,
-          "waypointImgId": 2,
+          "waypointImgId": [2, 2, 2],
           "waypointContent": "이쁜 겨울 바다"
         }
       ]
