@@ -243,10 +243,10 @@ public class ActivityUserShare extends PageController implements Cloneable{
                 Schedule putSchedule = (Schedule)subIntent.getSerializableExtra("putSchedule");
 
                 // SharedSchedule 값 넣기
-                addSharedScheduleData(fileArrayList, sharedSchedule, putSchedule);
+                SharedSchedule sch = addSharedScheduleData(fileArrayList, sharedSchedule, putSchedule);
 
                 //데이터 업로드
-                ServerController.getInstance().uploadSchedule(sharedSchedule, putSchedule, fileArrayList);
+                ServerController.getInstance().uploadSchedule(sch, putSchedule);
                 break;
             case 2:
                 //2페이지 확인
@@ -522,42 +522,22 @@ public class ActivityUserShare extends PageController implements Cloneable{
             out = new FileOutputStream(file);
 
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            
+            out.close();
         }
         catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            try {
-                out.close();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     //Bitmap 이미지 jpg변환
     private File changeJPG(ImageView imageView){
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-        File file;
+        File file = null;
         if (drawable != null){
             Bitmap bitmap = drawable.getBitmap();
             BitmapConvertFile(bitmap, getTagFromView(imageView, "uriId")+ ".jpg");
-            File tempfile = new File(getTagFromView(imageView, "uriId") + ".jpg");
-
-            OutputStream out = null;
-            try {
-                // OutputStream에 출력될 Stream에 파일을 넣어준다
-                out = new FileOutputStream(tempfile);
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            // bitmap 압축
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            file = tempfile;
-        }else {
-            file = null;
+            file = new File(getTagFromView(imageView, "uriId") + ".jpg");
         }
         return file;
     }
@@ -644,7 +624,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
         });
         ImageView img_Handle = v2.findViewById(R.id.IMG_Handle);
         img_Handle.setVisibility(View.VISIBLE);
-        img_Handle.setImageResource(R.drawable.ic_triangle_size);
+        img_Handle.setImageResource(R.drawable.ic_down_arrow);
     }
 
     //이미지 id 부여 및 웨이포인트 추가
@@ -669,7 +649,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
     }
 
     //공유 스케쥴 데이터 추가
-    private void addSharedScheduleData(ArrayList<File> fileArrayList,
+    private SharedSchedule addSharedScheduleData(ArrayList<File> fileArrayList,
                                    SharedSchedule sharedSchedule, Schedule schedule){
         EditText edt_TitleText = findViewById(R.id.EDT_TitleText);
         EditText edt_ContentText = findViewById(R.id.EDT_ContentText);
@@ -698,5 +678,6 @@ public class ActivityUserShare extends PageController implements Cloneable{
                 }
             }
         }
+        return sharedSchedule;
     }
 }
