@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class SharedSchedule {
     private int scheduleId;
-    private int ownerId;
+    private long ownerId;
     private double rating;
     private byte likes;
     private int sharedCount;
@@ -43,10 +43,10 @@ public class SharedSchedule {
         this.scheduleId = scheduleId;
     }
 
-    public int getOwnerId() {
+    public long getOwnerId() {
         return ownerId;
     }
-    public void setOwnerId(int ownerId) {
+    public void setOwnerId(long ownerId) {
         this.ownerId = ownerId;
     }
 

@@ -22,8 +22,8 @@
             android:textSize="18sp"
             android:textColor="@color/black"
             android:layout_marginLeft="16dp"
-            android:queryBackground="@drawable/background_searchview"
-            android:elevation="1dp"/>
+            android:background="@drawable/background_searchview"
+            android:elevation="1dp" />
 
         <include layout="@layout/layout_newsch_schmap" />
 

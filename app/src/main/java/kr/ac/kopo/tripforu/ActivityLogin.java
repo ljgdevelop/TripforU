@@ -76,7 +76,7 @@ public class ActivityLogin extends PageController {
         if (oAuthToken != null) {
             Log.i("[카카오] 로그인", "성공");
             updateKakaoLogin();
-            checkClientHasToken();
+            //checkClientHasToken();
             Intent intent = getIntent();
             finish();
             startActivity(intent);

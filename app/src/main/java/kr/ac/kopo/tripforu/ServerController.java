@@ -10,7 +10,9 @@ import com.kakao.sdk.auth.AuthApiClient;
 import com.kakao.sdk.user.UserApiClient;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import kr.ac.kopo.tripforu.AWS.S3;
 import kr.ac.kopo.tripforu.Retrofit.INetTask;
@@ -20,15 +22,9 @@ import kr.ac.kopo.tripforu.Retrofit.INetTask;
 public class ServerController extends PageController{
     // singleton 객체
     private static ServerController instance;
-    private Context context;
-    
-    String adress = "ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com";
-    short port = 6060;
-    byte connectionTry = 0;//5회까지 5초 간격으로 재 접속 시도
     
     private ServerController(){
         instance = this;
-        context = ActivityMain.context;
     }
     
     public static ServerController getInstance(){
@@ -38,18 +34,14 @@ public class ServerController extends PageController{
             return instance;
     }
     
-    public void uploadSchedule(SharedSchedule sharedSchedule, Schedule schedule, ArrayList<File> imageList){
+    public void uploadSchedule(SharedSchedule sharedSchedule, Schedule schedule){
         if (AuthApiClient.getInstance().hasToken()) {
             UserApiClient.getInstance().me((user, throwable) -> {
                 if (user != null) {
                     INetTask.getInstance().uploadUserInfo(user);
                     INetTask.getInstance().uploadSchedule(schedule);
+                    sharedSchedule.setOwnerId(user.getId());
                     INetTask.getInstance().uploadSharedSchedule(sharedSchedule);
-                    if(imageList != null)
-                    for (File img:imageList) {
-                        int id = INetTask.getInstance().getAvailableImageId();
-                        S3.getInstance(getApplicationContext()).uploadWithTransferUtilty(id + ".jpg", img);
-                    }
                 }
                 return null;
             });
