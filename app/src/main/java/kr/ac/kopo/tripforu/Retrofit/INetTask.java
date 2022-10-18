@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutionException;
 
 import kr.ac.kopo.tripforu.Schedule;
 import kr.ac.kopo.tripforu.SharedSchedule;
+import kr.ac.kopo.tripforu.Waypoint;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -186,7 +187,7 @@ public class INetTask {
             
                 JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
             
-                Call<List<GetRecommend>> call = jsonPlaceHolderApi.getBody();
+                Call<List<GetRecommend>> call = jsonPlaceHolderApi.getRecommend();
             
                 return call.execute().body();
             }catch (IOException e){
@@ -205,6 +206,45 @@ public class INetTask {
             for (GetRecommend recommend:jsonList) {
                 json.append(recommend.getRecommendSchedule());
                 newObj.add(recommend.getRecommendSchedule());
+            }
+            
+            return newObj;
+            
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public ArrayList<Waypoint> getWayPoints(String keyword){
+        CompletableFuture<List<GetWaypoints>> future = CompletableFuture.supplyAsync(() -> {
+            try {
+                Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/waypoints/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+                
+                JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+                
+                Call<List<GetWaypoints>> call = jsonPlaceHolderApi.getWaypoints(keyword);
+                
+                return call.execute().body();
+            }catch (IOException e){
+                e.printStackTrace();
+                return null;
+            }
+        });
+        try {
+            Gson gson = new Gson();
+            
+            ArrayList<Waypoint> newObj = new ArrayList<>();
+            //JSONArray json = JsonController.convertStringTOJArray();
+            StringBuilder json = new StringBuilder();
+            List<GetWaypoints> jsonList = future.get();
+            for (GetWaypoints waypoint:jsonList) {
+                json.append(waypoint.getWaypoint());
+                newObj.add(waypoint.getWaypoint());
             }
             
             return newObj;

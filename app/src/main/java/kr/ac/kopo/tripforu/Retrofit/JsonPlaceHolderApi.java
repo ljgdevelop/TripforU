@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface JsonPlaceHolderApi {
     @POST("posts")
@@ -20,6 +21,9 @@ public interface JsonPlaceHolderApi {
     @GET("get")
     Call<GetImageId> getImage();
     
+    @GET("get/")
+    Call<List<GetWaypoints>> getWaypoints(@Query("keyword") String keyword);
+    
     @GET("get")
-    Call<List<GetRecommend>> getBody();
+    Call<List<GetRecommend>> getRecommend();
 }
