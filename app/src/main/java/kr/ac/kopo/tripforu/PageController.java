@@ -460,32 +460,13 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         //메인 화면에 남은 일정 표시
         Date date = new Date();
         date = Calendar.getInstance().getTime();
-        SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.getDefault());
-        SimpleDateFormat monthFormat = new SimpleDateFormat("MM", Locale.getDefault());
-        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
-        int dayDate = Integer.parseInt(dayFormat.format(date));
-        int monthDate = Integer.parseInt(monthFormat.format(date));
-        int yearDate = Integer.parseInt(yearFormat.format(date));
-        String startDate = schedule.getStartDate();
-        int year = Integer.parseInt(startDate.substring(0,4));
-        int month = Integer.parseInt(startDate.substring(5,7));
-        int day = Integer.parseInt(startDate.substring(8,10));
-        if (year > yearDate){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        int intDate = Integer.parseInt(dateFormat.format(date));
+        String startDate = schedule.getStartDate().replaceAll("-","");
+        if (intDate <= Integer.parseInt(startDate)){
             remainSchContainer.addView(newTicket);
-        }else if (year < yearDate){
+        }else {
             pastSchContainer.addView(newTicket);
-        } else {
-            if (month > monthDate){
-                remainSchContainer.addView(newTicket);
-            }else if (month < monthDate){
-                pastSchContainer.addView(newTicket);
-            }else{
-                if (day > dayDate){
-                    remainSchContainer.addView(newTicket);
-                }else {
-                    pastSchContainer.addView(newTicket);
-                }
-            }
         }
     }
 }
