@@ -11,12 +11,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,14 +30,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
-import java.io.InputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
+
+import kr.ac.kopo.tripforu.AWS.S3;
+import kr.ac.kopo.tripforu.Retrofit.INetTask;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ActivityUserShare extends PageController implements Cloneable{
+    static S3 instance;
 
     @Override protected boolean useToolbar(){ return true; }
 
@@ -62,6 +66,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
         //갤러리 사진 가져오기
         onImageClick(findViewById(R.id.IMGBTN_TitleImage), 0);
         onImageClick(findViewById(R.id.IMGBTN_ContentImage), 1);
+
     }
 
     //이미지 클릭 후 사진 추가 기능
@@ -95,7 +100,9 @@ public class ActivityUserShare extends PageController implements Cloneable{
                     if (requestCode == 0){
                         ImageView img_TitleImage = findViewById(R.id.IMG_TitleImage);
                         ImageButton imgbtn_TitleImage = findViewById(R.id.IMGBTN_TitleImage);
+                        Uri uri = clipData.getItemAt(0).getUri();
                         img_TitleImage.setImageBitmap(BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData())));
+                        setTagToView(img_TitleImage, "uriId", uri);
                         imgbtn_TitleImage.setImageBitmap(null);
                         imgbtn_TitleImage.setBackgroundColor(00000000);
                         img_TitleImage.bringToFront();
@@ -109,21 +116,24 @@ public class ActivityUserShare extends PageController implements Cloneable{
                             ImageView img_ContentImage3 = findViewById(R.id.IMG_ContentImage3);
                             for (int i = 0 ; i < clipData.getItemCount(); i++){
                                 Uri uri = clipData.getItemAt(i).getUri();
-                                Bitmap img;
+                                Bitmap tempImg;
                                 switch (i){
                                     case 0:
-                                        img = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), uri));
-                                        img_ContentImage1.setImageBitmap(img);
+                                        tempImg = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), uri));
+                                        setTagToView(img_ContentImage1, "uriId", uri);
+                                        img_ContentImage1.setImageBitmap(tempImg);
                                         img_ContentImage1.setVisibility(View.VISIBLE);
                                         break;
                                     case 1:
-                                        img = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), uri));
-                                        img_ContentImage2.setImageBitmap(img);
+                                        tempImg = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), uri));
+                                        setTagToView(img_ContentImage2, "uriId", uri);
+                                        img_ContentImage2.setImageBitmap(tempImg);
                                         findViewById(R.id.IMGBTN_ContentImageRight).setVisibility(View.VISIBLE);
                                         break;
                                     case 2:
-                                        img = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), uri));
-                                        img_ContentImage3.setImageBitmap(img);
+                                        tempImg = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), uri));
+                                        setTagToView(img_ContentImage3, "uriId", uri);
+                                        img_ContentImage3.setImageBitmap(tempImg);
                                         break;
                                 }
                             }
@@ -191,11 +201,10 @@ public class ActivityUserShare extends PageController implements Cloneable{
         LinearLayout layout_UserShare_WayPoint = findViewById(R.id.LAYOUT_UserShare_Waypoint);
         EditText edt_ContentDetailText = findViewById(R.id.EDT_ContentDetailText);
         ImageView img_ContentImage1 = findViewById(R.id.IMG_ContentImage1);
-        ImageView img_ContentImage2 = findViewById(R.id.IMG_ContentImage2);
-        ImageView img_ContentImage3 = findViewById(R.id.IMG_ContentImage3);
         ArrayList<SharedSchedule.WaypointDescription> waypointDescriptions = new ArrayList<>();
         SharedSchedule sharedSchedule = new SharedSchedule(0,0,0,0,0,
                                                     0,"","",waypointDescriptions);
+        ArrayList<File> fileArrayList = new ArrayList<>();
 
         switch (i){
             case 0:
@@ -229,41 +238,15 @@ public class ActivityUserShare extends PageController implements Cloneable{
                         });
                     }
                 });
-                // 첫 페이지 사진, 제목, 머릿글 값 가져오기
+                //스케쥴 값 생성
                 Intent subIntent = getIntent();
                 Schedule putSchedule = (Schedule)subIntent.getSerializableExtra("putSchedule");
-                ImageButton imgbtn_TitleImage = findViewById(R.id.IMGBTN_TitleImage);
-                EditText edt_TitleText = findViewById(R.id.EDT_TitleText);
-                EditText edt_ContentText = findViewById(R.id.EDT_ContentText);
-                byte tempByte = 0;
-                sharedSchedule.setScheduleId(putSchedule.getId());
-                //sharedSchedule.setOwnerId();
-                sharedSchedule.setRating(0);
-                sharedSchedule.setLikes(tempByte);
-                sharedSchedule.setSharedCount(0);
-                sharedSchedule.setTitleText(edt_TitleText.getText().toString());
-                sharedSchedule.setDescriptionText(edt_ContentText.getText().toString());
-                sharedSchedule.setTitleImgId(0);
-                /*이미지 서버로 보낸 후 그 서버에서 이미지 불러올 때 주는 id값 저장 밑에 waypoint_IMG 값에 넣기 **********/
-                int[] tempImgId = {0,1,2};
-                EditText editText;
-                if (layout_SharedContent != null){
-                    for (int a = 0; a < layout_SharedContent.getChildCount(); a++){
-                        // 이미지 서버에 보낸 후 Id값 가져오기
-                        editText = layout_SharedContent.getChildAt(a).findViewById(R.id.EDT_ContentDetailText);
-                        if (editText.length() == 0){
-                            String contentText = "";
-                            sharedSchedule.addWaypoint(
-                                    Integer.parseInt(getTagFromView(layout_SharedContent.getChildAt(a), "layout_WaypointId")),
-                                    tempImgId, contentText);
-                        }else{
-                            String contentText = editText.getText().toString();
-                            sharedSchedule.addWaypoint(
-                                    Integer.parseInt(getTagFromView(layout_SharedContent.getChildAt(a), "layout_WaypointId")),
-                                    tempImgId, contentText);
-                        }
-                    }
-                }
+
+                // SharedSchedule 값 넣기
+                addSharedScheduleData(fileArrayList, sharedSchedule, putSchedule);
+
+                //데이터 업로드
+                ServerController.getInstance().uploadSchedule(sharedSchedule, putSchedule, fileArrayList);
                 break;
             case 2:
                 //2페이지 확인
@@ -294,87 +277,30 @@ public class ActivityUserShare extends PageController implements Cloneable{
                     SetAppBarAction(0, true, "");
                     findViewById(R.id.LAYOUT_UserShareContentDetail).setVisibility(View.GONE);
                     layout_UserShare_WayPoint.removeAllViewsInLayout();
-
                     v.findViewById(R.id.LAYOUT_UserShareStroke).setBackgroundResource(R.color.APP_Main);
 
-                    //공유한 이미지 넣기 및 이미지 있는지 없는지 확인
-                    ImageView img_PointDescImg1 = v2.findViewById(R.id.IMG_PointDescImg1);
-                    ImageView img_PointDescImg2 = v2.findViewById(R.id.IMG_PointDescImg2);
-                    ImageView img_PointDescImg3 = v2.findViewById(R.id.IMG_PointDescImg3);
-                    FrameLayout framelayout_PointDescGroup = v2.findViewById(R.id.FRAMELAYOUT_PointDescGroup);
-                    ImgLayoutSize(framelayout_PointDescGroup);
-                    img_PointDescImg1.setImageBitmap(((BitmapDrawable) img_ContentImage1.getDrawable()).getBitmap());
-                    img_PointDescImg2.setImageBitmap(((BitmapDrawable) img_ContentImage2.getDrawable()).getBitmap());
-                    img_PointDescImg3.setImageBitmap(((BitmapDrawable) img_ContentImage3.getDrawable()).getBitmap());
-                    if ((((BitmapDrawable) img_ContentImage1.getDrawable()).getBitmap()) == null){
-                        img_PointDescImg1.setVisibility(View.GONE);
-                        framelayout_PointDescGroup.setVisibility(View.GONE);
-                    }else {
-                        img_PointDescImg1.setVisibility(View.VISIBLE);
-                        framelayout_PointDescGroup.setVisibility(View.VISIBLE);
-                    }
+                    // 공유할 컨텐츠 내용 보기 및 삭제
+                    contentClickEvent(v, v2);
 
-                    //공유한 텍스트 넣기 및 있는지 없는지 확인
-                    TextView text_PointDescText = v2.findViewById(R.id.TEXT_PointDescText);
-                    text_PointDescText.setText(edt_ContentDetailText.getText());
-                    if (text_PointDescText.getText().length() == 0){
-                        text_PointDescText.setVisibility(View.GONE);
-                    }else{
-                        text_PointDescText.setVisibility(View.VISIBLE);
-                    }
-
-                    // 공유할 컨텐츠 내용 보기
-                    setTagToView(v, "layout_Shared",true);
-                    setTagToView(v2, "layout_WaypointId",getTagFromView(v,"layout_WaypointId"));
-                    v2.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View view, MotionEvent motionEvent) {
-                            return false;
-                        }
-                    });
-                    v2.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            LinearLayout layout_PointDescContent =  v2.findViewById(R.id.LAYOUT_PointDescContent);
-                            if (layout_PointDescContent.getVisibility() == View.GONE){
-                                layout_PointDescContent.setVisibility(View.VISIBLE);
-                            }else {
-                                layout_PointDescContent.setVisibility(View.GONE);
-                            }
-                        }
-                    });
-
-                    // 공유할 컨텐츠 롱클릭 삭제
-                    v2.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View view) {
-                            LayoutDialog dialog = new LayoutDialog(getApplicationContext());
-                            dialog.setDialogTitle("삭제하시겠습니까?");
-                            dialog.setDialogMessage("작성하신 내용은 삭제됩니다.");
-                            dialog.addButton(R.color.TEXT_Gray, "취소").setOnClickListener(v -> dialog.closeDialog());
-                            dialog.addButton(R.color.Negative, "삭제").setOnClickListener(v -> {
-                                ContentDelete(view);
-                                dialog.closeDialog();
-                            });
-                            return true;
-                        }
-                    });
-                    ImageView img_Handle = v2.findViewById(R.id.IMG_Handle);
-                    img_Handle.setVisibility(View.VISIBLE);
-                    img_Handle.setImageResource(R.drawable.ic_triangle_size);
+                    //콘텐츠 텍스트, 이미지 확인 및 부여
+                    shareContentCheck(v2);
 
                     //이미지 페이지 이동 버튼
-                    ChangeImgPage(v2.findViewById(R.id.IMGBTN_PointDescLeft),v2.findViewById(R.id.IMGBTN_PointDescRight),
-                            v2.findViewById(R.id.IMG_PointDescImg1), v2.findViewById(R.id.IMG_PointDescImg2),
-                            v2.findViewById(R.id.IMG_PointDescImg3));
-                    ImageView imageView2 = v2.findViewById(R.id.IMG_PointDescImg2);
-                    if (((BitmapDrawable)(imageView2.getDrawable())).getBitmap() != null){
-                        v2.findViewById(R.id.IMGBTN_PointDescRight).setVisibility(View.VISIBLE);
-                    }
+                    imgPageMove(v2);
+
+                    //콘텐츠 뷰 추가
                     layout_SharedContent.addView(v2);
+
+                    //콘텐츠 공유 여부 확인
                     ShareWaypointClickListner();
-                    edt_ContentDetailText.setText(null);
+
+                    //이미지 리셋
                     ContentImageReset();
+
+                    //초기화
+                    edt_ContentDetailText.setText(null);
+
+                    //이미지 페이지 버튼 숨기기
                     findViewById(R.id.IMGBTN_ContentImageRight).setVisibility(View.GONE);
                     findViewById(R.id.IMGBTN_ContentImageLeft).setVisibility(View.GONE);
                 }
@@ -386,6 +312,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
     private static void ShareWaypointInfo(View view, Schedule schedule){
         final ViewGroup waypointContainer = view.findViewById(R.id.LAYOUT_UserShareContent);
         waypointContainer.removeAllViewsInLayout();
+        int a = 0;
         for(Waypoint waypoint : schedule.getWayPointList()){
             View layoutWP = View.inflate(ActivityMain.context, R.layout.layout_usershare_point_desc, null);
 
@@ -397,35 +324,8 @@ public class ActivityUserShare extends PageController implements Cloneable{
 
             wpName.setText(waypoint.GetName());
             int imgSrc = -1;
-            switch (waypoint.GetType()){
-                case 1:
-                    imgSrc = R.drawable.ic_waypoint_home;
-                    break;
-                case 2:
-                    imgSrc = R.drawable.ic_waypoint_circle;
-                    break;
-                case 3:
-                    imgSrc = R.drawable.ic_waypoint_train;
-                    break;
-                case 4:
-                    imgSrc = R.drawable.ic_waypoint_subway;
-                    break;
-                case 5:
-                    imgSrc = R.drawable.ic_waypoint_car;
-                    break;
-                case 6:
-                    imgSrc = R.drawable.ic_waypoint_hotel;
-                    break;
-                case 7:
-                    imgSrc = R.drawable.ic_waypoint_restaurant;
-                    break;
-                case 8:
-                    imgSrc = R.drawable.ic_waypoint_pin;
-                    break;
-                default:
-                    imgSrc = R.drawable.ic_waypoint_pin;
-                    break;
-            }
+            imgSrc = ScheduleController.getInstance().getWayPointIcon(schedule, a);
+            a += 1;
             wpIcon.setImageResource(imgSrc);
 
             waypointContainer.addView(layoutWP);
@@ -608,5 +508,195 @@ public class ActivityUserShare extends PageController implements Cloneable{
         img_ContentImage1.setImageBitmap(null);
         img_ContentImage2.setImageBitmap(null);
         img_ContentImage3.setImageBitmap(null);
+    }
+
+    //비트맵 사진을 파일 객체로 변경
+    private void BitmapConvertFile(Bitmap bitmap, String strFilePath)
+    {
+        File file = new File(strFilePath);
+
+        OutputStream out = null;
+        try {
+            file.createNewFile();
+
+            out = new FileOutputStream(file);
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                out.close();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //Bitmap 이미지 jpg변환
+    private File changeJPG(ImageView imageView){
+        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+        File file;
+        if (drawable != null){
+            Bitmap bitmap = drawable.getBitmap();
+            BitmapConvertFile(bitmap, getTagFromView(imageView, "uriId")+ ".jpg");
+            File tempfile = new File(getTagFromView(imageView, "uriId") + ".jpg");
+
+            OutputStream out = null;
+            try {
+                // OutputStream에 출력될 Stream에 파일을 넣어준다
+                out = new FileOutputStream(tempfile);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            // bitmap 압축
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            file = tempfile;
+        }else {
+            file = null;
+        }
+        return file;
+    }
+
+    //이미지 페이지 이동 버튼
+    private void imgPageMove(View v2){
+        ChangeImgPage(v2.findViewById(R.id.IMGBTN_PointDescLeft),v2.findViewById(R.id.IMGBTN_PointDescRight),
+                v2.findViewById(R.id.IMG_PointDescImg1), v2.findViewById(R.id.IMG_PointDescImg2),
+                v2.findViewById(R.id.IMG_PointDescImg3));
+        ImageView imageView2 = v2.findViewById(R.id.IMG_PointDescImg2);
+        if (((BitmapDrawable)(imageView2.getDrawable())).getBitmap() != null){
+            v2.findViewById(R.id.IMGBTN_PointDescRight).setVisibility(View.VISIBLE);
+        }
+    }
+
+    //공유한 이미지, 텍스트 넣기 및 있는지 없는지 확인
+    private void shareContentCheck(View v2){
+        //공유한 이미지 넣기 및 이미지 있는지 없는지 확인
+        ImageView img_PointDescImg1 = v2.findViewById(R.id.IMG_PointDescImg1);
+        ImageView img_PointDescImg2 = v2.findViewById(R.id.IMG_PointDescImg2);
+        ImageView img_PointDescImg3 = v2.findViewById(R.id.IMG_PointDescImg3);
+        ImageView img_ContentImage1 = findViewById(R.id.IMG_ContentImage1);
+        ImageView img_ContentImage2 = findViewById(R.id.IMG_ContentImage2);
+        ImageView img_ContentImage3 = findViewById(R.id.IMG_ContentImage3);
+        EditText edt_ContentDetailText = findViewById(R.id.EDT_ContentDetailText);
+        FrameLayout framelayout_PointDescGroup = v2.findViewById(R.id.FRAMELAYOUT_PointDescGroup);
+        ImgLayoutSize(framelayout_PointDescGroup);
+        img_PointDescImg1.setImageBitmap(((BitmapDrawable) img_ContentImage1.getDrawable()).getBitmap());
+        img_PointDescImg2.setImageBitmap(((BitmapDrawable) img_ContentImage2.getDrawable()).getBitmap());
+        img_PointDescImg3.setImageBitmap(((BitmapDrawable) img_ContentImage3.getDrawable()).getBitmap());
+        if ((((BitmapDrawable) img_ContentImage1.getDrawable()).getBitmap()) == null){
+            img_PointDescImg1.setVisibility(View.GONE);
+            framelayout_PointDescGroup.setVisibility(View.GONE);
+        }else {
+            img_PointDescImg1.setVisibility(View.VISIBLE);
+            framelayout_PointDescGroup.setVisibility(View.VISIBLE);
+        }
+        //공유한 텍스트 넣기 및 있는지 없는지 확인
+        TextView text_PointDescText = v2.findViewById(R.id.TEXT_PointDescText);
+        text_PointDescText.setText(edt_ContentDetailText.getText());
+        if (text_PointDescText.getText().length() == 0){
+            text_PointDescText.setVisibility(View.GONE);
+        }else{
+            text_PointDescText.setVisibility(View.VISIBLE);
+        }
+    }
+
+    // 공유할 컨텐츠 뷰 클릭 이벤트
+    private void contentClickEvent(View v, View v2){
+        setTagToView(v, "layout_Shared",true);
+        setTagToView(v2, "layout_WaypointId",getTagFromView(v,"layout_WaypointId"));
+        v2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return false;
+            }
+        });
+        // 공유할 컨텐츠 내용 보기
+        v2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LinearLayout layout_PointDescContent =  v2.findViewById(R.id.LAYOUT_PointDescContent);
+                if (layout_PointDescContent.getVisibility() == View.GONE){
+                    layout_PointDescContent.setVisibility(View.VISIBLE);
+                }else {
+                    layout_PointDescContent.setVisibility(View.GONE);
+                }
+            }
+        });
+        // 공유할 컨텐츠 롱클릭 삭제
+        v2.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                LayoutDialog dialog = new LayoutDialog(getApplicationContext());
+                dialog.setDialogTitle("삭제하시겠습니까?");
+                dialog.setDialogMessage("작성하신 내용은 삭제됩니다.");
+                dialog.addButton(R.color.TEXT_Gray, "취소").setOnClickListener(v -> dialog.closeDialog());
+                dialog.addButton(R.color.Negative, "삭제").setOnClickListener(v -> {
+                    ContentDelete(view);
+                    dialog.closeDialog();
+                });
+                return true;
+            }
+        });
+        ImageView img_Handle = v2.findViewById(R.id.IMG_Handle);
+        img_Handle.setVisibility(View.VISIBLE);
+        img_Handle.setImageResource(R.drawable.ic_triangle_size);
+    }
+
+    //이미지 id 부여 및 웨이포인트 추가
+    private void addIdAndWaypoint(SharedSchedule sharedSchedule,int a){
+        int[] tempImgId = new int[3];
+        tempImgId[0] = INetTask.getInstance().getAvailableImageId();
+        tempImgId[1] = INetTask.getInstance().getAvailableImageId();
+        tempImgId[2] = INetTask.getInstance().getAvailableImageId();
+        ViewGroup layout_SharedContent = findViewById(R.id.LAYOUT_SharedContent);
+        EditText editText = layout_SharedContent.getChildAt(a).findViewById(R.id.EDT_ContentDetailText);
+        if (editText.length() == 0){
+            String contentText = "";
+            sharedSchedule.addWaypoint(
+                    Integer.parseInt(getTagFromView(layout_SharedContent.getChildAt(a), "layout_WaypointId")),
+                    tempImgId, contentText);
+        }else{
+            String contentText = editText.getText().toString();
+            sharedSchedule.addWaypoint(
+                    Integer.parseInt(getTagFromView(layout_SharedContent.getChildAt(a), "layout_WaypointId")),
+                    tempImgId, contentText);
+        }
+    }
+
+    //공유 스케쥴 데이터 추가
+    private void addSharedScheduleData(ArrayList<File> fileArrayList,
+                                   SharedSchedule sharedSchedule, Schedule schedule){
+        EditText edt_TitleText = findViewById(R.id.EDT_TitleText);
+        EditText edt_ContentText = findViewById(R.id.EDT_ContentText);
+        ImageView img_TitleImage = findViewById(R.id.IMG_TitleImage);
+        ViewGroup layout_SharedContent = findViewById(R.id.LAYOUT_SharedContent);
+        File file;
+        byte tempByte = 0;
+        sharedSchedule.setScheduleId(schedule.getId());
+        sharedSchedule.setLikes(tempByte);
+        sharedSchedule.setTitleText(edt_TitleText.getText().toString());
+        sharedSchedule.setDescriptionText(edt_ContentText.getText().toString());
+        sharedSchedule.setTitleImgId(INetTask.getInstance().getAvailableImageId());
+        file = changeJPG(img_TitleImage);
+        fileArrayList.set(0, file);
+        if (layout_SharedContent != null){
+            for (int a = 0; a < layout_SharedContent.getChildCount(); a++){
+                // 이미지 서버에 보낸 후 Id값 가져오기
+                addIdAndWaypoint(sharedSchedule, a);
+                ArrayList<ImageView> imageViewArrayList = new ArrayList<>();
+                imageViewArrayList.add(layout_SharedContent.getChildAt(a).findViewById(R.id.IMG_PointDescImg1));
+                imageViewArrayList.add(layout_SharedContent.getChildAt(a).findViewById(R.id.IMG_PointDescImg2));
+                imageViewArrayList.add(layout_SharedContent.getChildAt(a).findViewById(R.id.IMG_PointDescImg3));
+                for (int b = 0; b < 3; b++){
+                    file = changeJPG(imageViewArrayList.get(b));
+                    fileArrayList.set(b+1, file);
+                }
+            }
+        }
     }
 }
