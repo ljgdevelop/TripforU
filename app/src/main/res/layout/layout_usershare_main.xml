@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/APP_Accent"
+    android:id="@+id/LAYOUT_UserShareMain">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/APP_Accent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:clipToPadding="false"
+            android:elevation="4dp"
+            android:background="@color/APP_Accent">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/FRAMELAYOUT_TitleImage"
+                android:background="@color/APP_Accent">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:id="@+id/IMG_TitleImage"
+                    android:visibility="visible"/>
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/IMGBTN_TitleImage"
+                    android:src="@drawable/ic_tempimage"
+                    android:background="#E2E2E2"/>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="4dp"
+                android:clipToPadding="false"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="제목을 입력해 주세요."
+                    android:textStyle="bold"
+                    android:textColor="@color/TEXT_Black"
+                    android:textSize="22sp"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@null"
+                    android:id="@+id/EDT_TitleText"/>
+
+                <LinearLayout
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:background="#4DD7DDE9"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="top|left"
+                    android:paddingHorizontal="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="16dp"
+                    android:hint="머릿글을 작성해 주세요."
+                    android:textSize="18sp"
+                    android:textColor="@color/TEXT_Black"
+                    android:id="@+id/EDT_ContentText"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="@color/APP_Accent"
+                    android:id="@+id/LAYOUT_SharedContent"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:stateListAnimator="@null"
+        android:backgroundTint="@color/teal_700"
+        android:text="설명 추가"
+        app:icon="@drawable/ic_plus"
+        app:iconSize="25dp"
+        app:iconGravity="textStart"
+        android:textColor="@color/white"
+        android:layout_margin="32dp"
+        app:iconTint="@color/white"
+        android:layout_gravity="bottom|right"
+        android:id="@+id/ACBTN_AddContent"/>
+</FrameLayout>

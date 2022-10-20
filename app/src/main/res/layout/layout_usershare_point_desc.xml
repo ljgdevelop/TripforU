@@ -57,14 +57,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
 
-                <ImageView
+                <ImageButton
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:src="@drawable/ic_tempimage"
+                    android:src="@drawable/ic_down_arrow"
                     android:background="@color/transparent"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="16dp"
                     android:visibility="gone"
+                    android:clickable="false"
                     android:id="@+id/IMG_Handle"/>
             </LinearLayout>
         </LinearLayout>

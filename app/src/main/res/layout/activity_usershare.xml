@@ -1,195 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/APP_Accent">
+    android:clickable="false"
+    android:scrollbars="none"
+    android:id="@+id/LAYOUT_UserShareContainer">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/APP_Accent">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <include layout="@layout/layout_usershare_main"/>
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:clipToPadding="false"
-            android:elevation="4dp"
-            android:background="@color/APP_Accent">
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/FRAMELAYOUT_TitleImage"
-                android:background="@color/APP_Accent">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:id="@+id/IMG_TitleImage"
-                    android:visibility="visible"/>
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/IMGBTN_TitleImage"
-                    android:src="@drawable/ic_tempimage"
-                    android:background="#E2E2E2"/>
-            </FrameLayout>
+            android:background="@color/APP_Accent"
+            android:id="@+id/LAYOUT_UserShareContents">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:elevation="4dp"
-                android:clipToPadding="false"
-                android:orientation="vertical">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="제목을 입력해 주세요."
-                    android:textStyle="bold"
-                    android:textColor="@color/TEXT_Black"
-                    android:textSize="22sp"
-                    android:paddingHorizontal="16dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@null"
-                    android:id="@+id/EDT_TitleText"/>
-
-                <LinearLayout
-                    android:layout_marginVertical="8dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:background="#4DD7DDE9"/>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:gravity="top|left"
-                    android:paddingHorizontal="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="16dp"
-                    android:hint="머릿글을 작성해 주세요."
-                    android:textSize="18sp"
-                    android:textColor="@color/TEXT_Black"
-                    android:id="@+id/EDT_ContentText"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:background="@color/APP_Accent"
-                    android:id="@+id/LAYOUT_SharedContent"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/LAYOUT_UserShareContent">
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:stateListAnimator="@null"
-        android:backgroundTint="@color/teal_700"
-        android:text="설명 추가"
-        app:icon="@drawable/ic_plus"
-        app:iconSize="25dp"
-        app:iconGravity="textStart"
-        android:textColor="@color/white"
-        android:layout_margin="32dp"
-        app:iconTint="@color/white"
-        android:layout_gravity="bottom|right"
-        android:id="@+id/ACBTN_AddContent"/>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:orientation="vertical"
-        android:background="@color/APP_Accent"
-        android:id="@+id/LAYOUT_UserShareContents">
+        </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/LAYOUT_UserShareContent">
-        </LinearLayout>
-    </ScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/APP_Accent"
-        android:visibility="gone"
-        android:id="@+id/LAYOUT_UserShareContentDetail">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="vertical"
-            android:id="@+id/LAYOUT_UserShare_Waypoint">
-        </LinearLayout>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/FRAMELAYOUT_ContentImageGroup">
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:id="@+id/IMG_ContentImage3"
-                    android:visibility="gone"/>
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:id="@+id/IMG_ContentImage2"
-                    android:visibility="gone"/>
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:id="@+id/IMG_ContentImage1"
-                    android:visibility="gone"/>
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/IMGBTN_ContentImage"
-                    android:src="@drawable/ic_tempimage"
-                    android:background="#E2E2E2"/>
-            </FrameLayout>
-            <ImageButton
-                android:layout_width="48dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_arrow_left"
-                android:layout_gravity="center_vertical|left"
-                android:id="@+id/IMGBTN_ContentImageLeft"
-                android:background="#00000000"
-                android:scaleType="fitCenter"
-                android:visibility="gone"/>
-            <ImageButton
-                android:layout_width="48dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_arrow_right"
-                android:layout_gravity="center_vertical|right"
-                android:id="@+id/IMGBTN_ContentImageRight"
-                android:background="#00000000"
-                android:scaleType="fitCenter"
-                android:visibility="gone"/>
-        </FrameLayout>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:gravity="top|left"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="16dp"
-            android:hint="설명을 추가해 주세요."
-            android:textSize="18sp"
-            android:textColor="@color/TEXT_Black"
-            android:id="@+id/EDT_ContentDetailText"/>
+        <include layout="@layout/layout_usershare_waypoint_desc"/>
     </LinearLayout>
-</FrameLayout>
+</HorizontalScrollView>

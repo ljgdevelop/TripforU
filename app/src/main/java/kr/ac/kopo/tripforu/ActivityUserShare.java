@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.ImageDecoder;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,8 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -67,6 +71,8 @@ public class ActivityUserShare extends PageController implements Cloneable{
         onImageClick(findViewById(R.id.IMGBTN_TitleImage), 0);
         onImageClick(findViewById(R.id.IMGBTN_ContentImage), 1);
 
+        //메인 스크롤 뷰 터치 막기
+        findViewById(R.id.LAYOUT_UserShareContainer).setOnTouchListener(((view, motionEvent) -> { return true; }));
     }
 
     //이미지 클릭 후 사진 추가 기능
@@ -78,12 +84,12 @@ public class ActivityUserShare extends PageController implements Cloneable{
                     Intent intent = new Intent(Intent.ACTION_PICK);
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
                     intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                    startActivityForResult(intent, i);
+                    startActivityForResult(Intent.createChooser(intent, "사진 선택"), i);
                 }else if(getTagFromView(view, "ImgBtnId").equals("1")){
                     Intent intent = new Intent(Intent.ACTION_PICK);
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                    startActivityForResult(intent, i);
+                    startActivityForResult(Intent.createChooser(intent, "사진 선택"), i);
                 }
             }
         });
@@ -97,10 +103,10 @@ public class ActivityUserShare extends PageController implements Cloneable{
             if (resultCode == RESULT_OK){
                 try {
                     ClipData clipData = data.getClipData();
-                    if (requestCode == 0){
+                    if (requestCode == 0 && data.getData() != null){
                         ImageView img_TitleImage = findViewById(R.id.IMG_TitleImage);
                         ImageButton imgbtn_TitleImage = findViewById(R.id.IMGBTN_TitleImage);
-                        Uri uri = clipData.getItemAt(0).getUri();
+                        Uri uri = data.getData();
                         img_TitleImage.setImageBitmap(BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData())));
                         setTagToView(img_TitleImage, "uriId", uri);
                         imgbtn_TitleImage.setImageBitmap(null);
@@ -111,6 +117,10 @@ public class ActivityUserShare extends PageController implements Cloneable{
                             Toast.makeText(ActivityMain.context, "사진은 3장 이하로만 선택 가능합니다.",
                                     Toast.LENGTH_LONG).show();
                         }else{
+                            findViewById(R.id.IMGBTN_ContentImageRight).setVisibility(View.GONE);
+                            findViewById(R.id.IMGBTN_ContentImageLeft).setVisibility(View.GONE);
+                            ContentImageReset();
+                            
                             ImageView img_ContentImage1 = findViewById(R.id.IMG_ContentImage1);
                             ImageView img_ContentImage2 = findViewById(R.id.IMG_ContentImage2);
                             ImageView img_ContentImage3 = findViewById(R.id.IMG_ContentImage3);
@@ -149,7 +159,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
                     }
                 }catch (Exception e){ }
             }
-            else if (resultCode == RESULT_CANCELED){
+            /*else if (resultCode == RESULT_CANCELED){
                 if (requestCode == 0){
                     ImageView img_TitleImage = findViewById(R.id.IMG_TitleImage);
                     img_TitleImage.setImageBitmap(null);
@@ -162,7 +172,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
                     findViewById(R.id.IMGBTN_ContentImageLeft).setVisibility(View.GONE);
                     ContentImageReset();
                 }
-            }
+            }*/
         }
     }
 
@@ -173,7 +183,9 @@ public class ActivityUserShare extends PageController implements Cloneable{
             @Override
             public void onClick(View view) {
                 ScrollView layout_UserShareContent = findViewById(R.id.LAYOUT_UserShareContents);
-
+                
+                TabHorizontalScroll(findViewById(R.id.LAYOUT_UserShareContainer), 1);
+                
                 if (getTagFromView(view, "layoutCheck").equals("true")){
                     layout_UserShareContent.setVisibility(View.VISIBLE);
                 } else {
@@ -250,15 +262,15 @@ public class ActivityUserShare extends PageController implements Cloneable{
                 break;
             case 2:
                 //2페이지 확인
-                SetAppBarAction(1, false, "완료").setOnClickListener(view1 -> onClickHandler(view1, 1, null));
+                SetAppBarAction(1, false, "업로드").setOnClickListener(view1 -> onClickHandler(view1, 1, null));
                 SetAppBarAction(2, true, "취소").setOnClickListener(view1 -> onClickHandler(view1, 0, null));
-                findViewById(R.id.LAYOUT_UserShareContents).setVisibility(View.GONE);
+                TabHorizontalScroll(findViewById(R.id.LAYOUT_UserShareContainer), 0);
                 break;
             case 3:
                 //3페이지 이전
                 SetAppBarAction(1, false, "완료").setOnClickListener(view1 -> onClickHandler(view1, 2, null));
                 SetAppBarAction(0, true, "");
-                findViewById(R.id.LAYOUT_UserShareContentDetail).setVisibility(View.GONE);
+                TabHorizontalScroll(findViewById(R.id.LAYOUT_UserShareContainer), 1);
                 layout_UserShare_WayPoint.removeAllViewsInLayout();
                 ShareWaypointClickListner();
                 edt_ContentDetailText.setText(null);
@@ -275,7 +287,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
                 }else{
                     SetAppBarAction(1, false, "완료").setOnClickListener(view1 -> onClickHandler(view1, 2, null));
                     SetAppBarAction(0, true, "");
-                    findViewById(R.id.LAYOUT_UserShareContentDetail).setVisibility(View.GONE);
+                    TabHorizontalScroll(findViewById(R.id.LAYOUT_UserShareContainer), 1);
                     layout_UserShare_WayPoint.removeAllViewsInLayout();
                     v.findViewById(R.id.LAYOUT_UserShareStroke).setBackgroundResource(R.color.APP_Main);
 
@@ -293,16 +305,6 @@ public class ActivityUserShare extends PageController implements Cloneable{
 
                     //콘텐츠 공유 여부 확인
                     ShareWaypointClickListner();
-
-                    //이미지 리셋
-                    ContentImageReset();
-
-                    //초기화
-                    edt_ContentDetailText.setText(null);
-
-                    //이미지 페이지 버튼 숨기기
-                    findViewById(R.id.IMGBTN_ContentImageRight).setVisibility(View.GONE);
-                    findViewById(R.id.IMGBTN_ContentImageLeft).setVisibility(View.GONE);
                 }
                 break;
         }
@@ -377,6 +379,19 @@ public class ActivityUserShare extends PageController implements Cloneable{
                     }
                 });
                 layout_UserShare_WayPoint.addView(layoutWaypoint);
+                
+                TabHorizontalScroll(findViewById(R.id.LAYOUT_UserShareContainer), 2);
+    
+                //이미지 리셋
+                ContentImageReset();
+    
+                //초기화
+                ((TextView)findViewById(R.id.EDT_ContentDetailText)).setText(null);
+    
+                //이미지 페이지 버튼 숨기기
+                findViewById(R.id.IMGBTN_ContentImageRight).setVisibility(View.GONE);
+                findViewById(R.id.IMGBTN_ContentImageLeft).setVisibility(View.GONE);
+                
                 SetAppBarAction(1, false, "완료").setOnClickListener(view1 -> onClickHandler(view, 4,layoutWaypoint));
                 SetAppBarAction(0, true, "이전").setOnClickListener(view1 -> onClickHandler(view, 3,layoutWaypoint));
             }
@@ -459,6 +474,29 @@ public class ActivityUserShare extends PageController implements Cloneable{
 
     // 시작 셋팅
     private void StartSeting(){
+        FrameLayout main = findViewById(R.id.LAYOUT_UserShareMain);
+        LinearLayout waypoints = findViewById(R.id.LAYOUT_UserShareContent);
+        LinearLayout desc = findViewById(R.id.LAYOUT_UserShareContentDetail);
+    
+        //화면 너비 가져오기
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getRealSize(size);
+        int swidth = size.x;
+    
+        //레이아웃의 너비를 화면 너비에 맞춤
+        LinearLayout.LayoutParams mainP = new LinearLayout.LayoutParams(main.getLayoutParams());
+        mainP.width = swidth;
+        main.setLayoutParams(mainP);
+    
+        FrameLayout.LayoutParams waypointsP = new FrameLayout.LayoutParams(waypoints.getLayoutParams());
+        waypointsP.width = swidth;
+        waypoints.setLayoutParams(waypointsP);
+    
+        LinearLayout.LayoutParams descP = new LinearLayout.LayoutParams(desc.getLayoutParams());
+        descP.width = swidth;
+        desc.setLayoutParams(descP);
+        
         ImageView img_TitleImage = findViewById(R.id.IMG_TitleImage);
         ImageButton imgbtn_TitleImage = findViewById(R.id.IMGBTN_TitleImage);
         ImgLayoutSize(findViewById(R.id.FRAMELAYOUT_TitleImage));
@@ -600,10 +638,13 @@ public class ActivityUserShare extends PageController implements Cloneable{
             @Override
             public void onClick(View view) {
                 LinearLayout layout_PointDescContent =  v2.findViewById(R.id.LAYOUT_PointDescContent);
+                ImageView img_Handle = v2.findViewById(R.id.IMG_Handle);
                 if (layout_PointDescContent.getVisibility() == View.GONE){
                     layout_PointDescContent.setVisibility(View.VISIBLE);
+                    img_Handle.setImageResource(R.drawable.ic_expand_less);
                 }else {
                     layout_PointDescContent.setVisibility(View.GONE);
+                    img_Handle.setImageResource(R.drawable.ic_expand_more);
                 }
             }
         });
@@ -624,7 +665,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
         });
         ImageView img_Handle = v2.findViewById(R.id.IMG_Handle);
         img_Handle.setVisibility(View.VISIBLE);
-        img_Handle.setImageResource(R.drawable.ic_down_arrow);
+        img_Handle.setImageResource(R.drawable.ic_expand_more);
     }
 
     //이미지 id 부여 및 웨이포인트 추가
