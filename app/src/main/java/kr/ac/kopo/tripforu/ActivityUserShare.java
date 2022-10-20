@@ -704,7 +704,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
         sharedSchedule.setDescriptionText(edt_ContentText.getText().toString());
         sharedSchedule.setTitleImgId(INetTask.getInstance().getAvailableImageId());
         file = changeJPG(img_TitleImage);
-        fileArrayList.set(0, file);
+        fileArrayList.add(file);
         if (layout_SharedContent != null){
             for (int a = 0; a < layout_SharedContent.getChildCount(); a++){
                 // 이미지 서버에 보낸 후 Id값 가져오기
@@ -715,7 +715,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
                 imageViewArrayList.add(layout_SharedContent.getChildAt(a).findViewById(R.id.IMG_PointDescImg3));
                 for (int b = 0; b < 3; b++){
                     file = changeJPG(imageViewArrayList.get(b));
-                    fileArrayList.set(b+1, file);
+                    fileArrayList.add(file);
                 }
             }
         }
