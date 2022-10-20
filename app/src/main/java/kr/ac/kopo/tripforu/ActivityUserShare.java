@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import kr.ac.kopo.tripforu.AWS.S3;
 import kr.ac.kopo.tripforu.Retrofit.INetTask;
@@ -58,8 +56,6 @@ public class ActivityUserShare extends PageController implements Cloneable{
         //시작 초기 설정
         StartSeting();
 
-        //캐시 삭제
-        deleteCache(ActivityMain.context.getCacheDir());
         // 첫 페이지 앱바
         SetAppBarAction(1, false, "완료").setOnClickListener(view1 -> onClickHandler(view1, 1,  null));
         SetAppBarAction(2, true, "취소").setOnClickListener(view1 -> onClickHandler(view1, 0,  null));
@@ -104,7 +100,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
                     if (requestCode == 0){
                         ImageView img_TitleImage = findViewById(R.id.IMG_TitleImage);
                         ImageButton imgbtn_TitleImage = findViewById(R.id.IMGBTN_TitleImage);
-                        Uri uri = data.getData();
+                        Uri uri = clipData.getItemAt(0).getUri();
                         img_TitleImage.setImageBitmap(BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData())));
                         setTagToView(img_TitleImage, "uriId", uri);
                         imgbtn_TitleImage.setImageBitmap(null);
@@ -176,7 +172,6 @@ public class ActivityUserShare extends PageController implements Cloneable{
         acbtn_AddContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 ScrollView layout_UserShareContent = findViewById(R.id.LAYOUT_UserShareContents);
 
                 if (getTagFromView(view, "layoutCheck").equals("true")){
@@ -248,10 +243,10 @@ public class ActivityUserShare extends PageController implements Cloneable{
                 Schedule putSchedule = (Schedule)subIntent.getSerializableExtra("putSchedule");
 
                 // SharedSchedule 값 넣기
-                sharedSchedule = addSharedScheduleData(fileArrayList, sharedSchedule, putSchedule);
+                SharedSchedule sch = addSharedScheduleData(fileArrayList, sharedSchedule, putSchedule);
 
                 //데이터 업로드
-                ServerController.getInstance().uploadSchedule(sharedSchedule, putSchedule);
+                ServerController.getInstance().uploadSchedule(sch, putSchedule);
                 break;
             case 2:
                 //2페이지 확인
@@ -527,35 +522,22 @@ public class ActivityUserShare extends PageController implements Cloneable{
             out = new FileOutputStream(file);
 
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            
+            out.close();
         }
         catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            try {
-                out.close();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     //Bitmap 이미지 jpg변환
     private File changeJPG(ImageView imageView){
+        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
         File file = null;
-        try {
-            file = File.createTempFile("bmFile",".jpg", ActivityMain.context.getCacheDir());
-            BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-            if (!drawable.equals(null)){
-                Bitmap bitmap = drawable.getBitmap();
-                //임시 디렉토리(캐쉬 디렉토리) 주소값 생성해주고 넣어주고 Tag로 주소값 넣어주기.
-                BitmapConvertFile(bitmap,  file.toString());
-                file = new File(file.toString());
-                Log.d("TAG", "changeJPG: " + file);
-            }
-        }catch (IOException e){
-
+        if (drawable != null){
+            Bitmap bitmap = drawable.getBitmap();
+            BitmapConvertFile(bitmap, getTagFromView(imageView, "uriId")+ ".jpg");
+            file = new File(getTagFromView(imageView, "uriId") + ".jpg");
         }
         return file;
     }
@@ -642,7 +624,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
         });
         ImageView img_Handle = v2.findViewById(R.id.IMG_Handle);
         img_Handle.setVisibility(View.VISIBLE);
-        img_Handle.setImageResource(R.drawable.ic_triangle_size);
+        img_Handle.setImageResource(R.drawable.ic_down_arrow);
     }
 
     //이미지 id 부여 및 웨이포인트 추가
@@ -652,14 +634,14 @@ public class ActivityUserShare extends PageController implements Cloneable{
         tempImgId[1] = INetTask.getInstance().getAvailableImageId();
         tempImgId[2] = INetTask.getInstance().getAvailableImageId();
         ViewGroup layout_SharedContent = findViewById(R.id.LAYOUT_SharedContent);
-        TextView textView = layout_SharedContent.getChildAt(a).findViewById(R.id.TEXT_PointDescText);
-        if (textView.length() == 0){
+        EditText editText = layout_SharedContent.getChildAt(a).findViewById(R.id.EDT_ContentDetailText);
+        if (editText.length() == 0){
             String contentText = "";
             sharedSchedule.addWaypoint(
                     Integer.parseInt(getTagFromView(layout_SharedContent.getChildAt(a), "layout_WaypointId")),
                     tempImgId, contentText);
         }else{
-            String contentText = textView.getText().toString();
+            String contentText = editText.getText().toString();
             sharedSchedule.addWaypoint(
                     Integer.parseInt(getTagFromView(layout_SharedContent.getChildAt(a), "layout_WaypointId")),
                     tempImgId, contentText);
@@ -680,9 +662,8 @@ public class ActivityUserShare extends PageController implements Cloneable{
         sharedSchedule.setTitleText(edt_TitleText.getText().toString());
         sharedSchedule.setDescriptionText(edt_ContentText.getText().toString());
         sharedSchedule.setTitleImgId(INetTask.getInstance().getAvailableImageId());
-
         file = changeJPG(img_TitleImage);
-        fileArrayList.add(file);
+        fileArrayList.set(0, file);
         if (layout_SharedContent != null){
             for (int a = 0; a < layout_SharedContent.getChildCount(); a++){
                 // 이미지 서버에 보낸 후 Id값 가져오기
@@ -693,40 +674,10 @@ public class ActivityUserShare extends PageController implements Cloneable{
                 imageViewArrayList.add(layout_SharedContent.getChildAt(a).findViewById(R.id.IMG_PointDescImg3));
                 for (int b = 0; b < 3; b++){
                     file = changeJPG(imageViewArrayList.get(b));
-                    fileArrayList.add(file);
+                    fileArrayList.set(b+1, file);
                 }
-            }
-        }
-        File directory = new File(ActivityMain.context.getCacheDir()+"");
-        File[] files = directory.listFiles();
-        ArrayList<String> filesNameList = new ArrayList<>();
-        for (int i = 0; i< files.length; i++) {
-            filesNameList.add(files[i].getName());
-        }
-        for (int i = 0; i < fileArrayList.size(); i++){
-            if (fileArrayList.get(i) != null){
-                Log.d("TAG", "addSharedScheduleData: " + fileArrayList.get(i));
-                Log.d("TAG", "addSharedScheduleData: " + filesNameList.get(i));
-                S3.getInstance(getApplicationContext()).uploadWithTransferUtilty(filesNameList.get(i),fileArrayList.get(i));
             }
         }
         return sharedSchedule;
-    }
-
-    public boolean deleteCache(File dir){
-        //File이 Null 인지 Null이 아니라면 폴더인지 체크
-        if(dir != null && dir.isDirectory()){
-            //Null도 아니고 폴더도 아니라면 폴더안 파일 리스트를 호출
-            String[] children = dir.list();
-            //파일 리스트를 반복문으로 호출
-            for(String child : children){
-                //파일 리스트중 폴더가 존재할 수 있기 때문에 재귀호출
-                boolean isSuccess = deleteCache(new File(dir, child));
-                if(!isSuccess){
-                    return false;
-                }
-            }
-        }
-        return dir.delete();
     }
 }

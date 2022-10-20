@@ -65,7 +65,6 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="16dp"
                     android:visibility="gone"
-                    android:scaleType="centerInside"
                     android:id="@+id/IMG_Handle"/>
             </LinearLayout>
         </LinearLayout>
