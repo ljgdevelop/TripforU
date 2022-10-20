@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -73,6 +74,8 @@ public class ActivityUserShare extends PageController implements Cloneable{
 
         //메인 스크롤 뷰 터치 막기
         findViewById(R.id.LAYOUT_UserShareContainer).setOnTouchListener(((view, motionEvent) -> { return true; }));
+
+
     }
 
     //이미지 클릭 후 사진 추가 기능
@@ -560,22 +563,34 @@ public class ActivityUserShare extends PageController implements Cloneable{
             out = new FileOutputStream(file);
 
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            
-            out.close();
         }
         catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     //Bitmap 이미지 jpg변환
     private File changeJPG(ImageView imageView){
-        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
         File file = null;
-        if (drawable != null){
-            Bitmap bitmap = drawable.getBitmap();
-            BitmapConvertFile(bitmap, getTagFromView(imageView, "uriId")+ ".jpg");
-            file = new File(getTagFromView(imageView, "uriId") + ".jpg");
+        try {
+            file = File.createTempFile("bmFile",".jpg", ActivityMain.context.getCacheDir());
+            BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+            if (!drawable.equals(null)){
+                Bitmap bitmap = drawable.getBitmap();
+                //임시 디렉토리(캐쉬 디렉토리) 주소값 생성
+                BitmapConvertFile(bitmap,  file.toString());
+                file = new File(file.toString());
+                Log.d("TAG", "changeJPG: " + file);
+            }
+        }catch (IOException e){
+
         }
         return file;
     }
@@ -719,6 +734,36 @@ public class ActivityUserShare extends PageController implements Cloneable{
                 }
             }
         }
+        File directory = new File(ActivityMain.context.getCacheDir()+"");
+        File[] files = directory.listFiles();
+        ArrayList<String> filesNameList = new ArrayList<>();
+        for (int i = 0; i< files.length; i++) {
+            filesNameList.add(files[i].getName());
+        }
+        for (int i = 0; i < fileArrayList.size(); i++){
+            if (fileArrayList.get(i) != null){
+                Log.d("TAG", "addSharedScheduleData: " + fileArrayList.get(i));
+                Log.d("TAG", "addSharedScheduleData: " + filesNameList.get(i));
+                S3.getInstance(getApplicationContext()).uploadWithTransferUtilty(filesNameList.get(i),fileArrayList.get(i));
+            }
+        }
         return sharedSchedule;
+    }
+
+    public boolean deleteCache(File dir){
+        //File이 Null 인지 Null이 아니라면 폴더인지 체크
+        if(dir != null && dir.isDirectory()){
+            //Null도 아니고 폴더도 아니라면 폴더안 파일 리스트를 호출
+            String[] children = dir.list();
+            //파일 리스트를 반복문으로 호출
+            for(String child : children){
+                //파일 리스트중 폴더가 존재할 수 있기 때문에 재귀호출
+                boolean isSuccess = deleteCache(new File(dir, child));
+                if(!isSuccess){
+                    return false;
+                }
+            }
+        }
+        return dir.delete();
     }
 }
