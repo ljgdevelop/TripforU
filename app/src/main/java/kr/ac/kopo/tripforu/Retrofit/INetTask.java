@@ -196,17 +196,15 @@ public class INetTask {
             }
         });
         try {
-            
-            Gson gson = new Gson();
-    
             ArrayList<SharedSchedule> newObj = new ArrayList<>();
-            //JSONArray json = JsonController.convertStringTOJArray();
+            
             StringBuilder json = new StringBuilder();
             List<GetRecommend> jsonList = future.get();
-            for (GetRecommend recommend:jsonList) {
-                json.append(recommend.getRecommendSchedule());
-                newObj.add(recommend.getRecommendSchedule());
-            }
+            if(jsonList != null)
+                for (GetRecommend recommend:jsonList) {
+                    json.append(recommend.getRecommendSchedule());
+                    newObj.add(recommend.getRecommendSchedule());
+                }
             
             return newObj;
             

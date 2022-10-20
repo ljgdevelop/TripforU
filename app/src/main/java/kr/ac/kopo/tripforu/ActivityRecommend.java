@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +24,14 @@ public class ActivityRecommend extends PageController {
     String baseImgUrl = "";
     
     @Override protected boolean useToolbar(){ return true; }
+    @Override
+    public void onBackPressed() {
+        if(((HorizontalScrollView)findViewById(R.id.LAYOUT_Recommend)).getScrollX() > 0)
+            TabHorizontalScroll(findViewById(R.id.LAYOUT_Recommend), 0);
+        else
+            super.onBackPressed();
+        
+    }
     
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override

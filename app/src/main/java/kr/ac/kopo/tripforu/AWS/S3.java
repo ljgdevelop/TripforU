@@ -64,7 +64,7 @@ public class S3 {
     
     // aws S3 client 생성
     private void init(Context context) {
-        JSONObject jObj = JsonController.readJsonObjFromAssets("json/awsS3Key.json", context);
+        JSONObject jObj = JsonController.readJsonObjFromAssets("json/awsS3.json", context);
         this.accessKey = jObj.get("accessKey").toString();
         this.secretKey = jObj.get("secretAccessKey").toString();
         this.context = context;
