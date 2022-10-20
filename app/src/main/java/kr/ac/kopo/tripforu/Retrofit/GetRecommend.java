@@ -13,7 +13,7 @@ public class GetRecommend {
     @SerializedName("ScheduleId")
     private int scheduleId;
     @SerializedName("OwnerId")
-    private int ownerId;
+    private long ownerId;
     @SerializedName("Rating")
     private double rating;
     @SerializedName("Likes")

@@ -15,7 +15,7 @@ public class SharedSchedule {
     
     public SharedSchedule(){}
     
-    public SharedSchedule(int scheduleId, int ownerId, double rating, int likes, int sharedCount,
+    public SharedSchedule(int scheduleId, long ownerId, double rating, int likes, int sharedCount,
                           int titleImgId, String titleText, String desctriptionText,
                           ArrayList<WaypointDescription> descriptionList){
 
