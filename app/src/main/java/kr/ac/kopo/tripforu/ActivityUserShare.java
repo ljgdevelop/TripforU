@@ -74,8 +74,6 @@ public class ActivityUserShare extends PageController implements Cloneable{
 
         //메인 스크롤 뷰 터치 막기
         findViewById(R.id.LAYOUT_UserShareContainer).setOnTouchListener(((view, motionEvent) -> { return true; }));
-
-
     }
 
     //이미지 클릭 후 사진 추가 기능
@@ -248,20 +246,23 @@ public class ActivityUserShare extends PageController implements Cloneable{
                         dialog.setDialogMessage("작성하신 내용이 다른 사용자에게 공유됩니다.");
                         dialog.addButton(R.color.TEXT_Gray, "취소").setOnClickListener(v -> dialog.closeDialog());
                         dialog.addButton(R.color.APP_Main, "확인").setOnClickListener(v -> {
+    
+                            //스케쥴 값 생성
+                            Intent subIntent = getIntent();
+                            Schedule putSchedule = (Schedule)subIntent.getSerializableExtra("putSchedule");
+    
+                            // SharedSchedule 값 넣기
+                            SharedSchedule sch = addSharedScheduleData(fileArrayList, sharedSchedule, putSchedule);
+                            
+                            //데이터 업로드
+                            ServerController.getInstance().uploadSchedule(sch, putSchedule);
+                            
                             dialog.closeDialog();
                             finish();
                         });
                     }
                 });
-                //스케쥴 값 생성
-                Intent subIntent = getIntent();
-                Schedule putSchedule = (Schedule)subIntent.getSerializableExtra("putSchedule");
 
-                // SharedSchedule 값 넣기
-                SharedSchedule sch = addSharedScheduleData(fileArrayList, sharedSchedule, putSchedule);
-
-                //데이터 업로드
-                ServerController.getInstance().uploadSchedule(sch, putSchedule);
                 break;
             case 2:
                 //2페이지 확인
@@ -563,16 +564,11 @@ public class ActivityUserShare extends PageController implements Cloneable{
             out = new FileOutputStream(file);
 
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            
+            out.close();
         }
         catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            try {
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
