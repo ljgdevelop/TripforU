@@ -634,14 +634,14 @@ public class ActivityUserShare extends PageController implements Cloneable{
         tempImgId[1] = INetTask.getInstance().getAvailableImageId();
         tempImgId[2] = INetTask.getInstance().getAvailableImageId();
         ViewGroup layout_SharedContent = findViewById(R.id.LAYOUT_SharedContent);
-        EditText editText = layout_SharedContent.getChildAt(a).findViewById(R.id.EDT_ContentDetailText);
-        if (editText.length() == 0){
+        TextView text_PointDescText = layout_SharedContent.getChildAt(a).findViewById(R.id.TEXT_PointDescText);
+        if (text_PointDescText.length() == 0){
             String contentText = "";
             sharedSchedule.addWaypoint(
                     Integer.parseInt(getTagFromView(layout_SharedContent.getChildAt(a), "layout_WaypointId")),
                     tempImgId, contentText);
         }else{
-            String contentText = editText.getText().toString();
+            String contentText = text_PointDescText.getText().toString();
             sharedSchedule.addWaypoint(
                     Integer.parseInt(getTagFromView(layout_SharedContent.getChildAt(a), "layout_WaypointId")),
                     tempImgId, contentText);
