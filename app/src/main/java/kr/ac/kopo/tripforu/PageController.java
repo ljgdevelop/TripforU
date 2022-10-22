@@ -34,9 +34,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-interface OnBackPressedListener {
-    void onBackPressed();
-}
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class PageController extends AppCompatActivity implements OnBackPressedListener{
@@ -60,42 +57,6 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         pageStack.remove(pageStack.size() - 1);
     }
     
-    /***
-     * @author 이제경
-     * 뒤로가기 버튼 클릭시 화면 상단에 띄워져있는 레이아웃부터 종료
-     */
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-        if(pageStack.size() > 0) {
-            Page lastPage = pageStack.get(pageStack.size() - 1);
-            switch (lastPage.GetPageType()) {
-                case 0:
-                    ((Activity) lastPage.GetPageObject()).finish();
-                    break;
-                case 1:
-                    ScrollView v = ((View)lastPage.GetPageObject()).findViewById(R.id.VIEW_SchInfoScroll);
-                    String tag = v.getTag().toString();
-                    if(tag.equals("onTop") || tag.equals("init")) {
-                        v.setOnTouchListener(((view1, motionEvent) -> true));
-                        v.setTag("remove");
-                        v.smoothScrollTo(0, 0);
-                        //((ViewGroup)((View) lastPage.GetPageObject()).getParent()).removeView((View) lastPage.GetPageObject());s
-                    }
-                    else {
-                        v.smoothScrollTo(0, findViewById(R.id.LAYOUT_SchInfoMiddle).getBottom() - v.getHeight());
-                        v.setTag("onTop");
-                    }
-                    return;
-                case 2:
-                    break;
-            }
-            PopPage();
-        }
-        else{
-            //종료 팝업
-        }
-    }
     
     /***
      * @author 이제경
@@ -115,9 +76,14 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         return true;
     }
     
+    @Override
+    public void startActivity(Intent i){
+        super.startActivity(i);
+    }
     
     @Override
     public void setContentView(int layoutResID){
+        Log.d("TAG", "setContentView: newActivity");
         fullView = (FrameLayout) getLayoutInflater().inflate(R.layout.activity_main, null);
         FrameLayout activityContainer = fullView.findViewById(R.id.activity_content);
         View child = getLayoutInflater().inflate(layoutResID, activityContainer, true);
@@ -371,7 +337,7 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         int mostCloseScheduleId = 0;
         long mostCloseTime = 0;
         for (Schedule sch:ScheduleController.getSortedScheduleByDate()) {
-            LayoutScheduleTicket newTicket = new LayoutScheduleTicket(ActivityMain.context);
+            LayoutScheduleTicket newTicket = new LayoutScheduleTicket(getApplicationContext());
             newTicket.setScheduleId(sch.getId());
             remainSchedule(sch, pastSchContainer, remainSchContainer, newTicket);
 
@@ -396,40 +362,52 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
             }catch (Exception e){
                 Log.e("TAG", "showScheduleList: ", e);
             }
-
-            //길게 터치시 선택모드 진입
-            newTicket.setOnLongClickListener(view -> {
-                if(!isSelectMode) {
-                    isSelectMode = true;
-                    setTagToView(pastSchContainer, "isSelectMode", true);
-                    setTagToView(newTicket, "isSelected", true);
-                    newTicket.findViewById(R.id.LAYOUT_TicketBG).setBackground(getResources().getDrawable(R.drawable.background_ticket_selected));
-
-                    //선택모드 진입 시 취소, 삭제 버튼 출력
-                    SetAppBarAction(0, true, "취소").setOnClickListener(v -> cancelSelectMode());
-                    SetAppBarAction(2, false, "삭제").setOnClickListener(v -> {
-                        //삭제 확인 출력
-                        LayoutDialog dialog = new LayoutDialog(getApplicationContext());
-                        dialog.setDialogTitle("삭제하시겠습니까?");
-                        dialog.setDialogMessage("이 작업은 되돌릴 수 없습니다.");
-                        dialog.addButton(R.color.TEXT_Gray, "취소").setOnClickListener(v2 -> dialog.closeDialog());
-                        dialog.addButton(R.color.TEXT_Red, "삭제").setOnClickListener(v2 -> {
-                            setTagToView(pastSchContainer, "isSelectMode", false);
-                            isSelectMode = false;
-                            for (int i = pastSchContainer.getChildCount() - 1; i >= 0; i--) {
-                                if(getTagFromView(pastSchContainer.getChildAt(i), "isSelected").equals("true")){
-                                    ScheduleController.getInstance().removeScheduleById(((LayoutScheduleTicket)pastSchContainer.getChildAt(i)).getScheduleId());
-                                }
-                            }
-                            pastSchContainer.removeAllViewsInLayout();
-                            showScheduleList(pastSchContainer, remainSchContainer);
-                            ResetAppBar();
-                        });
-                    });
-                }
-                return true;
-            });
         }
+    }
+    
+    /***
+     * @author 이제경
+     * @param schedule - 생성할 뷰의 스케쥴
+     * @param pastSchContainer - 지난 일정 담는 컨테이너 LinearLayout
+     * @param remainSchContainer - 남은 일정 담는 컨테이너 LinearLayout
+     * @param newTicket - 추가될 뷰
+     *
+     *      선택모드를 활성화합니다.
+     */
+    private void setSelectMode(Schedule schedule, LinearLayout pastSchContainer,
+                               LinearLayout remainSchContainer, LayoutScheduleTicket newTicket){
+        //길게 터치시 선택모드 진입
+        newTicket.setOnLongClickListener(view -> {
+            if(!isSelectMode) {
+                isSelectMode = true;
+                setTagToView(pastSchContainer, "isSelectMode", true);
+                setTagToView(newTicket, "isSelected", true);
+                newTicket.findViewById(R.id.LAYOUT_TicketBG).setBackground(getResources().getDrawable(R.drawable.background_ticket_selected));
+                
+                //선택모드 진입 시 취소, 삭제 버튼 출력
+                SetAppBarAction(0, true, "취소").setOnClickListener(v -> cancelSelectMode());
+                SetAppBarAction(2, false, "삭제").setOnClickListener(v -> {
+                    //삭제 확인 출력
+                    LayoutDialog dialog = new LayoutDialog(getApplicationContext());
+                    dialog.setDialogTitle("삭제하시겠습니까?");
+                    dialog.setDialogMessage("이 작업은 되돌릴 수 없습니다.");
+                    dialog.addButton(R.color.TEXT_Gray, "취소").setOnClickListener(v2 -> dialog.closeDialog());
+                    dialog.addButton(R.color.TEXT_Red, "삭제").setOnClickListener(v2 -> {
+                        setTagToView(pastSchContainer, "isSelectMode", false);
+                        isSelectMode = false;
+                        for (int i = pastSchContainer.getChildCount() - 1; i >= 0; i--) {
+                            if(getTagFromView(pastSchContainer.getChildAt(i), "isSelected").equals("true")){
+                                ScheduleController.getInstance().removeScheduleById(((LayoutScheduleTicket)pastSchContainer.getChildAt(i)).getScheduleId());
+                            }
+                        }
+                        pastSchContainer.removeAllViewsInLayout();
+                        showScheduleList(pastSchContainer, remainSchContainer);
+                        ResetAppBar();
+                    });
+                });
+            }
+            return true;
+        });
     }
 
     /***
@@ -465,8 +443,10 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         String startDate = schedule.getStartDate().replaceAll("-","");
         if (intDate <= Integer.parseInt(startDate)){
             remainSchContainer.addView(newTicket);
+            newTicket.setOnLongClickListener(null);
         }else {
             pastSchContainer.addView(newTicket);
+            setSelectMode(schedule, pastSchContainer, remainSchContainer, newTicket);
         }
     }
 }
