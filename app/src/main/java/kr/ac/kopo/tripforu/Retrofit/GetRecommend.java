@@ -28,6 +28,10 @@ public class GetRecommend {
     private String descriptionText;
     @SerializedName("DescriptionList")
     private ArrayList<Description> descriptionList = new ArrayList<>();
+    @SerializedName("OwnerName")
+    private String ownerName;
+    @SerializedName("OwnerProfile")
+    private String ownerProfile;
     
     public SharedSchedule getRecommendSchedule(){
         ArrayList<SharedSchedule.WaypointDescription> descriptionList = new  ArrayList<SharedSchedule.WaypointDescription>();
@@ -40,6 +44,13 @@ public class GetRecommend {
         }
         SharedSchedule sch = new SharedSchedule(scheduleId, ownerId, rating, likes, sharedCount, titleImgId, titleText, descriptionText, descriptionList);
         return sch;
+    }
+    
+    public String[] getOwnerInfo(){
+        String[] info = new String[2];
+        info[0] = this.ownerName;
+        info[1] = this.ownerProfile;
+        return info;
     }
     
     private class Description{

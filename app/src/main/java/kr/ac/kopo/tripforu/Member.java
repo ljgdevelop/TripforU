@@ -12,6 +12,7 @@ class Member{
     public Member(int id, int scheduleId){
         this.id = id;
         this.userIdList = new ArrayList<Integer>();
+        this.userIdList.add(0);
         this.memoIdList = new ArrayList<Integer>();
         this.scheduleId = scheduleId;
     }

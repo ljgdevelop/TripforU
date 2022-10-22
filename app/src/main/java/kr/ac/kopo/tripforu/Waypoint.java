@@ -39,6 +39,8 @@ public class Waypoint implements Serializable {
         this.time = (int)time;
     }
     
+    public Waypoint(){}
+    
     public int GetId(){
         return this.id;
     }

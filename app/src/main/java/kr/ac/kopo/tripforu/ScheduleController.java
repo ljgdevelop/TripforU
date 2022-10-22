@@ -275,6 +275,11 @@ public class ScheduleController extends Application {
         getInstance().scheduleDictionary.put(schedule.getId(), schedule);
         JsonController.saveJson(getAllScheduleValue(), "schedule", context);
     }
+    public void updateSchedule(Schedule schedule){
+        getInstance().scheduleDictionary.remove(schedule.getId());
+        getInstance().scheduleDictionary.put(schedule.getId(), schedule);
+        JsonController.saveJson(getAllScheduleValue(), "schedule", context);
+    }
     
     
     public ArrayList<Member> getAllMemberValues() {
@@ -285,9 +290,11 @@ public class ScheduleController extends Application {
     }
     public void addMemberToList(Member member){
         getInstance().memberList.put(member.GetId(), member);
+        JsonController.saveJson(getAllMemberValues(), "member", context);
     }
     public void setMemberList(HashMap<Integer, Member> memberList){
         getInstance().memberList = memberList;
+        JsonController.saveJson(getAllMemberValues(), "member", context);
     }
     
     

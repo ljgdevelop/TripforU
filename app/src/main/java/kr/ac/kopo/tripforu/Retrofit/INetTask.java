@@ -15,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import kr.ac.kopo.tripforu.Schedule;
+import kr.ac.kopo.tripforu.ScheduleController;
 import kr.ac.kopo.tripforu.SharedSchedule;
 import kr.ac.kopo.tripforu.Waypoint;
 import retrofit2.Call;
@@ -198,16 +199,91 @@ public class INetTask {
         try {
             ArrayList<SharedSchedule> newObj = new ArrayList<>();
             
-            StringBuilder json = new StringBuilder();
             List<GetRecommend> jsonList = future.get();
             if(jsonList != null)
                 for (GetRecommend recommend:jsonList) {
-                    json.append(recommend.getRecommendSchedule());
-                    newObj.add(recommend.getRecommendSchedule());
+                    SharedSchedule sch = recommend.getRecommendSchedule();
+                    newObj.add(sch);
+                    ScheduleController.getInstance().addOwnerList(sch.getOwnerId() ,recommend.getOwnerInfo());
                 }
             
             return newObj;
             
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public ArrayList<SharedSchedule> getRecommendScheduleList(String keyword){
+        CompletableFuture<List<GetRecommend>> future = CompletableFuture.supplyAsync(() -> {
+            try {
+                Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/recommend/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+                
+                JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+                
+                Call<List<GetRecommend>> call = jsonPlaceHolderApi.getRecommend(keyword);
+                
+                return call.execute().body();
+            }catch (IOException e){
+                e.printStackTrace();
+                return null;
+            }
+        });
+        try {
+            ArrayList<SharedSchedule> newObj = new ArrayList<>();
+            
+            List<GetRecommend> jsonList = future.get();
+            if(jsonList != null)
+                for (GetRecommend recommend:jsonList) {
+                    SharedSchedule sch = recommend.getRecommendSchedule();
+                    newObj.add(sch);
+                    ScheduleController.getInstance().addOwnerList(sch.getOwnerId() ,recommend.getOwnerInfo());
+                }
+            
+            return newObj;
+            
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Schedule getSchedule(int id){
+        CompletableFuture<GetSchedule> future = CompletableFuture.supplyAsync(() -> {
+            try {
+                Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/schedule/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+                
+                JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+                
+                Call<GetSchedule> call = jsonPlaceHolderApi.getSchedule(id + "");
+                
+                return call.execute().body();
+            }catch (IOException e){
+                e.printStackTrace();
+                return null;
+            }
+        });
+        try {
+            Schedule newObj;
+            
+            GetSchedule jsonList = future.get();
+            if(jsonList != null){
+                Schedule sch = jsonList.getSchedule();
+                newObj = sch;
+                ScheduleController.getInstance().addScheduleToDictionary(sch);
+                return newObj;
+            }
+            
+            return null;
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
             return null;
@@ -237,7 +313,6 @@ public class INetTask {
             Gson gson = new Gson();
             
             ArrayList<Waypoint> newObj = new ArrayList<>();
-            //JSONArray json = JsonController.convertStringTOJArray();
             StringBuilder json = new StringBuilder();
             List<GetWaypoints> jsonList = future.get();
             for (GetWaypoints waypoint:jsonList) {
