@@ -56,7 +56,6 @@ public class ActivityUserShare extends PageController implements Cloneable{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usershare);
-        AddPage(this);
 
         //시작 초기 설정
         StartSeting();
@@ -97,6 +96,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
     }
 
     // 갤러리에서 이미지 가져오기
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
@@ -160,20 +160,6 @@ public class ActivityUserShare extends PageController implements Cloneable{
                     }
                 }catch (Exception e){ }
             }
-            /*else if (resultCode == RESULT_CANCELED){
-                if (requestCode == 0){
-                    ImageView img_TitleImage = findViewById(R.id.IMG_TitleImage);
-                    img_TitleImage.setImageBitmap(null);
-                    ImageButton imgbtnTitleImage = findViewById(R.id.IMGBTN_TitleImage);
-                    imgbtnTitleImage.bringToFront();
-                    imgbtnTitleImage.setImageResource(R.drawable.ic_tempimage);
-                    imgbtnTitleImage.setBackgroundColor(Color.parseColor("#E2E2E2"));
-                }else if(requestCode == 1){
-                    findViewById(R.id.IMGBTN_ContentImageRight).setVisibility(View.GONE);
-                    findViewById(R.id.IMGBTN_ContentImageLeft).setVisibility(View.GONE);
-                    ContentImageReset();
-                }
-            }*/
         }
     }
 
@@ -246,7 +232,12 @@ public class ActivityUserShare extends PageController implements Cloneable{
                         dialog.setDialogMessage("작성하신 내용이 다른 사용자에게 공유됩니다.");
                         dialog.addButton(R.color.TEXT_Gray, "취소").setOnClickListener(v -> dialog.closeDialog());
                         dialog.addButton(R.color.APP_Main, "확인").setOnClickListener(v -> {
-    
+                            
+                            if(!ServerController.getInstance().isLoggedIn()) {
+                                Toast.makeText(getApplicationContext(), "일정을 업로드 하기위해 로그인 해야 합니다.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            
                             //스케쥴 값 생성
                             Intent subIntent = getIntent();
                             Schedule putSchedule = (Schedule)subIntent.getSerializableExtra("putSchedule");
@@ -254,7 +245,13 @@ public class ActivityUserShare extends PageController implements Cloneable{
                             // SharedSchedule 값 넣기
                             SharedSchedule sch = addSharedScheduleData(fileArrayList, sharedSchedule, putSchedule);
                             
+                            //scheduleDictionary 갱신
+                            putSchedule.setSharedState(true);
+                            putSchedule.setSharedSchedule(sch);
+                            ScheduleController.getInstance().updateSchedule(putSchedule);
+                            
                             //데이터 업로드
+                            Log.d("TAG", "upLoading: " + 1);
                             ServerController.getInstance().uploadSchedule(sch, putSchedule);
                             
                             dialog.closeDialog();
@@ -573,20 +570,20 @@ public class ActivityUserShare extends PageController implements Cloneable{
     }
 
     //Bitmap 이미지 jpg변환
-    private File changeJPG(ImageView imageView){
+    private File changeJPG(ImageView imageView, int name){
         File file = null;
-        try {
-            file = File.createTempFile("bmFile",".jpg", ActivityMain.context.getCacheDir());
-            BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-            if (!drawable.equals(null)){
-                Bitmap bitmap = drawable.getBitmap();
-                //임시 디렉토리(캐쉬 디렉토리) 주소값 생성
-                BitmapConvertFile(bitmap,  file.toString());
-                file = new File(file.toString());
-                Log.d("TAG", "changeJPG: " + file);
-            }
-        }catch (IOException e){
-
+        StringBuilder path = new StringBuilder(ActivityMain.context.getCacheDir().toString());
+        path.append("/");
+        path.append(name);
+        path.append(".jpg");
+    
+        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+        if (!drawable.equals(null)){
+            Bitmap bitmap = drawable.getBitmap();
+            //임시 디렉토리(캐쉬 디렉토리) 주소값 생성
+            BitmapConvertFile(bitmap,  path.toString());
+            file = new File(path.toString());
+            Log.d("TAG", "changeJPG: " + file);
         }
         return file;
     }
@@ -679,27 +676,6 @@ public class ActivityUserShare extends PageController implements Cloneable{
         img_Handle.setImageResource(R.drawable.ic_expand_more);
     }
 
-    //이미지 id 부여 및 웨이포인트 추가
-    private void addIdAndWaypoint(SharedSchedule sharedSchedule,int a){
-        int[] tempImgId = new int[3];
-        tempImgId[0] = INetTask.getInstance().getAvailableImageId();
-        tempImgId[1] = INetTask.getInstance().getAvailableImageId();
-        tempImgId[2] = INetTask.getInstance().getAvailableImageId();
-        ViewGroup layout_SharedContent = findViewById(R.id.LAYOUT_SharedContent);
-        TextView text_PointDescText = layout_SharedContent.getChildAt(a).findViewById(R.id.TEXT_PointDescText);
-        if (text_PointDescText.length() == 0){
-            String contentText = "";
-            sharedSchedule.addWaypoint(
-                    Integer.parseInt(getTagFromView(layout_SharedContent.getChildAt(a), "layout_WaypointId")),
-                    tempImgId, contentText);
-        }else{
-            String contentText = text_PointDescText.getText().toString();
-            sharedSchedule.addWaypoint(
-                    Integer.parseInt(getTagFromView(layout_SharedContent.getChildAt(a), "layout_WaypointId")),
-                    tempImgId, contentText);
-        }
-    }
-
     //공유 스케쥴 데이터 추가
     private SharedSchedule addSharedScheduleData(ArrayList<File> fileArrayList,
                                    SharedSchedule sharedSchedule, Schedule schedule){
@@ -709,25 +685,38 @@ public class ActivityUserShare extends PageController implements Cloneable{
         ViewGroup layout_SharedContent = findViewById(R.id.LAYOUT_SharedContent);
         File file;
         byte tempByte = 0;
+        int titleImgId = INetTask.getInstance().getAvailableImageId();
         sharedSchedule.setScheduleId(schedule.getId());
         sharedSchedule.setLikes(tempByte);
         sharedSchedule.setTitleText(edt_TitleText.getText().toString());
         sharedSchedule.setDescriptionText(edt_ContentText.getText().toString());
-        sharedSchedule.setTitleImgId(INetTask.getInstance().getAvailableImageId());
-        file = changeJPG(img_TitleImage);
+        sharedSchedule.setTitleImgId(titleImgId);
+        file = changeJPG(img_TitleImage, titleImgId);
         fileArrayList.add(file);
         if (layout_SharedContent != null){
             for (int a = 0; a < layout_SharedContent.getChildCount(); a++){
-                // 이미지 서버에 보낸 후 Id값 가져오기
-                addIdAndWaypoint(sharedSchedule, a);
                 ArrayList<ImageView> imageViewArrayList = new ArrayList<>();
-                imageViewArrayList.add(layout_SharedContent.getChildAt(a).findViewById(R.id.IMG_PointDescImg1));
-                imageViewArrayList.add(layout_SharedContent.getChildAt(a).findViewById(R.id.IMG_PointDescImg2));
-                imageViewArrayList.add(layout_SharedContent.getChildAt(a).findViewById(R.id.IMG_PointDescImg3));
+                int[] ids = {R.id.IMG_PointDescImg1, R.id.IMG_PointDescImg2, R.id.IMG_PointDescImg3};
+                int[] tempImgId = new int[3];
+                
                 for (int b = 0; b < 3; b++){
-                    file = changeJPG(imageViewArrayList.get(b));
-                    fileArrayList.add(file);
+                    ImageView v = (layout_SharedContent.getChildAt(a).findViewById(ids[b]));
+                    if(((BitmapDrawable)v.getDrawable()).getBitmap() != null){
+                        
+                        tempImgId[b] = INetTask.getInstance().getAvailableImageId();
+                        
+                        imageViewArrayList.add(layout_SharedContent.getChildAt(a).findViewById(ids[b]));
+                        file = changeJPG(imageViewArrayList.get(b), tempImgId[b]);
+                        fileArrayList.add(file);
+                    }
                 }
+    
+                TextView text_PointDescText = layout_SharedContent.getChildAt(a).findViewById(R.id.TEXT_PointDescText);
+                
+                String contentText = text_PointDescText.length() == 0 ? "" : text_PointDescText.getText().toString();
+                sharedSchedule.addWaypoint(
+                    Integer.parseInt(getTagFromView(layout_SharedContent.getChildAt(a), "layout_WaypointId")),
+                    tempImgId, contentText);
             }
         }
         File directory = new File(ActivityMain.context.getCacheDir()+"");
@@ -738,9 +727,7 @@ public class ActivityUserShare extends PageController implements Cloneable{
         }
         for (int i = 0; i < fileArrayList.size(); i++){
             if (fileArrayList.get(i) != null){
-                Log.d("TAG", "addSharedScheduleData: " + fileArrayList.get(i));
-                Log.d("TAG", "addSharedScheduleData: " + filesNameList.get(i));
-                S3.getInstance(getApplicationContext()).uploadWithTransferUtilty(filesNameList.get(i),fileArrayList.get(i));
+                S3.getInstance(getApplicationContext()).uploadWithTransferUtilty(fileArrayList.get(i));
             }
         }
         return sharedSchedule;
