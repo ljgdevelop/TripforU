@@ -254,6 +254,44 @@ public class INetTask {
     }
     
     @RequiresApi(api = Build.VERSION_CODES.O)
+    public ArrayList<SharedSchedule> getRecommendScheduleList(long ownerId){
+        CompletableFuture<List<GetRecommend>> future = CompletableFuture.supplyAsync(() -> {
+            try {
+                Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/recommend/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+                
+                JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+                
+                Call<List<GetRecommend>> call = jsonPlaceHolderApi.getRecommend(ownerId);
+                
+                return call.execute().body();
+            }catch (IOException e){
+                e.printStackTrace();
+                return null;
+            }
+        });
+        try {
+            ArrayList<SharedSchedule> newObj = new ArrayList<>();
+            
+            List<GetRecommend> jsonList = future.get();
+            if(jsonList != null)
+                for (GetRecommend recommend:jsonList) {
+                    SharedSchedule sch = recommend.getRecommendSchedule();
+                    newObj.add(sch);
+                    ScheduleController.getInstance().addOwnerList(sch.getOwnerId() ,recommend.getOwnerInfo());
+                }
+            
+            return newObj;
+            
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Schedule getSchedule(int id){
         CompletableFuture<GetSchedule> future = CompletableFuture.supplyAsync(() -> {
             try {

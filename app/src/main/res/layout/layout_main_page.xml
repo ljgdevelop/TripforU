@@ -19,19 +19,63 @@
 
 
         <TextView
+            android:id="@+id/TEXT_MainRemain"
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/TEXT_Black"
             android:textSize="18sp"
             android:layout_marginBottom="16dp"
-            android:text="남은 일정"/>
+            android:text="여행 일정이 아직 없어요!"/>
 
         <LinearLayout
             android:id="@+id/LAYOUT_FirstSchedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:orientation="vertical"/>
+
+        <LinearLayout
+            android:id="@+id/LAYOUT_MainGotoAdd"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            android:layout_marginHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:background="@drawable/background_ticket_new"
+            android:elevation="2dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="새 여행 일정 만들기"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_arrow_right"
+                android:scaleType="centerInside"
+                app:tint="@color/TEXT_Gray" />
+        </LinearLayout>
 
         <include
             android:id="@+id/LAYOUT_MainGotoRecommend"
@@ -42,16 +86,4 @@
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-
-    <Button
-        android:id="@+id/LAYOUT_MainGotoAdd"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="72dp"
-        android:layout_marginHorizontal="32dp"
-        android:elevation="2dp"
-        android:backgroundTint="@color/APP_Secondary"
-        android:text="새 일정 추가하기"
-        android:textStyle="bold"/>
 </LinearLayout>

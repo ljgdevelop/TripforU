@@ -140,6 +140,17 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         this.fullView = PageController.fullView;
     }
     
+    @Override
+    protected void onAppBarSearchListener(String text){
+        super.onAppBarSearchListener(text);
+        
+        //목록 화면으로 이동
+        TabHorizontalScroll(findViewById(R.id.VIEW_MainPageTabPage), 0);
+        
+        //검색 결과 보여주기
+        
+    }
+    
     /***
      * @author 이제경
      *

@@ -12,6 +12,8 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -75,11 +77,25 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         FrameLayout activityContainer = fullView.findViewById(R.id.activity_content);
         View child = getLayoutInflater().inflate(layoutResID, activityContainer, true);
         
-        ResetAppBar();
-        
         super.setContentView(fullView);
     
+        ResetAppBar();
         Toolbar toolbar = fullView.findViewById(R.id.LAYOUT_AppBar);
+        
+        fullView.findViewById(R.id.IMG_AppBarGoBack).setOnClickListener(v -> ResetAppBar());
+        fullView.findViewById(R.id.IMG_AppBarErase).setOnClickListener(v ->
+            ((TextView)fullView.findViewById(R.id.TEXT_AppBarSearchText)).setText(""));
+        
+        EditText editText = (EditText) fullView.findViewById(R.id.TEXT_AppBarSearchText);
+        editText.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
+        editText.setOnEditorActionListener((textView, i, keyEvent) -> {
+           if(i == EditorInfo.IME_ACTION_DONE){
+               onAppBarSearchListener(editText.getText().toString());
+               return true;
+           }
+           return false;
+        });
+        
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) activityContainer.getLayoutParams();
         if(useToolbar()){
             setSupportActionBar(toolbar);
@@ -135,15 +151,38 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     }
     
     /**
-     * 앱바를 기본 상태로 초기화
-     *
      * @author 이제경
+     *
+     *      앱바를 기본 상태로 초기화
      */
     protected void ResetAppBar(){
+        //키보드가 올라와있으면 내리기
+        android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(fullView.findViewById(R.id.TEXT_AppBarSearchText).getWindowToken(), 0);
+        
         fullView.findViewById(R.id.TEXT_AppBarLeft).setVisibility(View.GONE);
         fullView.findViewById(R.id.TEXT_AppBarRight).setVisibility(View.GONE);
         fullView.findViewById(R.id.TEXT_AppBarTittle).setVisibility(View.VISIBLE);
         fullView.findViewById(R.id.IMG_AppBarRight).setVisibility(View.VISIBLE);
+        fullView.findViewById(R.id.LAYOUT_AppBarSearch).setVisibility(View.GONE);
+        fullView.findViewById(R.id.IMG_AppBarRight).setOnClickListener(v -> {
+            /*fullView.findViewById(R.id.LAYOUT_AppBarSearch).setVisibility(View.VISIBLE);
+            EditText editText = (EditText)fullView.findViewById(R.id.TEXT_AppBarSearchText);
+            editText.requestFocus();
+            imm.showSoftInput(editText, 0);*/
+            //정다빈은 보아라
+        });
+    }
+    
+    /**
+     * @author 이제경
+     *
+     *      앱바에서 검색시의 리스너
+     *      오버라이드 하여 사용
+     */
+    protected void onAppBarSearchListener(String text){
+        android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(fullView.findViewById(R.id.TEXT_AppBarSearchText).getWindowToken(), 0);
     }
     
     ObjectAnimator scrollAnimator;
@@ -318,12 +357,18 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
      */
     boolean isSelectMode = false;
     protected void showScheduleList(LinearLayout pastSchContainer, LinearLayout remainSchContainer){
+        ArrayList<Schedule> scheduleList = ScheduleController.getSortedScheduleByDate();
+        
+        if(isPassed(scheduleList.get(0).getStartDate())) {
+            remainSchContainer.removeAllViewsInLayout();
+            ((TextView)findViewById(R.id.TEXT_MainRemain)).setText("남은 여행 일정");
+        }
+        
         pastSchContainer.removeAllViewsInLayout();
-        remainSchContainer.removeAllViewsInLayout();
         int thisYear = 9999;
         int mostCloseScheduleId = 0;
         long mostCloseTime = 0;
-        for (Schedule sch:ScheduleController.getSortedScheduleByDate()) {
+        for (Schedule sch : scheduleList) {
             LayoutScheduleTicket newTicket = new LayoutScheduleTicket(getApplicationContext());
             newTicket.setScheduleId(sch.getId());
             remainSchedule(sch, pastSchContainer, remainSchContainer, newTicket);
@@ -424,12 +469,7 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     private void remainSchedule(Schedule schedule, LinearLayout pastSchContainer,
                                 LinearLayout remainSchContainer, LayoutScheduleTicket newTicket){
         //메인 화면에 남은 일정 표시
-        Date date = new Date();
-        date = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
-        int intDate = Integer.parseInt(dateFormat.format(date));
-        String startDate = schedule.getStartDate().replaceAll("-","");
-        if (intDate <= Integer.parseInt(startDate)){
+        if (isPassed(schedule.getStartDate())){
             remainSchContainer.addView(newTicket);
             newTicket.setOnLongClickListener(v -> {
                 LayoutDialog dialog = new LayoutDialog(getApplicationContext());
@@ -438,6 +478,7 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
                 dialog.addButton(R.color.TEXT_Gray, "취소").setOnClickListener(v2 -> dialog.closeDialog());
                 dialog.addButton(R.color.TEXT_Red, "삭제").setOnClickListener(v2 -> {
                     ScheduleController.getInstance().removeScheduleById(newTicket.getScheduleId());
+                    ((TextView)findViewById(R.id.TEXT_MainRemain)).setText("여행 일정이 아직 없어요!");
                     newTicket.removeAllViews();
                     dialog.closeDialog();
                 });
@@ -447,6 +488,14 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
             pastSchContainer.addView(newTicket);
             setSelectMode(schedule, pastSchContainer, remainSchContainer, newTicket);
         }
+    }
+    
+    private boolean isPassed(String date){
+        Date now = Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        int intDate = Integer.parseInt(dateFormat.format(now));
+        
+        return intDate < Integer.parseInt(date.replaceAll("-",""));
     }
     
     /***

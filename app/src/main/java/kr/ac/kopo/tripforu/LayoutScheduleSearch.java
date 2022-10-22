@@ -111,6 +111,7 @@ public class LayoutScheduleSearch extends PageController{
                 break;
         }
     }
+    
     //검색창 버튼 클릭 기능
     public void searchLayoutBtn(){
         LayoutScheduleSearch layoutScheduleSearch = new LayoutScheduleSearch();

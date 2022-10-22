@@ -31,5 +31,8 @@ public interface JsonPlaceHolderApi {
     Call<List<GetRecommend>> getRecommend(@Query("keyword") String keyword);
     
     @GET("get/")
+    Call<List<GetRecommend>> getRecommend(@Query("ownerId") long keyword);
+    
+    @GET("get/")
     Call<GetSchedule> getSchedule(@Query("id") String id);
 }

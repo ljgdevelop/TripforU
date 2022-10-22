@@ -19,11 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:id="@+id/LAYOUT_NavbarLeft">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:id="@+id/LAYOUT_AppBarDefault">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -82,6 +82,52 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@color/APP_Accent"
+                android:visibility="gone"
+                android:id="@+id/LAYOUT_AppBarSearch">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/IMG_AppBarGoBack"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/ic_arrow_back"
+                        android:scaleX="0.5"
+                        android:scaleY="0.5"
+                        android:layout_marginRight="8dp"/>
+
+                    <EditText
+                        android:id="@+id/TEXT_AppBarSearchText"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:hint="검색..."
+                        android:inputType="textPersonName"
+                        android:textColor="#5e5e5e"
+                        android:textSize="18sp"
+                        android:textStyle="normal" />
+
+                    <ImageButton
+                        android:id="@+id/IMG_AppBarErase"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginLeft="16dp"
+                        android:background="@drawable/ic_cross"
+                        android:scaleX="0.5"
+                        android:scaleY="0.5"
+                        android:layout_marginRight="16dp"/>
+                </LinearLayout>
+            </LinearLayout>
         </FrameLayout>
     </androidx.appcompat.widget.Toolbar>
 </FrameLayout>

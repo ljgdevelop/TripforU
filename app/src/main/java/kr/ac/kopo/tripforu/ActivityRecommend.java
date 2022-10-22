@@ -47,6 +47,9 @@ public class ActivityRecommend extends PageController {
         
         //서버의 이미지를 가져오기 위한 baseUrl
         baseImgUrl = JsonController.readJsonObjFromAssets("json/awsS3.json", getApplicationContext()).get("baseUrl").toString();
+    
+        //추천 일정 상세보기 페이지 가져오기
+        recommendDetail = findViewById(R.id.LAYOUT_Recommend_Detail);
         
         //스크롤 뷰를 터치를 통해 이동되지 않도록 오버라이드
         findViewById(R.id.LAYOUT_Recommend).setOnTouchListener(((view, motionEvent) -> {return true;}));
@@ -64,17 +67,25 @@ public class ActivityRecommend extends PageController {
             ((ViewGroup) findViewById(R.id.LAYOUT_Recommend_Container)).addView(banner);
             banner.setOnClickListener(this::onClick);
         }
+    }
+    
+    @Override
+    protected void onAppBarSearchListener(String text){
+        super.onAppBarSearchListener(text);
         
-        //추천 일정 상세보기 페이지 가져오기
-        recommendDetail = findViewById(R.id.LAYOUT_Recommend_Detail);
+        ((ViewGroup) findViewById(R.id.LAYOUT_Recommend_Container)).removeAllViewsInLayout();
+        
+        for (SharedSchedule sharedSchedule : INetTask.getInstance().getRecommendScheduleList(text)) {
+            LayoutRecommendBanner banner = new LayoutRecommendBanner(getApplicationContext(), 0, sharedSchedule);
+            ((ViewGroup) findViewById(R.id.LAYOUT_Recommend_Container)).addView(banner);
+            banner.setOnClickListener(this::onClick);
+        }
     }
     
     /***
      * @author 이제경
      *
      *      추천 일정 클릭 시 사용자가 업로드 한 정보를 토대로 상세보기 페이지 로드
-     *
-     *      사용자 정보 DB 연동 후 프로필 이미지와 이름 추가할 것.
      */
     private void onClick(View view) {
         //기존 정보 지우기
@@ -119,6 +130,19 @@ public class ActivityRecommend extends PageController {
         Glide.with(getApplicationContext()).load(ScheduleController.getInstance().getOwnerList(selectedSchedule.getOwnerId())[1])
             .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(60)))
             .into(titleProfile);
+        
+        //프로필 클릭 시 ownerId로 추천 일정 검색
+        titleProfile.setOnClickListener(v -> {
+            ((ViewGroup) findViewById(R.id.LAYOUT_Recommend_Container)).removeAllViewsInLayout();
+            
+            for (SharedSchedule sharedSchedule : INetTask.getInstance().getRecommendScheduleList(selectedSchedule.getOwnerId())) {
+                LayoutRecommendBanner resultBanner = new LayoutRecommendBanner(getApplicationContext(), 0, sharedSchedule);
+                ((ViewGroup) findViewById(R.id.LAYOUT_Recommend_Container)).addView(resultBanner);
+                resultBanner.setOnClickListener(this::onClick);
+            }
+    
+            onBackPressed();
+        });
     
         //배경의 체인
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) recommendDetail.findViewById(R.id.LAYOUT_Recommend_Detail_Chain1).getLayoutParams();
