@@ -19,6 +19,7 @@ public class Schedule implements Serializable {
     private ArrayList<Waypoint> wayPointList = new ArrayList<>();
     private int memberGroupId;
     private boolean isShared;
+    private SharedSchedule sharedSchedule;
     
     //생성자 : wayPointList 포함
     public Schedule(int id, String name, String destination, int days, String startDate,
@@ -58,6 +59,8 @@ public class Schedule implements Serializable {
         }
         this.isShared = false;
     }
+    
+    public Schedule(){}
     
     //id 변수의 getter setter
     public int getId(){
@@ -128,5 +131,13 @@ public class Schedule implements Serializable {
     }
     public void setMemberGroupId(int memberGroupId) {
         this.memberGroupId = memberGroupId;
+    }
+    
+    public SharedSchedule getSharedSchedule() {
+        return sharedSchedule;
+    }
+    
+    public void setSharedSchedule(SharedSchedule sharedSchedule) {
+        this.sharedSchedule = sharedSchedule;
     }
 }
