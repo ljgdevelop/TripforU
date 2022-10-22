@@ -17,17 +17,23 @@ import kr.ac.kopo.tripforu.Retrofit.INetTask;
 import androidx.annotation.RequiresApi;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ActivityRecommend extends PageController {
-    FrameLayout recommendDetail;
-    String baseImgUrl = "";
+    private FrameLayout recommendDetail;
+    private SharedSchedule selectedSchedule;
+    private String baseImgUrl = "";
     
     @Override protected boolean useToolbar(){ return true; }
     @Override
     public void onBackPressed() {
-        if(((HorizontalScrollView)findViewById(R.id.LAYOUT_Recommend)).getScrollX() > 0)
+        if(((HorizontalScrollView)findViewById(R.id.LAYOUT_Recommend)).getScrollX() > 10) {
             TabHorizontalScroll(findViewById(R.id.LAYOUT_Recommend), 0);
+            ResetAppBar();
+        }
         else
             super.onBackPressed();
         
@@ -38,9 +44,6 @@ public class ActivityRecommend extends PageController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommend);
-    
-        //추천 일정 목록 받아오기
-        
         
         //서버의 이미지를 가져오기 위한 baseUrl
         baseImgUrl = JsonController.readJsonObjFromAssets("json/awsS3.json", getApplicationContext()).get("baseUrl").toString();
@@ -54,10 +57,6 @@ public class ActivityRecommend extends PageController {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(size.x, ViewGroup.LayoutParams.WRAP_CONTENT);
         ((View)findViewById(R.id.LAYOUT_Recommend_Container).getParent()).setLayoutParams(lp);
         ((View)findViewById(R.id.LAYOUT_Recommend_WPContainer).getParent()).setLayoutParams(lp);
-        
-        //추천 여행 일정 받아오기
-        /*ScheduleController.syncJsonToObject(JsonController.readJsonArrayFromAssets("json/sharedSchedule.json", getApplicationContext()),
-            SharedSchedule.class.toString());*/
         
         //추천 여행 일정 보여주기
         for (SharedSchedule sharedSchedule : INetTask.getInstance().getRecommendScheduleList()) {
@@ -78,9 +77,25 @@ public class ActivityRecommend extends PageController {
      *      사용자 정보 DB 연동 후 프로필 이미지와 이름 추가할 것.
      */
     private void onClick(View view) {
+        //기존 정보 지우기
+        ViewGroup vg = findViewById(R.id.LAYOUT_Recommend_Detail_Container);
+        vg.removeViews(1, vg.getChildCount() - 1);
+        
         //LayoutRecommendBanner 객체와 SharedSchedule 가져오기
         LayoutRecommendBanner banner = (LayoutRecommendBanner) view;
-        SharedSchedule sharedSchedule = banner.getSharedSchedule();
+        selectedSchedule = banner.getSharedSchedule();
+        
+        //앱 바 설정
+        SetAppBarAction(0, true, "이전").setOnClickListener(v -> onBackPressed());
+        SetAppBarAction(1, false, "가져오기").setOnClickListener(v -> {
+            LayoutDialog dialog = new LayoutDialog(getApplicationContext());
+            dialog.setDialogTitle("일정 가져오기");
+            dialog.setDialogMessage("이 여행 일정을 다운로드 하고 저장하시겠습니까?");
+            dialog.addButton(R.color.TEXT_Gray, "취소").setOnClickListener(v2 -> dialog.closeDialog());
+            dialog.addButton(R.color.TEXT_Black, "확인").setOnClickListener(v2 -> {
+                donwloadSchedule();
+            });
+        });
         
         //머릿글
         ImageView titleImg = recommendDetail.findViewById(R.id.IMG_Recommend_Detail_TitleImg);
@@ -91,14 +106,19 @@ public class ActivityRecommend extends PageController {
     
         //메인 이미지 설정
         StringBuilder url = new StringBuilder(baseImgUrl);
-        url.append(sharedSchedule.getTitleImgId());
+        url.append(selectedSchedule.getTitleImgId());
         url.append(".jpg");
         Glide.with(getApplicationContext()).load(url.toString()).into(titleImg);
         
         //텍스트 입력
-        titleText.setText(sharedSchedule.getTitleText());
-        titleDesc.setText(sharedSchedule.getDescriptionText());
-        /*여기에 프로필 이미지와 이름 추가할 것.*/
+        titleText.setText(selectedSchedule.getTitleText());
+        titleDesc.setText(selectedSchedule.getDescriptionText());
+        
+        //프로필 이름 이미지 삽입
+        titleName.setText(ScheduleController.getInstance().getOwnerList(selectedSchedule.getOwnerId())[0]);
+        Glide.with(getApplicationContext()).load(ScheduleController.getInstance().getOwnerList(selectedSchedule.getOwnerId())[1])
+            .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(60)))
+            .into(titleProfile);
     
         //배경의 체인
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) recommendDetail.findViewById(R.id.LAYOUT_Recommend_Detail_Chain1).getLayoutParams();
@@ -138,5 +158,22 @@ public class ActivityRecommend extends PageController {
         
         //페이지 이동
         TabHorizontalScroll(findViewById(R.id.LAYOUT_Recommend), 1);
+    }
+    
+    private void donwloadSchedule(){
+        //서버에서 일정을 가져옵니다.
+        Schedule schedule = INetTask.getInstance().getSchedule(selectedSchedule.getScheduleId());
+        schedule.setSharedSchedule(selectedSchedule);
+        if(ScheduleController.getInstance().getMemberByID(-1) == null)
+            ScheduleController.getInstance().addMemberToList(new Member(-1, -1));
+        schedule.setMemberGroupId(-1);
+        ScheduleController.getInstance().addScheduleToDictionary(schedule);
+        Log.d("TAG", "donwloadSchedule: " + schedule.getId());
+        
+        //다이얼로그 종료
+        LayoutDialog.instance.closeDialog();
+        
+        //액티비티 종료 및 새로고침
+        refreshActivity(ActivityMain.class);
     }
 }
