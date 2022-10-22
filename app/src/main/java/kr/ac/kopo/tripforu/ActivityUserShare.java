@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -60,6 +61,9 @@ public class ActivityUserShare extends PageController implements Cloneable{
         //시작 초기 설정
         StartSeting();
 
+        //캐시 삭제
+        deleteCache(ActivityMain.context.getCacheDir());
+
         // 첫 페이지 앱바
         SetAppBarAction(1, false, "완료").setOnClickListener(view1 -> onClickHandler(view1, 1,  null));
         SetAppBarAction(2, true, "취소").setOnClickListener(view1 -> onClickHandler(view1, 0,  null));
@@ -73,6 +77,15 @@ public class ActivityUserShare extends PageController implements Cloneable{
 
         //메인 스크롤 뷰 터치 막기
         findViewById(R.id.LAYOUT_UserShareContainer).setOnTouchListener(((view, motionEvent) -> { return true; }));
+
+        Button btn_Temp = findViewById(R.id.BTN_Temp);
+        btn_Temp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Alarm alarm = new Alarm();
+                alarm.schAlarm();
+            }
+        });
     }
 
     //이미지 클릭 후 사진 추가 기능

@@ -93,7 +93,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         checkFirstRun();
         
         //layout_main_schedule_list 화면에 여행 일정 목록 표시
-        showScheduleList(findViewById(R.id.LAYOUT_SchListContainer), findViewById(R.id.LAYOUT_FirstSchedule));
+        showScheduleList(findViewById(R.id.LAYOUT_SchListContainer), findViewById(R.id.LAYOUT_FirstSchedule), 0);
         
         //탭 페이지 설정
         settingTabPage();
@@ -135,7 +135,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
             Intent i = new Intent(this, ActivityNewSchedule.class);
             startActivity(i);
         });
-        
+
         //지금 액티비티의 fullView 가져오기
         this.fullView = PageController.fullView;
     }
@@ -148,7 +148,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         TabHorizontalScroll(findViewById(R.id.VIEW_MainPageTabPage), 0);
         
         //검색 결과 보여주기
-        
+
     }
     
     /***
@@ -217,7 +217,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
             }
         });
         
-        int ids[] = {R.id.LAYOUT_SchList, R.id.LAYOUT_MainPage, R.id.LAYOUT_Account};
+        int ids[] = {R.id.LAYOUT_SchList, R.id.LAYOUT_MainPage, R.id.LAYOUT_Account, R.id.LAYOUT_SearchView};
         int navIds[] = {R.id.LAYOUT_NAVSchList, R.id.LAYOUT_NAVHome, R.id.LAYOUT_NAVAccount};
         for (int i = 0; i < ids.length; i++) {
             //각 페이지의 너비를 화면 크기와 맞춤
@@ -226,19 +226,21 @@ public class ActivityMain extends PageController implements OnBackPressedListene
             findViewById(ids[i]).setLayoutParams(lp);
         
             //하단의 탭을 눌렀을때의 이벤트 리스너
-            findViewById(navIds[i]).setTag(i);
-            findViewById(navIds[i]).setOnClickListener(view -> {
-                TabHorizontalScroll(findViewById(R.id.VIEW_MainPageTabPage), (Integer) view.getTag());
-                for (int id: navIds) {
-                    ((ImageView)findViewById(id).findViewById(R.id.IMG_NAVicon)).setColorFilter(getResources().getColor(R.color.TEXT_Black));
-                    ((TextView)findViewById(id).findViewById(R.id.IMG_NAVtext)).setTextColor(getResources().getColor(R.color.TEXT_Black));
-                }
-                ((ImageView)view.findViewById(R.id.IMG_NAVicon)).setColorFilter(getResources().getColor(R.color.APP_Main));
-                ((TextView)view.findViewById(R.id.IMG_NAVtext)).setTextColor(getResources().getColor(R.color.APP_Main));
-    
-                cancelSelectMode();
-                ResetAppBar();
-            });
+            if (i < 3){
+                findViewById(navIds[i]).setTag(i);
+                findViewById(navIds[i]).setOnClickListener(view -> {
+                    TabHorizontalScroll(findViewById(R.id.VIEW_MainPageTabPage), (Integer) view.getTag());
+                    for (int id: navIds) {
+                        ((ImageView)findViewById(id).findViewById(R.id.IMG_NAVicon)).setColorFilter(getResources().getColor(R.color.TEXT_Black));
+                        ((TextView)findViewById(id).findViewById(R.id.IMG_NAVtext)).setTextColor(getResources().getColor(R.color.TEXT_Black));
+                    }
+                    ((ImageView)view.findViewById(R.id.IMG_NAVicon)).setColorFilter(getResources().getColor(R.color.APP_Main));
+                    ((TextView)view.findViewById(R.id.IMG_NAVtext)).setTextColor(getResources().getColor(R.color.APP_Main));
+
+                    cancelSelectMode();
+                    ResetAppBar();
+                });
+            }
         }
     }
     
