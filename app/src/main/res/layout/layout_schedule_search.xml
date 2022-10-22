@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/APP_Accent"
     android:orientation="vertical"
-    android:visibility="gone">
+    android:visibility="invisible">
     <include
         layout="@layout/layout_searchview"/>
     <ScrollView
@@ -14,7 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingBottom="56dp">
+            android:paddingBottom="56dp"
+            android:layout_marginHorizontal="8dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -24,7 +25,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="남은 일정"
+                    android:text="남은 여행 일정"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/TEXT_Black"
@@ -45,7 +46,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="지난 일정"
+                    android:text="지난 여행 일정"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/TEXT_Black"

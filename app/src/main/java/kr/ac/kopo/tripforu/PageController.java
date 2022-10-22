@@ -166,10 +166,14 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         fullView.findViewById(R.id.IMG_AppBarRight).setVisibility(View.VISIBLE);
         fullView.findViewById(R.id.LAYOUT_AppBarSearch).setVisibility(View.GONE);
         fullView.findViewById(R.id.IMG_AppBarRight).setOnClickListener(v -> {
-            /*fullView.findViewById(R.id.LAYOUT_AppBarSearch).setVisibility(View.VISIBLE);
+            fullView.findViewById(R.id.LAYOUT_AppBarSearch).setVisibility(View.VISIBLE);
             EditText editText = (EditText)fullView.findViewById(R.id.TEXT_AppBarSearchText);
             editText.requestFocus();
-            imm.showSoftInput(editText, 0);*/
+            imm.showSoftInput(editText, 0);
+            fullView.findViewById(R.id.LAYOUT_SearchView).setVisibility(View.VISIBLE);
+            TabHorizontalScroll(fullView.findViewById(R.id.VIEW_MainPageTabPage),3);
+            LayoutScheduleSearch layoutScheduleSearch = new LayoutScheduleSearch();
+            layoutScheduleSearch.searchLayoutBtn();
             //정다빈은 보아라
         });
     }
@@ -356,10 +360,10 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
      *      목록 화면에 여행 일정들을 표시합니다.
      */
     boolean isSelectMode = false;
-    protected void showScheduleList(LinearLayout pastSchContainer, LinearLayout remainSchContainer){
+    protected void showScheduleList(LinearLayout pastSchContainer, LinearLayout remainSchContainer, int check){
         ArrayList<Schedule> scheduleList = ScheduleController.getSortedScheduleByDate();
-        
-        if(isPassed(scheduleList.get(0).getStartDate())) {
+
+        if(isPassed(scheduleList.get(0).getStartDate()) && check == 0) {
             remainSchContainer.removeAllViewsInLayout();
             ((TextView)findViewById(R.id.TEXT_MainRemain)).setText("남은 여행 일정");
         }
@@ -369,9 +373,9 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         int mostCloseScheduleId = 0;
         long mostCloseTime = 0;
         for (Schedule sch : scheduleList) {
-            LayoutScheduleTicket newTicket = new LayoutScheduleTicket(getApplicationContext());
+            LayoutScheduleTicket newTicket = new LayoutScheduleTicket(ActivityMain.context);
             newTicket.setScheduleId(sch.getId());
-            remainSchedule(sch, pastSchContainer, remainSchContainer, newTicket);
+            remainSchedule(sch, pastSchContainer, remainSchContainer, newTicket, check);
 
             //년도가 바뀔때마나 표시
             int scheduleYear = Integer.parseInt(sch.getStartDate().split("-")[0]);
@@ -399,15 +403,15 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     
     /***
      * @author 이제경
-     * @param schedule - 생성할 뷰의 스케쥴
      * @param pastSchContainer - 지난 일정 담는 컨테이너 LinearLayout
      * @param remainSchContainer - 남은 일정 담는 컨테이너 LinearLayout
      * @param newTicket - 추가될 뷰
      *
      *      선택모드를 활성화합니다.
      */
-    private void setSelectMode(Schedule schedule, LinearLayout pastSchContainer,
-                               LinearLayout remainSchContainer, LayoutScheduleTicket newTicket){
+    private void setSelectMode(LinearLayout pastSchContainer, LinearLayout remainSchContainer,
+                               LayoutScheduleTicket newTicket, int check){
+        Log.d("TAG", "setSelectMode121212: "+ check +"확인");
         //길게 터치시 선택모드 진입
         newTicket.setOnLongClickListener(view -> {
             if(!isSelectMode) {
@@ -433,7 +437,7 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
                             }
                         }
                         pastSchContainer.removeAllViewsInLayout();
-                        showScheduleList(pastSchContainer, remainSchContainer);
+                        showScheduleList(pastSchContainer, remainSchContainer, check);
                         ResetAppBar();
                         dialog.closeDialog();
                     });
@@ -467,7 +471,8 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
      * @param newTicket - 추가될 뷰
      */
     private void remainSchedule(Schedule schedule, LinearLayout pastSchContainer,
-                                LinearLayout remainSchContainer, LayoutScheduleTicket newTicket){
+                                LinearLayout remainSchContainer, LayoutScheduleTicket newTicket,
+                                int check){
         //메인 화면에 남은 일정 표시
         if (isPassed(schedule.getStartDate())){
             remainSchContainer.addView(newTicket);
@@ -486,7 +491,7 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
             });
         }else {
             pastSchContainer.addView(newTicket);
-            setSelectMode(schedule, pastSchContainer, remainSchContainer, newTicket);
+            setSelectMode(pastSchContainer, remainSchContainer, newTicket, check);
         }
     }
     
