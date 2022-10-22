@@ -89,6 +89,8 @@ public class LayoutScheduleTicket extends FrameLayout {
             
             if(schedule.checkIsShared())
                 findViewById(R.id.IMG_IsSharedIcon).setVisibility(VISIBLE);
+            else if(schedule.getSharedSchedule() != null)
+                findViewById(R.id.IMG_IsDownloadedIcon).setVisibility(VISIBLE);
             
             ((TextView)findViewById(R.id.TEXT_TicketTitle)).setText(schedule.getName());
             
@@ -193,7 +195,6 @@ public class LayoutScheduleTicket extends FrameLayout {
                     else if (y < 10 && scroll.getTag() == "remove") {
                         scroll.setTag("removed");
                         ((ViewGroup) fullView).removeView(view);
-                        PageController.PopPage();
                     }
                 }catch(Exception e){
                     Log.e("TAG", "ShowScheduleInfo: ", e);
@@ -201,17 +202,24 @@ public class LayoutScheduleTicket extends FrameLayout {
             });
         });
         
-        //공유하기 버튼 클릭시
-        btn_schInfoShare.setOnClickListener(button -> {
-            Intent i = new Intent(getContext(), ActivityUserShare.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.putExtra("putSchedule", schedule);
-            context.startActivity(i);
-        });
-        
-        //뒤로기기키로 닫기 위해 페이지 등록
-        PageController.AddPage(new Page(view, PageController.TYPE_VIEW));
-        
+        //공유하기 버튼
+        if(!schedule.checkIsShared() && schedule.getSharedSchedule() == null) // <== 공유받지 않고 공유하지 않은 일정
+            btn_schInfoShare.setOnClickListener(button -> {
+                Intent i = new Intent(getContext(), ActivityUserShare.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("putSchedule", schedule);
+                context.startActivity(i);
+            });
+        else if(schedule.checkIsShared() && schedule.getSharedSchedule() == null) { // <== 공유한 일정
+            btn_schInfoShare.setOnClickListener(null);
+            btn_schInfoShare.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_outline_button_off));
+            btn_schInfoShare.setTextColor(getResources().getColor(R.color.TEXT_Gray));
+        }
+        else{ // <== 공유받은 일정
+            btn_schInfoShare.setOnClickListener(null);
+            btn_schInfoShare.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_outline_button_off));
+            btn_schInfoShare.setTextColor(getResources().getColor(R.color.TEXT_Gray));
+        }
         return view;
     }
     
@@ -230,12 +238,12 @@ public class LayoutScheduleTicket extends FrameLayout {
             ImageView wpIcon = (ImageView) layoutWP.findViewById(R.id.IMG_WaypointIcon);
             
             wpName.setText(waypoint.GetName());
-            int time = waypoint.GetTime();
-            String disc = time + "분";
-            if(time > 60) {
-                disc = (time / 60) + "시간 ";
-                if(time % 60 > 0)
-                    disc += (time % 60) + "분";
+                int time = waypoint.GetTime();
+                String disc = time + "분";
+                if(time > 60) {
+                    disc = (time / 60) + "시간 ";
+                    if(time % 60 > 0)
+                        disc += (time % 60) + "분";
             }
             wpDisc.setText(disc);
             

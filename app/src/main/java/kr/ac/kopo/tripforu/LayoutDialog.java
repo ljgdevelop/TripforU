@@ -74,7 +74,6 @@ public class LayoutDialog extends LinearLayout {
             fullView.findViewById(R.id.LAYOUT_DialogContainer).setTranslationY(-1 * (Integer) anim.getAnimatedValue());
         });
         va.start();
-        PageController.AddPage(this);
     }
     
     private void syncContext(){
