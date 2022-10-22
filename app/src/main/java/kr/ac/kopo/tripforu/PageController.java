@@ -37,7 +37,6 @@ import java.util.Locale;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class PageController extends AppCompatActivity implements OnBackPressedListener{
-    private static ArrayList<Page> pageStack = new ArrayList<>();
     public boolean isLoggedIn = false;
     final static byte TYPE_ACTIVITY = 0;
     final static byte TYPE_VIEW = 1;
@@ -45,18 +44,6 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     public SharedPreferences prefs;
     
     protected static FrameLayout fullView = null;
-    
-    public static void AddPage(Page page){
-        pageStack.add(page);
-    }
-    public static void AddPage(View page){
-        pageStack.add(new Page(page, TYPE_VIEW));
-    }
-    public static void AddPage(Activity activity){ pageStack.add(new Page(activity, TYPE_ACTIVITY)); }
-    public static void PopPage(){
-        pageStack.remove(pageStack.size() - 1);
-    }
-    
     
     /***
      * @author 이제경
@@ -403,6 +390,7 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
                         pastSchContainer.removeAllViewsInLayout();
                         showScheduleList(pastSchContainer, remainSchContainer);
                         ResetAppBar();
+                        dialog.closeDialog();
                     });
                 });
             }
@@ -443,10 +431,41 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         String startDate = schedule.getStartDate().replaceAll("-","");
         if (intDate <= Integer.parseInt(startDate)){
             remainSchContainer.addView(newTicket);
-            newTicket.setOnLongClickListener(null);
+            newTicket.setOnLongClickListener(v -> {
+                LayoutDialog dialog = new LayoutDialog(getApplicationContext());
+                dialog.setDialogTitle("삭제하시겠습니까?");
+                dialog.setDialogMessage("이 작업은 되돌릴 수 없습니다.");
+                dialog.addButton(R.color.TEXT_Gray, "취소").setOnClickListener(v2 -> dialog.closeDialog());
+                dialog.addButton(R.color.TEXT_Red, "삭제").setOnClickListener(v2 -> {
+                    ScheduleController.getInstance().removeScheduleById(newTicket.getScheduleId());
+                    newTicket.removeAllViews();
+                    dialog.closeDialog();
+                });
+                return true;
+            });
         }else {
             pastSchContainer.addView(newTicket);
             setSelectMode(schedule, pastSchContainer, remainSchContainer, newTicket);
         }
+    }
+    
+    /***
+     * @author 이제경
+     * @param cls - 새로고침 할 액티비티의 클래스
+     * <p>
+     *      액티비티를 새로고침합니다.
+     * </p>
+     */
+    public void refreshActivity(Class<?> cls){
+        finish();//인텐트 종료
+        overridePendingTransition(0, 0);//인텐트 효과 없애기
+        Intent intent = new Intent(this, cls); //인텐트
+        startActivity(intent); //액티비티 열기
+    }
+    public void refreshActivity(){
+        finish();//인텐트 종료
+        overridePendingTransition(0, 0);//인텐트 효과 없애기
+        Intent intent = getIntent(); //인텐트
+        startActivity(intent); //액티비티 열기
     }
 }

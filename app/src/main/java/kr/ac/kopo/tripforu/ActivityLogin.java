@@ -77,9 +77,11 @@ public class ActivityLogin extends PageController {
             Log.i("[카카오] 로그인", "성공");
             updateKakaoLogin();
             //checkClientHasToken();
-            Intent intent = getIntent();
+            Intent intent = new Intent(getApplicationContext(), ActivityMain.class);
             finish();
             startActivity(intent);
+            ServerController.getInstance().updateUserData();
+            
         }
         if (throwable != null) {
             Log.i("[카카오] 로그인", "실패");

@@ -83,11 +83,11 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         JSONObject obj = JsonController.readJsonObjFromAssets("json/appKey.json", getApplicationContext());
         String kakao_app_key = obj.get("key").toString();
         KakaoSdk.init(this, kakao_app_key);
+        ServerController.getInstance();
         
         setContentView(R.layout.layout_main);
         
         context = this.getApplicationContext();
-        AddPage(new Page(ActivityMain.this, TYPE_ACTIVITY));
         
         //첫 실행시 권한 요구 화면으로 이동
         checkFirstRun();
