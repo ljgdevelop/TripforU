@@ -27,6 +27,7 @@ public class ScheduleController extends Application {
     private HashMap<Integer, Schedule> scheduleDictionary = new HashMap<>();
     private HashMap<Integer, Member> memberList = new HashMap<>();
     private HashMap<Integer, Waypoint> waypointList = new HashMap<>();
+    private HashMap<Long, String[]> ownerList = new HashMap<>();
     private ArrayList<SharedSchedule> sharedSchedules = new ArrayList<>();
     
     private ScheduleController(){
@@ -303,6 +304,18 @@ public class ScheduleController extends Application {
         getInstance().waypointList = waypointList;
     }
     
+    public void addOwnerList(long id, String name, String profileUrl) {
+        String[] info = new String[2];
+        info[0] = name;
+        info[1] = profileUrl;
+        getInstance().ownerList.put(id, info);
+    }
+    public void addOwnerList(long id, String[] info) {
+        getInstance().ownerList.put(id, info);
+    }
+    public String[] getOwnerList(long id) {
+        return getInstance().ownerList.get(id);
+    }
     
     public ArrayList<SharedSchedule> getSharedSchedules() {
         return getInstance().sharedSchedules;
