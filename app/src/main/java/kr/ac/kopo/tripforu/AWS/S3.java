@@ -71,7 +71,7 @@ public class S3 {
         cacheDirl = context.getCacheDir().getPath();
     }
     
-    public void uploadWithTransferUtilty(String fileName, File file) {
+    public void uploadWithTransferUtilty(File file) {
         Log.d("MYTAG", "UPLOAD - - START : " + accessKey + ":" + secretKey);
         try {
             AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
@@ -80,7 +80,7 @@ public class S3 {
             TransferUtility transferUtility = TransferUtility.builder().s3Client(s3Client).context(context).build();
             TransferNetworkLossHandler.getInstance(context);
             
-            TransferObserver uploadObserver = transferUtility.upload(bucket, fileName, file);
+            TransferObserver uploadObserver = transferUtility.upload(bucket, file.getName(), file);
             
             uploadObserver.setTransferListener(new TransferListener() {
                 @Override
