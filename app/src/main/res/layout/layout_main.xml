@@ -38,6 +38,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
+            <include
+                android:id="@+id/LAYOUT_SearchView"
+                layout="@layout/layout_schedule_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
         </LinearLayout>
     </HorizontalScrollView>
     <include
