@@ -37,7 +37,7 @@ public class LayoutDialog extends LinearLayout {
     private String title = "";
     private String message = "";
     private ArrayList<TextView> buttonList = new ArrayList<>();
-    
+    public static LayoutDialog instance;
     
     /**
      * @author 이제경
@@ -60,6 +60,7 @@ public class LayoutDialog extends LinearLayout {
     
     private void init(Context context){
         this.context = context;
+        this.instance = this;
         fullView = inflate(getContext(), R.layout.layout_dialog, this);
         PageController.fullView.addView(fullView);
         fullView.post(this::onShow);

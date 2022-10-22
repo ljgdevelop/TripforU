@@ -49,7 +49,7 @@ public class LayoutRecommendBanner extends LinearLayout {
         fullView.findViewById(R.id.IMG_RecommandBanner).setClipToOutline(true);
         
         //메인 이미지 설정
-        StringBuilder url = new StringBuilder(JsonController.readJsonObjFromAssets("json/awsS3Key.json", context).get("baseUrl").toString());
+        StringBuilder url = new StringBuilder(JsonController.readJsonObjFromAssets("json/awsS3.json", context).get("baseUrl").toString());
         url.append(sharedSchedule.getTitleImgId());
         url.append(".jpg");
         Glide.with(context).load(url.toString()).into((ImageView) fullView.findViewById(R.id.IMG_RecommandBanner));

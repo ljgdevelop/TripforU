@@ -2,6 +2,7 @@ package kr.ac.kopo.tripforu;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -17,24 +18,62 @@ import android.view.Display;
 import android.view.View;
 
 import android.content.Context;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kakao.sdk.common.KakaoSdk;
 
 import org.json.simple.JSONObject;
 
+import java.time.Duration;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.function.Consumer;
 
 import kr.ac.kopo.tripforu.Retrofit.INetTask;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ActivityMain extends PageController implements OnBackPressedListener{
+    public static Context context;//this context
+    private FrameLayout fullView;
+    
+    private LocalTime lastBackPressed;
+    
+    //툴바 사용
     @Override protected boolean useToolbar(){ return true; }
     
-    public static Context context;//this context
+    /***
+     * @author 이제경
+     * 뒤로가기 버튼 클릭시 화면 상단에 띄워져있는 레이아웃부터 종료
+     */
+    @Override
+    public void onBackPressed() {
+        if(this.fullView.findViewById(R.id.LAYOUT_DialogContainer) != null){
+            LayoutDialog.instance.closeDialog();
+        }
+        else if(this.fullView.findViewById(R.id.VIEW_SchInfoScroll) != null){
+            ScrollView s = this.fullView.findViewById(R.id.VIEW_SchInfoScroll);
+            s.smoothScrollTo(0, 0);
+        }
+        else if(isSelectMode){
+            cancelSelectMode();
+        }
+        else{
+            if(lastBackPressed != null && Duration.between(lastBackPressed, LocalTime.now()).getSeconds() < 1){
+                ActivityCompat.finishAffinity(this);
+                System.exit(0);
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "한번 더 눌러 종료합니다.", Toast.LENGTH_SHORT).show();
+                lastBackPressed = LocalTime.now();
+            }
+        }
+    }
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,13 +136,8 @@ public class ActivityMain extends PageController implements OnBackPressedListene
             startActivity(i);
         });
         
-        /*ScheduleController.syncJsonToObject(JsonController.readJsonArrayFromAssets("json/sharedSchedule.json", getApplicationContext()),
-            SharedSchedule.class.toString());
-        ServerController.getInstance().uploadSchedule(
-            ScheduleController.getInstance().getSharedSchedules().get(0),
-            ScheduleController.getInstance().getScheduleById(2),
-            null
-        );*/
+        //지금 액티비티의 fullView 가져오기
+        this.fullView = PageController.fullView;
     }
     
     /***
@@ -210,5 +244,11 @@ public class ActivityMain extends PageController implements OnBackPressedListene
                 syncPermissionIsChecked();
             }
         }
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PageController.fullView = this.fullView;
     }
 }

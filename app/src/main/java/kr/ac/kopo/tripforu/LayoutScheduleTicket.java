@@ -26,6 +26,8 @@ import java.util.Date;
 public class LayoutScheduleTicket extends FrameLayout {
     private Context context;
     private int scheduleId;//여행 일정의 ID
+    private FrameLayout fullView;
+    public static LayoutScheduleTicket instance;
     public void setScheduleId(int id){this.scheduleId = id;}
     public int getScheduleId(){return scheduleId;}
     
@@ -56,15 +58,16 @@ public class LayoutScheduleTicket extends FrameLayout {
      */
     private void init(Context context){
         this.context = context;
-        View fullView = inflate(getContext(), R.layout.layout_scheduleticket, this);
-        fullView.setOnClickListener(this::OnTouch);
-        fullView.post(this::SyncTicketText);
+        this.fullView = PageController.fullView;
+        this.instance = this;
+        View ticket = inflate(getContext(), R.layout.layout_scheduleticket, this);
+        ticket.setOnClickListener(this::OnTouch);
+        ticket.post(this::SyncTicketText);
     }
     
     private void OnTouch(View view){
         if(PageController.getTagFromView(this.getParent(), "isSelectMode").equals("true")) {
             PageController.setTagToView(this, "isSelected", !PageController.getTagFromView(this, "isSelected").equals("true"));
-            Log.d("TAG", "OnTouch: isSelected: " + PageController.getTagFromView(this, "isSelected").equals("true"));
             if(PageController.getTagFromView(this, "isSelected").equals("true"))
                 this.findViewById(R.id.LAYOUT_TicketBG).setBackground(getResources().getDrawable(R.drawable.background_ticket_selected));
             else
@@ -116,7 +119,6 @@ public class LayoutScheduleTicket extends FrameLayout {
     @SuppressLint("ClickableViewAccessibility")
     public View ShowScheduleInfo(Context context, Schedule schedule){
         //뷰를 화면 상단(Z축)에 복제
-        FrameLayout fullView = PageController.fullView;
         View view = ((LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).
             inflate(R.layout.layout_scheduleinfo, fullView, false).findViewById(R.id.LAYOUT_SchInfo);
         fullView.addView(view);
