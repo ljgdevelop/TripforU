@@ -41,7 +41,7 @@ public class MyJobService extends JobService {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void checkAlarm(){
         try {
-            List<String> jsonList = Files.readAllLines(Paths.get(getFilesDir() + "/settings.josn"));
+            List<String> jsonList = Files.readAllLines(Paths.get(getFilesDir() + "/settings.json"));
             StringBuilder json = new StringBuilder("");
 
             for (String line : jsonList) {
@@ -54,7 +54,7 @@ public class MyJobService extends JobService {
 
             if(setting.lastAlarmCheck == null || LocalDate.now().isAfter(setting.lastAlarmCheck)){
                 String settingText = new Gson().toJson(setting.lastAlarmCheck = LocalDate.now());
-                Files.write(Paths.get(getFilesDir() + "/settings.josn"), settingText.getBytes());
+                Files.write(Paths.get(getFilesDir() + "/settings.json"), settingText.getBytes());
                 Alarm alarm = new Alarm();
                 alarm.schAlarm();
             }else {
