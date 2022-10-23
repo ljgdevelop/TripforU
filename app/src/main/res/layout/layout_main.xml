@@ -107,6 +107,7 @@
                 android:layout_height="14dp"
                 android:text="홈"
                 android:textSize="12sp"
+                android:textColor="@color/APP_Main"
                 app:tint="@color/APP_Main" />
         </LinearLayout>
 

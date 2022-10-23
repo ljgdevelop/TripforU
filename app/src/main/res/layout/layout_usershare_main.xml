@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:stateListAnimator="@null"
-        android:backgroundTint="@color/teal_700"
+        android:backgroundTint="@color/APP_Secondary"
         android:text="설명 추가"
         app:icon="@drawable/ic_plus"
         app:iconSize="25dp"
@@ -100,10 +100,4 @@
         app:iconTint="@color/white"
         android:layout_gravity="bottom|right"
         android:id="@+id/ACBTN_AddContent"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/black"
-        android:layout_gravity="center"
-        android:id="@+id/BTN_Temp"/>
 </FrameLayout>
