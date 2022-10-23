@@ -1,15 +1,13 @@
 package kr.ac.kopo.tripforu;
 
 import android.content.Context;
-import android.os.Environment;
+
 
 import com.google.gson.Gson;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.HashMap;
 
 public class Settings {
