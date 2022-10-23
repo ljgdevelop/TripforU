@@ -79,5 +79,5 @@ dependencies {
 
 // 노티피케이션을 위한 패키지
 dependencies {
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.work:work-runtime:2.7.1'
 }
