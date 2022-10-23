@@ -1,71 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/LAYOUT_NewSch_List">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/TEXT_MainRemain"
+        android:textStyle="bold"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/TEXT_Black"
+        android:textSize="20sp"
+        android:paddingVertical="16dp"
+        android:paddingStart="32dp"
+        android:background="@color/APP_Accent"
+        android:text="가고싶은 관광지를 추가 해주세요"/>
+
+    <TextView style="@style/divideLine"/>
+
+    <FrameLayout
         android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@color/APP_Shade">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/LAYOUT_NewSch_List_WPContainer"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:orientation="vertical"
-            android:background="@color/APP_Accent"
-            android:visibility="gone"
-            android:id="@+id/LAYOUT_UserShare">
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:tag="default"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:scaleX="0.5"
-                    android:scaleY="0.5"
-                    android:visibility="visible"
-                    android:src="@drawable/ic_waypoint_pin"
-                    android:id="@+id/IMG_ShareIcon"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:maxLength="20"
-                    android:text="/"
-                    android:textSize="18sp"
-                    android:textColor="@color/TEXT_Black"
-                    android:layout_gravity="center_vertical" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:text="+ 추가하기"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:id="@+id/BTN_AddSchedule"
-        android:layout_margin="32dp">
-
-    </com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/LAYOUT_WayPointSCHContainer"
-        android:orientation="vertical" />
-
-</FrameLayout>
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            app:icon="@drawable/ic_plus"
+            app:iconTint="@color/white"
+            android:text="추가하기"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:id="@+id/BTN_AddSchedule"
+            android:layout_margin="32dp"
+            android:backgroundTint="@color/APP_Secondary"/>
+    </FrameLayout>
+</LinearLayout>

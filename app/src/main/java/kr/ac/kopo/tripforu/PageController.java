@@ -31,6 +31,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.kakao.sdk.auth.AuthApiClient;
 import com.kakao.sdk.user.UserApiClient;
 
@@ -51,6 +53,8 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     final static byte TYPE_VIEW = 1;
     byte TYPE_HIDEANDSHOW = 2;
     public SharedPreferences prefs;
+    public static Settings settings = new Settings();
+    public static Context context;
     
     protected static final int JOB_ID = 0x1000;
     
@@ -81,13 +85,14 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     
     @Override
     public void setContentView(int layoutResID){
-        Log.d("TAG", "setContentView: newActivity");
         fullView = (FrameLayout) getLayoutInflater().inflate(R.layout.activity_main, null);
         FrameLayout activityContainer = fullView.findViewById(R.id.activity_content);
         View child = getLayoutInflater().inflate(layoutResID, activityContainer, true);
         
         super.setContentView(fullView);
     
+        context = getApplicationContext();
+        
         ResetAppBar();
         Toolbar toolbar = fullView.findViewById(R.id.LAYOUT_AppBar);
         
@@ -298,6 +303,11 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
             Intent i = new Intent(getApplicationContext(), ActivityPermissionCheck.class);
             startActivityForResult(i, 0);
             JsonController.saveJsonFromAssets(getApplicationContext());
+    
+            ArrayList<Settings> tempArray = new ArrayList<>();
+            tempArray.add(settings);
+            JsonController.saveJson(tempArray, "settings", getApplicationContext());
+            
             prefs.edit().putBoolean("isFirstRun",false).apply();
         }
         else{
@@ -311,13 +321,19 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         }
     }
     
-    public void createSettingFile(Context context){
-        //설정 파일 생성
-        Settings newSetting = new Settings()
-            .setLastAlarmCheck(LocalDate.now())
-            .setDoNotDisturb(false, LocalTime.of(0, 0), LocalTime.of(0, 0));
-        JsonController.saveJsonObj(newSetting, "settings", context);
-        Settings.getInstance().syncSetting(context);
+    public static Settings saveSettings(){
+        ArrayList<Settings> tempArray = new ArrayList<>();
+        tempArray.add(settings);
+        JsonController.saveJson(tempArray, "settings", context);
+        return settings;
+    }
+    
+    public static Settings syncSetting(){
+        ArrayList<Settings> settingList =
+            new Gson()
+                .fromJson(JsonController.readJson("settings", context).toJSONString(), new TypeToken<ArrayList<Settings>>() {}.getType());
+        settings = settingList.get(0);
+        return settings;
     }
     
     public static int ConvertSPtoPX(@NonNull Context context, int sp) {

@@ -238,7 +238,7 @@ public class ScheduleController extends Application {
                 imgSrc = R.drawable.ic_waypoint_pin;
                 break;
         }
-        return getResources().getDrawable(imgSrc);
+        return context.getResources().getDrawable(imgSrc);
     }
     
     public Member getMemberByID(int id){

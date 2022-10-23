@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:id="@+id/LAYOUT_SchScroll"
         android:scrollX="720dp"
-        android:layout_weight="1"
+        android:scrollbars="none"
         android:overScrollMode="always">
 
         <LinearLayout
@@ -22,41 +22,28 @@
             android:orientation="horizontal">
 
             <include
-                layout="@layout/layout_newsch_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </include>
+                layout="@layout/layout_newsch_date"/>
 
             <include
-                layout="@layout/layout_newsch_sch"
+                layout="@layout/layout_newsch_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-            <LinearLayout
+            <include
+                layout="@layout/layout_newsch_wp_main"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:id="@+id/LAYOUT_NewSch_Container">
-
-            </LinearLayout>
+                android:layout_height="match_parent"/>
 
             <include
                 layout="@layout/layout_newsch_setting"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </include>
+                android:layout_height="match_parent"/>
 
             <include
                 layout="@layout/layout_newsch_check"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </include>
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
-
     </HorizontalScrollView>
-
 </FrameLayout>

@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -98,7 +99,7 @@ public class Schedule implements Serializable {
     public String getStartDate(){
         return this.startDate;
     }
-    public void setStartDate(){
+    public void setStartDate(String date){
         this.startDate = startDate;
     }
     

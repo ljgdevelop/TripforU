@@ -1,10 +1,12 @@
 package kr.ac.kopo.tripforu.Retrofit;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 import kr.ac.kopo.tripforu.Waypoint;
 
 public class GetWaypoints {
-    @SerializedName("Id")
+    @SerializedName("ID")
     private int id;
     @SerializedName("Name")
     private String name;
