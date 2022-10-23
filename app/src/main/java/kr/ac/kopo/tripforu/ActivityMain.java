@@ -90,7 +90,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         
         //설정 파일이 있는지 확인 후 없으면 생성
         if(!new File(getFilesDir() + "/settings.json").exists())
-            createSettingFile();
+            createSettingFile(getApplicationContext());
         
         //layout_main_schedule_list 화면에 여행 일정 목록 표시
         showScheduleList(findViewById(R.id.LAYOUT_SchListContainer), findViewById(R.id.LAYOUT_FirstSchedule), 0);

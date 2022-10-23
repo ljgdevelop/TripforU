@@ -311,13 +311,13 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         }
     }
     
-    public void createSettingFile(){
+    public void createSettingFile(Context context){
         //설정 파일 생성
         Settings newSetting = new Settings()
             .setLastAlarmCheck(LocalDate.now())
             .setDoNotDisturb(false, LocalTime.of(0, 0), LocalTime.of(0, 0));
-        JsonController.saveJsonObj(newSetting, "settings", getApplicationContext());
-        Settings.getInstance().syncSetting(getApplicationContext());
+        JsonController.saveJsonObj(newSetting, "settings", context);
+        Settings.getInstance().syncSetting(context);
     }
     
     public static int ConvertSPtoPX(@NonNull Context context, int sp) {

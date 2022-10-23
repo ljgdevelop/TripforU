@@ -30,8 +30,8 @@ public class Settings {
             return instance;
     }
     
-    public Settings syncSetting(Context context){
-        this.context = context;
+    public Settings syncSetting(Context c){
+        context = c;
         instance = new Gson().fromJson(JsonController.readJsonObj("settings", context).toJSONString(), Settings.class);
         return this;
     }
