@@ -2,11 +2,15 @@ package kr.ac.kopo.tripforu;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
+import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -30,7 +34,10 @@ import com.bumptech.glide.Glide;
 import com.kakao.sdk.auth.AuthApiClient;
 import com.kakao.sdk.user.UserApiClient;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -44,6 +51,8 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     final static byte TYPE_VIEW = 1;
     byte TYPE_HIDEANDSHOW = 2;
     public SharedPreferences prefs;
+    
+    protected static final int JOB_ID = 0x1000;
     
     protected static FrameLayout fullView = null;
     
@@ -189,6 +198,17 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         imm.hideSoftInputFromWindow(fullView.findViewById(R.id.TEXT_AppBarSearchText).getWindowToken(), 0);
     }
     
+    protected void startJobService(){
+        JobScheduler jobScheduler =
+            (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        jobScheduler.schedule(new JobInfo.Builder(JOB_ID,
+            new ComponentName(this, kr.ac.kopo.tripforu.Service.MyJobService.class))
+            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+            .setPeriodic(DateUtils.HOUR_IN_MILLIS)
+            .setPersisted(true)
+            .build());
+    }
+    
     ObjectAnimator scrollAnimator;
     static int scrollTime = 0;
     /**
@@ -289,6 +309,15 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
             ScheduleController.syncJsonToObject(JsonController.readJson("schedule", getApplicationContext()),
                 Schedule.class.toString());
         }
+    }
+    
+    public void createSettingFile(){
+        //설정 파일 생성
+        Settings newSetting = new Settings()
+            .setLastAlarmCheck(LocalDate.now())
+            .setDoNotDisturb(false, LocalTime.of(0, 0), LocalTime.of(0, 0));
+        JsonController.saveJsonObj(newSetting, "settings", getApplicationContext());
+        Settings.getInstance().syncSetting(getApplicationContext());
     }
     
     public static int ConvertSPtoPX(@NonNull Context context, int sp) {

@@ -13,7 +13,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 
@@ -30,12 +29,9 @@ import com.kakao.sdk.common.KakaoSdk;
 
 import org.json.simple.JSONObject;
 
+import java.io.File;
 import java.time.Duration;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.function.Consumer;
-
-import kr.ac.kopo.tripforu.Retrofit.INetTask;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ActivityMain extends PageController implements OnBackPressedListener{
@@ -88,9 +84,13 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         setContentView(R.layout.layout_main);
         
         context = this.getApplicationContext();
-        
+    
         //첫 실행시 권한 요구 화면으로 이동
         checkFirstRun();
+        
+        //설정 파일이 있는지 확인 후 없으면 생성
+        if(!new File(getFilesDir() + "/settings.json").exists())
+            createSettingFile();
         
         //layout_main_schedule_list 화면에 여행 일정 목록 표시
         showScheduleList(findViewById(R.id.LAYOUT_SchListContainer), findViewById(R.id.LAYOUT_FirstSchedule), 0);
@@ -113,16 +113,8 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         //로그아웃
         findViewById(R.id.BTN_GoLogout).setOnClickListener(view -> logoutKakao());
         
-        //설정 - 알림 온 오프시
-        findViewById(R.id.BTN_SettingAlarm).setOnClickListener(view -> {
-            View alarmSettings = findViewById(R.id.LAYOUT_AlarmSettings);
-            if(alarmSettings.getVisibility() == View.VISIBLE) {
-                findViewById(R.id.LAYOUT_AlarmSettings).setVisibility(View.GONE);
-            }
-            else{
-                findViewById(R.id.LAYOUT_AlarmSettings).setVisibility(View.VISIBLE);
-            }
-        });
+        //알림 설정
+        setAlarmState();
         
         //일정 추천받기
         findViewById(R.id.LAYOUT_MainGotoRecommend).setOnClickListener(view -> {
@@ -149,6 +141,56 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         
         //검색 결과 보여주기
 
+    }
+    
+    private void setAlarmState(){
+        //알림 on/off에 따라 하위 뷰 표시
+        View alarmSettings = findViewById(R.id.LAYOUT_AlarmSettings);
+        SwitchCompat sAlarm = findViewById(R.id.BTN_SettingAlarm);
+        SwitchCompat sDisturbMode = findViewById(R.id.BTN_SettingAlarmDisturbMode);
+        SwitchCompat sDday = findViewById(R.id.BTN_SettingAlarmDday);
+        SwitchCompat sRecommend = findViewById(R.id.BTN_SettingAlarmRecommend);
+        SwitchCompat sFullScreen = findViewById(R.id.BTN_SettingAlarmFullScreen);
+    
+        //설정 업데이트
+        Settings.getInstance().syncSetting(getApplicationContext());
+        
+        //설정 값에 따라 동기화
+        sAlarm.setChecked(Settings.getInstance().isAlarmOn);
+        if(Settings.getInstance().isAlarmOn)
+            alarmSettings.setVisibility(View.VISIBLE);
+        else
+            alarmSettings.setVisibility(View.GONE);
+        sDisturbMode.setChecked(Settings.getInstance().isDoNotDisturb);
+        sDday.setChecked(Settings.getInstance().isDdayAlarmOn);
+        sRecommend.setChecked(Settings.getInstance().isRecommendAlarmOn);
+        sFullScreen.setChecked(Settings.getInstance().isFullScreenAlarmOn);
+        
+        sDisturbMode.setOnClickListener(view -> {
+            sDisturbMode.setChecked(
+                Settings.getInstance().setDoNotDisturb(
+                    !Settings.getInstance().isDoNotDisturb,
+                    Settings.getInstance().disturbTimeStart,
+                    Settings.getInstance().disturbTimeEnd).isDoNotDisturb);
+        });
+        sDday.setOnClickListener(view -> {
+            sDday.setChecked(
+                Settings.getInstance().setDdayAlarmOn(!Settings.getInstance().isDdayAlarmOn).isDdayAlarmOn);
+        });
+        sRecommend.setOnClickListener(view -> {
+            sRecommend.setChecked(
+                Settings.getInstance().setRecommendAlarmOn(!Settings.getInstance().isRecommendAlarmOn).isRecommendAlarmOn);
+        });
+        sFullScreen.setOnClickListener(view -> {
+            sFullScreen.setChecked(
+                Settings.getInstance().setFullScreenAlarmOn(!Settings.getInstance().isFullScreenAlarmOn).isFullScreenAlarmOn);
+        });
+        sAlarm.setOnClickListener(view -> {
+            if(Settings.getInstance().setAlarmOn(!Settings.getInstance().isAlarmOn).isAlarmOn)
+                alarmSettings.setVisibility(View.VISIBLE);
+            else
+                alarmSettings.setVisibility(View.GONE);
+        });
     }
     
     /***

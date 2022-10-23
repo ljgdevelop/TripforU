@@ -75,6 +75,7 @@
                 android:layout_weight="1"/>
 
             <include
+                android:id="@+id/BTN_SettingAlarmDisturbMode"
                 layout="@layout/layout_slidebutton"/>
         </LinearLayout>
 
@@ -117,6 +118,7 @@
                 android:layout_weight="1"/>
 
             <include
+                android:id="@+id/BTN_SettingAlarmDday"
                 layout="@layout/layout_slidebutton"/>
         </LinearLayout>
 
@@ -141,6 +143,7 @@
                 android:layout_weight="1"/>
 
             <include
+                android:id="@+id/BTN_SettingAlarmRecommend"
                 layout="@layout/layout_slidebutton"/>
         </LinearLayout>
 
@@ -165,6 +168,7 @@
                 android:layout_weight="1"/>
 
             <include
+                android:id="@+id/BTN_SettingAlarmFullScreen"
                 layout="@layout/layout_slidebutton"/>
         </LinearLayout>
 

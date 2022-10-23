@@ -52,6 +52,24 @@ public class JsonController extends AppCompatActivity {
         }
     }
     
+    public static void saveJsonObj(Object obj, String fileName, Context context){
+        try {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            
+            StringBuilder path = new StringBuilder(fileName);
+            path.append(".json");
+            
+            FileOutputStream fos = context.openFileOutput(path.toString(), Context.MODE_PRIVATE);
+            
+            fos.write(new Gson().toJson(obj).getBytes());
+            
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     /***
      * @author 이제경
      * @param context - applicationContext
@@ -101,6 +119,37 @@ public class JsonController extends AppCompatActivity {
     
             return jsonArray;
         
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static JSONObject readJsonObj(String fileName, Context context) {
+        String json = "";
+        try {
+            StringBuilder path = new StringBuilder(fileName);
+            path.append(".json");
+            
+            FileInputStream fis = context.openFileInput(path.toString());
+            StringBuffer buffer = new StringBuffer();
+            String data = null;
+            BufferedReader iReader = new BufferedReader(new InputStreamReader(fis));
+            
+            data = iReader.readLine();
+            while(data != null){
+                buffer.append(data);
+                data = iReader.readLine();
+            }
+            
+            json = buffer.toString();
+            
+            JSONParser parser = new JSONParser();
+            JSONObject obj = (JSONObject) parser.parse(json);
+            
+            
+            return obj;
+            
         } catch (IOException | ParseException e) {
             e.printStackTrace();
             return null;
