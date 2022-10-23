@@ -78,14 +78,6 @@ public class ActivityUserShare extends PageController implements Cloneable{
         //메인 스크롤 뷰 터치 막기
         findViewById(R.id.LAYOUT_UserShareContainer).setOnTouchListener(((view, motionEvent) -> { return true; }));
 
-        Button btn_Temp = findViewById(R.id.BTN_Temp);
-        btn_Temp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Alarm alarm = new Alarm();
-                alarm.schAlarm();
-            }
-        });
     }
 
     //이미지 클릭 후 사진 추가 기능
