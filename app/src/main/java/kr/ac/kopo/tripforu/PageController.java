@@ -208,7 +208,12 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
             .setPersisted(true)
             .build());
     }
-    
+
+    public void cancelJobService(){
+        JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        jobScheduler.cancel(JOB_ID);
+        Log.d("TAG", "cancelJob: 작업취소");
+    }
     ObjectAnimator scrollAnimator;
     static int scrollTime = 0;
     /**
