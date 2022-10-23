@@ -19,6 +19,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 
+import kr.ac.kopo.tripforu.Alarm;
 import kr.ac.kopo.tripforu.JsonController;
 import kr.ac.kopo.tripforu.PageController;
 import kr.ac.kopo.tripforu.Settings;
@@ -42,19 +43,25 @@ public class MyJobService extends JobService {
         try {
             List<String> jsonList = Files.readAllLines(Paths.get(getFilesDir() + "/settings.josn"));
             StringBuilder json = new StringBuilder("");
-            
+
             for (String line : jsonList) {
                 json.append(line);
             }
-            
+
             Settings setting = new Gson().fromJson(
                 json.toString(),
                 Settings.class);
-            
+
             if(setting.lastAlarmCheck == null || LocalDate.now().isAfter(setting.lastAlarmCheck)){
                 String settingText = new Gson().toJson(setting.lastAlarmCheck = LocalDate.now());
                 Files.write(Paths.get(getFilesDir() + "/settings.josn"), settingText.getBytes());
-                
+                Alarm alarm = new Alarm();
+                alarm.schAlarm();
+            }else {
+                Alarm alarm = new Alarm();
+                alarm.removeNotification();
+                PageController pageController = new PageController();
+                pageController.cancelJobService();
             }
         } catch (IOException e) {
             e.printStackTrace();
