@@ -6,13 +6,11 @@
     android:layout_marginBottom="48dp"
     android:paddingHorizontal="16dp">
 
-
     <TextView
         android:id="@+id/TEXT_Calendar_YearMonth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:paddingHorizontal="16dp"
         android:text="2000년 00월"
         android:textStyle="bold"
         android:textSize="18sp"

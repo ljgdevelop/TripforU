@@ -173,16 +173,23 @@
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_main_banner.xml" value="0.5" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_main_mainpage.xml" value="0.2957427536231884" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_main_page.xml" value="0.31029986962190353" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_main_schedule_list.xml" value="0.2359375" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_main_scheduleticket.xml" value="0.25" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_main_welcome.xml" value="0.2957427536231884" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_memo_summary.xml" value="0.3619791666666667" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_navigation_bar_parent.xml" value="0.3619791666666667" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_newsch_check.xml" value="0.20729166666666668" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_newsch_date.xml" value="0.20729166666666668" />
-        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_newsch_list.xml" value="0.20729166666666668" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_newsch_list.xml" value="0.25" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_newsch_list_banner.xml" value="0.3619791666666667" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_newsch_sch.xml" value="0.3619791666666667" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_newsch_schmap.xml" value="0.3619791666666667" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_newsch_setting.xml" value="0.20729166666666668" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_newsch_wp.xml" value="0.3729166666666667" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_newsch_wp_banner.xml" value="0.33" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_newsch_wp_card.xml" value="0.2359375" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_newsch_wp_list.xml" value="0.25" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_newsch_wp_main.xml" value="0.3619791666666667" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_newsch_wplist.xml" value="0.3619791666666667" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_othersetting.xml" value="0.47410358565737054" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_page_main.xml" value="0.3016304347826087" />
@@ -193,6 +200,7 @@
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_recommend_trip_banner.xml" value="0.3016304347826087" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_recommend_waypoint.xml" value="0.33" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_recycleviewschedule.xml" value="0.20729166666666668" />
+        <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_schedule_search.xml" value="0.3729166666666667" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_scheduleinfo.xml" value="0.33" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_scheduleinfo_waypoint.xml" value="0.3619791666666667" />
         <entry key="..\:/android/TripforU/app/src/main/res/layout/layout_scheduleticket.xml" value="0.3564102564102564" />

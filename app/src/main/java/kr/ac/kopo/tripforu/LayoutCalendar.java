@@ -22,6 +22,7 @@ import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class LayoutCalendar extends LinearLayout {
     public static ArrayList<LayoutCalendar> calendarList = new ArrayList<>();
+    public LocalDate firstDate, secondDate;
     private LinearLayout fullView = null;
     private Context context = null;
     private LocalDate localDate;
@@ -66,7 +67,6 @@ public class LayoutCalendar extends LinearLayout {
         int weeks = 1;
         LocalDate lastDate = localDate.withDayOfMonth(localDate.lengthOfMonth());
         for(int i = 1; i <= lastDate.getDayOfMonth(); i ++){
-            Log.d("TAG", "showCalendarDate: ");
             LocalDate thisDate = LocalDate.of(localDate.getYear(), localDate.getMonthValue(), i);
             if(thisDate.getDayOfWeek().getValue() % 7 == 0)
                 weeks ++;
@@ -129,9 +129,6 @@ public class LayoutCalendar extends LinearLayout {
                 LinearLayout.LayoutParams gp = (LayoutParams) v.findViewById(R.id.LAYOUT_Calendar_viewport).getLayoutParams();
                 gp.width = ((ViewGroup)v.getParent()).getChildAt(0).getWidth();
                 v.findViewById(R.id.LAYOUT_Calendar_viewport).setLayoutParams(gp);
-
-                Log.d("TAG", "setCalendarDate: "
-                        + v.findViewById(R.id.LAYOUT_Calendar_viewport).getWidth() + "  ;" + v.getLeft());
             });
             v.setPadding(0,PageController.ConvertDPtoPX(context,16),0,PageController.ConvertDPtoPX(context,8));
             
@@ -142,7 +139,8 @@ public class LayoutCalendar extends LinearLayout {
         }
         
         public void setSelectedDate(View view, LocalDate date){
-            LocalDate firstDate = null, secondDate = null;
+            firstDate = null;
+            secondDate = null;
             View container = calendarList.get(0);
             String formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             switch (PageController.getTagFromView(container, "selectedCount")){
@@ -181,7 +179,8 @@ public class LayoutCalendar extends LinearLayout {
     }
     
     public void updateCalendarSelection(){
-        LocalDate firstDate = null, secondDate = null;
+        firstDate = null;
+        secondDate = null;
         View container = calendarList.get(0);
         
         //처음과 끝이 설정 되었는지 확인

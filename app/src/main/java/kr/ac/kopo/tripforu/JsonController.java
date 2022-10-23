@@ -3,19 +3,23 @@ package kr.ac.kopo.tripforu;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.json.simple.JSONArray;
@@ -45,24 +49,6 @@ public class JsonController extends AppCompatActivity {
             
             fos.write(gson.toJson(ja).getBytes());
     
-            fos.flush();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public static void saveJsonObj(Object obj, String fileName, Context context){
-        try {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            
-            StringBuilder path = new StringBuilder(fileName);
-            path.append(".json");
-            
-            FileOutputStream fos = context.openFileOutput(path.toString(), Context.MODE_PRIVATE);
-            
-            fos.write(new Gson().toJson(obj).getBytes());
-            
             fos.flush();
             fos.close();
         } catch (IOException e) {
@@ -146,7 +132,6 @@ public class JsonController extends AppCompatActivity {
             
             JSONParser parser = new JSONParser();
             JSONObject obj = (JSONObject) parser.parse(json);
-            
             
             return obj;
             

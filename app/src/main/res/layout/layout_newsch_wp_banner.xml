@@ -4,16 +4,26 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:orientation="vertical"
-    android:id="@+id/LAYOUT_NewSch_Wp">
+    android:paddingHorizontal="16dp"
+    android:layout_marginBottom="80dp"
+    android:clipToPadding="false">
+
+    <com.naver.maps.map.widget.LocationButtonView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/location"
+        android:layout_gravity="right"
+        android:layout_marginBottom="8dp"/>
 
     <LinearLayout
+        android:id="@+id/LAYOUT_NewSch_Wp_Banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:padding="16dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@color/APP_Accent"
+        android:background="@drawable/background_white_rcorner_15"
+        android:elevation="4dp"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -24,7 +34,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/wireframe"
+                android:src="@drawable/ic_tempimage"
                 android:scaleType="centerCrop"
                 android:id="@+id/LAYOUT_NewSch_WpImg"/>
 
@@ -32,9 +42,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="match_parent"
+            android:paddingStart="16dp"
+            android:paddingVertical="8dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
@@ -52,6 +63,11 @@
                 android:maxLength="15"
                 android:id="@+id/LAYOUT_NewSch_WpAddress"
                 android:textColor="@color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -71,35 +87,7 @@
                     android:textSize="14sp"
                     android:id="@+id/LAYOUT_NewSch_WpRating"
                     android:textColor="@color/black"/>
-
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="더보기"
-                android:textSize="14sp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
-                android:id="@+id/BTN_NewSch_Wp"
-                android:textColor="@color/teal_200"
-                android:background="@color/APP_Accent"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
 </LinearLayout>

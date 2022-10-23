@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <ImageButton
+        android:id="@+id/IMG_NewSch_List_Banner_Icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/ic_waypoint_pin"
+        android:background="@color/transparent"/>
+
+    <TextView
+        android:id="@+id/TEXT_NewSch_List_Banner_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="12dp"
+        android:text="@string/lorem"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:textColor="@color/TEXT_Black"
+        android:textSize="18sp"/>
+
+    <ImageButton
+        android:id="@+id/BTN_NewSch_List_Banner_Close"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="12dp"
+        android:src="@drawable/ic_cross"
+        android:visibility="gone"
+        android:background="@color/transparent"/>
+</LinearLayout>

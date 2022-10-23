@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/TEXT_MainRemain"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/TEXT_Black"
+        android:textSize="20sp"
+        android:paddingVertical="16dp"
+        android:paddingStart="32dp"
+        android:background="@color/APP_Accent"
+        android:text="여행 날짜 선택"/>
+
+    <TextView style="@style/divideLine"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -14,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/LAYOUT_CC">
+            android:id="@+id/LAYOUT_NewSch_Calendar_Container">
 
         </LinearLayout>
     </ScrollView>

@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 
@@ -32,6 +33,8 @@ import org.json.simple.JSONObject;
 import java.io.File;
 import java.time.Duration;
 import java.time.LocalTime;
+
+import kr.ac.kopo.tripforu.Retrofit.INetTask;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ActivityMain extends PageController implements OnBackPressedListener{
@@ -88,10 +91,6 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         //첫 실행시 권한 요구 화면으로 이동
         checkFirstRun();
         
-        //설정 파일이 있는지 확인 후 없으면 생성
-        if(!new File(getFilesDir() + "/settings.json").exists())
-            createSettingFile(getApplicationContext());
-        
         //layout_main_schedule_list 화면에 여행 일정 목록 표시
         showScheduleList(findViewById(R.id.LAYOUT_SchListContainer), findViewById(R.id.LAYOUT_FirstSchedule), 0);
         
@@ -121,6 +120,11 @@ public class ActivityMain extends PageController implements OnBackPressedListene
             Intent i = new Intent(this, ActivityRecommend.class);
             startActivity(i);
         });
+        
+        //서버에서 관광지 목록 가져오기
+        /*for (Waypoint wp : INetTask.getInstance().getWayPoints("")) {
+            ScheduleController.getInstance().addWaypointToList(wp);
+        }*/
         
         //일정 추가하기
         findViewById(R.id.LAYOUT_MainGotoAdd).setOnClickListener(view -> {
@@ -153,40 +157,40 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         SwitchCompat sFullScreen = findViewById(R.id.BTN_SettingAlarmFullScreen);
     
         //설정 업데이트
-        Settings.getInstance().syncSetting(getApplicationContext());
+        syncSetting();
         
         //설정 값에 따라 동기화
-        sAlarm.setChecked(Settings.getInstance().isAlarmOn);
-        if(Settings.getInstance().isAlarmOn)
+        sAlarm.setChecked(settings.isAlarmOn);
+        if(settings.isAlarmOn)
             alarmSettings.setVisibility(View.VISIBLE);
         else
             alarmSettings.setVisibility(View.GONE);
-        sDisturbMode.setChecked(Settings.getInstance().isDoNotDisturb);
-        sDday.setChecked(Settings.getInstance().isDdayAlarmOn);
-        sRecommend.setChecked(Settings.getInstance().isRecommendAlarmOn);
-        sFullScreen.setChecked(Settings.getInstance().isFullScreenAlarmOn);
+        sDisturbMode.setChecked(settings.isDoNotDisturb);
+        sDday.setChecked(settings.isDdayAlarmOn);
+        sRecommend.setChecked(settings.isRecommendAlarmOn);
+        sFullScreen.setChecked(settings.isFullScreenAlarmOn);
         
         sDisturbMode.setOnClickListener(view -> {
             sDisturbMode.setChecked(
-                Settings.getInstance().setDoNotDisturb(
-                    !Settings.getInstance().isDoNotDisturb,
-                    Settings.getInstance().disturbTimeStart,
-                    Settings.getInstance().disturbTimeEnd).isDoNotDisturb);
+                settings.setDoNotDisturb(
+                    !settings.isDoNotDisturb,
+                    settings.disturbTimeStart,
+                    settings.disturbTimeEnd).isDoNotDisturb);
         });
         sDday.setOnClickListener(view -> {
             sDday.setChecked(
-                Settings.getInstance().setDdayAlarmOn(!Settings.getInstance().isDdayAlarmOn).isDdayAlarmOn);
+                settings.setDdayAlarmOn(!settings.isDdayAlarmOn).isDdayAlarmOn);
         });
         sRecommend.setOnClickListener(view -> {
             sRecommend.setChecked(
-                Settings.getInstance().setRecommendAlarmOn(!Settings.getInstance().isRecommendAlarmOn).isRecommendAlarmOn);
+                settings.setRecommendAlarmOn(!settings.isRecommendAlarmOn).isRecommendAlarmOn);
         });
         sFullScreen.setOnClickListener(view -> {
             sFullScreen.setChecked(
-                Settings.getInstance().setFullScreenAlarmOn(!Settings.getInstance().isFullScreenAlarmOn).isFullScreenAlarmOn);
+                settings.setFullScreenAlarmOn(!settings.isFullScreenAlarmOn).isFullScreenAlarmOn);
         });
         sAlarm.setOnClickListener(view -> {
-            if(Settings.getInstance().setAlarmOn(!Settings.getInstance().isAlarmOn).isAlarmOn)
+            if(settings.setAlarmOn(!settings.isAlarmOn).isAlarmOn)
                 alarmSettings.setVisibility(View.VISIBLE);
             else
                 alarmSettings.setVisibility(View.GONE);
