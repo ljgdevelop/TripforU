@@ -191,6 +191,7 @@ public class ActivityMain extends PageController implements OnBackPressedListene
             else
                 alarmSettings.setVisibility(View.GONE);
         });
+        startJobService();
     }
     
     /***
