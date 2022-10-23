@@ -26,23 +26,23 @@ public class LayoutScheduleSearch extends PageController{
         EditText editText = (EditText)fullView.findViewById(R.id.TEXT_AppBarSearchText);
         TextView text_TitleTextCriternion = fullView.findViewById(R.id.TEXT_TitleTextCriternion);
         TextView text_DestinationCriternion = fullView.findViewById(R.id.TEXT_DestinationCriternion);
-        LinearLayout layout_NewSch_Container = fullView.findViewById(R.id.LAYOUT_NewSch_Container);
+        LinearLayout layout_NewSchedule_Container = fullView.findViewById(R.id.LAYOUT_NewSchedule_Container);
         LinearLayout layout_PastSch_Container = fullView.findViewById(R.id.LAYOUT_PastSch_Container);
-        layout_NewSch_Container.removeAllViews();
+        layout_NewSchedule_Container.removeAllViews();
         layout_PastSch_Container.removeAllViews();
-        showScheduleList(layout_PastSch_Container, layout_NewSch_Container, 1);
+        showScheduleList(layout_PastSch_Container, layout_NewSchedule_Container, 1);
         Log.d("TAG", "textChangedListener232323: ");
         editText.addTextChangedListener(new TextWatcher() {
             //입력 변화가 생길때마다 조치
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 int a = 0;
-                for (int i = 0; i < layout_NewSch_Container.getChildCount(); i++){
+                for (int i = 0; i < layout_NewSchedule_Container.getChildCount(); i++){
                     if (getTagFromView(text_TitleTextCriternion, "state").equals("true")){
-                        ScheduleSearch(layout_NewSch_Container.getChildAt(i),scheduleArrayList.get(a), editText, 0);
+                        ScheduleSearch(layout_NewSchedule_Container.getChildAt(i),scheduleArrayList.get(a), editText, 0);
                         a += 1;
                     }else if (getTagFromView(text_DestinationCriternion, "state").equals("true")){
-                        ScheduleSearch(layout_NewSch_Container.getChildAt(i),scheduleArrayList.get(a), editText, 1);
+                        ScheduleSearch(layout_NewSchedule_Container.getChildAt(i),scheduleArrayList.get(a), editText, 1);
                         a += 1;
                     }
                 }
@@ -64,12 +64,12 @@ public class LayoutScheduleSearch extends PageController{
             @Override
             public void afterTextChanged(Editable editable) {
                 int a = 0;
-                for (int i = 0; i < layout_NewSch_Container.getChildCount(); i++){
+                for (int i = 0; i < layout_NewSchedule_Container.getChildCount(); i++){
                     if (getTagFromView(text_TitleTextCriternion, "state").equals("true")){
-                        ScheduleSearch(layout_NewSch_Container.getChildAt(i),scheduleArrayList.get(a), editText, 0);
+                        ScheduleSearch(layout_NewSchedule_Container.getChildAt(i),scheduleArrayList.get(a), editText, 0);
                         a += 1;
                     }else if (getTagFromView(text_DestinationCriternion, "state").equals("true")){
-                        ScheduleSearch(layout_NewSch_Container.getChildAt(i),scheduleArrayList.get(a), editText, 1);
+                        ScheduleSearch(layout_NewSchedule_Container.getChildAt(i),scheduleArrayList.get(a), editText, 1);
                         a += 1;
                     }
                 }
