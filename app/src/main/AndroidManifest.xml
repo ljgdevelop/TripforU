@@ -28,10 +28,6 @@
             android:permission="android.permission.BIND_JOB_SERVICE"/>
 
         <activity
-            android:name=".Alarm"
-            android:exported="false" />
-
-        <activity
             android:name=".ActivityNewSchedule"
             android:exported="true">
             <intent-filter>

@@ -33,7 +33,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/LAYOUT_NewSch_Container"
+                    android:id="@+id/LAYOUT_NewSchedule_Container"
                     android:orientation="vertical"
                     android:layout_marginBottom="20dp"/>
             </LinearLayout>

@@ -4,26 +4,26 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class Alarm extends PageController {
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        schAlarm();
-    }
+public class Alarm extends PageController{
+    //D-Day 날짜 확인
     public void schAlarm(){
         try {
             ArrayList<Schedule> scheduleArrayList = ScheduleController.getInstance().getAllScheduleValue();
@@ -31,13 +31,13 @@ public class Alarm extends PageController {
             Date now = Calendar.getInstance().getTime();
             String str = sdfNow.format(now);
             Date date = sdfNow.parse(str);
-            for (int i = 0; i < scheduleArrayList.size(); i++) {
-                Schedule schedule = scheduleArrayList.get(i);
+            for (int i = 0 ; i < scheduleArrayList.size(); i++){
+                Schedule schedule = scheduleArrayList.get(0);
                 Date startDate = sdfNow.parse(schedule.getStartDate());
                 long calDate = startDate.getTime() - date.getTime();
                 long calDateDays = calDate / (24*60*60*1000);
                 calDateDays = Math.abs(calDateDays);
-                if (calDateDays <= 7){
+                if (calDateDays <= 1 && calDateDays > -1){
                     showNotification(schedule, calDateDays);
                 }
             }
@@ -45,7 +45,7 @@ public class Alarm extends PageController {
             System.out.println(e.getMessage());
         }
     }
-
+    //알림 생성
     private void showNotification(Schedule schedule, Long date) {
         String CHANNEL_ID = Integer.toString(schedule.getId());
         String CHANEL_NAME = schedule.getName();
@@ -78,5 +78,9 @@ public class Alarm extends PageController {
         Notification notification = builder.build();
         //알림창 실행
         manager.notify(1,notification);
+    }
+    public void removeNotification() {
+        // Notification 제거
+        NotificationManagerCompat.from(this).cancel(1);
     }
 }
