@@ -43,6 +43,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import kr.ac.kopo.tripforu.Service.MyJobService;
+
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class PageController extends AppCompatActivity implements OnBackPressedListener{
@@ -91,7 +93,15 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         ResetAppBar();
         Toolbar toolbar = fullView.findViewById(R.id.LAYOUT_AppBar);
         
-        fullView.findViewById(R.id.IMG_AppBarGoBack).setOnClickListener(v -> ResetAppBar());
+        fullView.findViewById(R.id.IMG_AppBarGoBack).setOnClickListener(v -> {
+            ViewGroup layout_TABBUTTON = fullView.findViewById(R.id.LAYOUT_TABBUTTON);
+            for (int i = 0; i < layout_TABBUTTON.getChildCount(); i++){
+                if (((TextView)layout_TABBUTTON.getChildAt(i).findViewById(R.id.IMG_NAVtext)).getCurrentTextColor() == getColor(R.color.APP_Main)){
+                    TabHorizontalScroll(fullView.findViewById(R.id.VIEW_MainPageTabPage),i);
+                }
+            }
+            ResetAppBar();
+        });
         fullView.findViewById(R.id.IMG_AppBarErase).setOnClickListener(v ->
             ((TextView)fullView.findViewById(R.id.TEXT_AppBarSearchText)).setText(""));
         
@@ -171,7 +181,17 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         
         fullView.findViewById(R.id.TEXT_AppBarLeft).setVisibility(View.GONE);
         fullView.findViewById(R.id.TEXT_AppBarRight).setVisibility(View.GONE);
+        fullView.findViewById(R.id.IMG_AppBarGoBack).setVisibility(View.VISIBLE);
         fullView.findViewById(R.id.TEXT_AppBarTittle).setVisibility(View.VISIBLE);
+        fullView.findViewById(R.id.IMG_AppBarGoBack).setOnClickListener(v -> {
+            ViewGroup layout_TABBUTTON = fullView.findViewById(R.id.LAYOUT_TABBUTTON);
+            for (int i = 0; i < layout_TABBUTTON.getChildCount(); i++){
+                if (((TextView)layout_TABBUTTON.getChildAt(i).findViewById(R.id.IMG_NAVtext)).getCurrentTextColor() == getColor(R.color.APP_Main)){
+                    TabHorizontalScroll(fullView.findViewById(R.id.VIEW_MainPageTabPage),i);
+                }
+            }
+            ResetAppBar();
+        });
         fullView.findViewById(R.id.IMG_AppBarRight).setVisibility(View.VISIBLE);
         fullView.findViewById(R.id.LAYOUT_AppBarSearch).setVisibility(View.GONE);
         fullView.findViewById(R.id.IMG_AppBarRight).setOnClickListener(v -> {
@@ -445,7 +465,6 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
      */
     private void setSelectMode(LinearLayout pastSchContainer, LinearLayout remainSchContainer,
                                LayoutScheduleTicket newTicket, int check){
-        Log.d("TAG", "setSelectMode121212: "+ check +"확인");
         //길게 터치시 선택모드 진입
         newTicket.setOnLongClickListener(view -> {
             if(!isSelectMode) {
