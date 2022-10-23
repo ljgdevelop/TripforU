@@ -188,9 +188,10 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
             for (int i = 0; i < layout_TABBUTTON.getChildCount(); i++){
                 if (((TextView)layout_TABBUTTON.getChildAt(i).findViewById(R.id.IMG_NAVtext)).getCurrentTextColor() == getColor(R.color.APP_Main)){
                     TabHorizontalScroll(fullView.findViewById(R.id.VIEW_MainPageTabPage),i);
+                    ResetAppBar();
+                    break;
                 }
             }
-            ResetAppBar();
         });
         fullView.findViewById(R.id.IMG_AppBarRight).setVisibility(View.VISIBLE);
         fullView.findViewById(R.id.LAYOUT_AppBarSearch).setVisibility(View.GONE);
