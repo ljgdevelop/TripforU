@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.ac.kopo.tripforu.Alarm;
+import kr.ac.kopo.tripforu.JsonController;
 import kr.ac.kopo.tripforu.PageController;
 import kr.ac.kopo.tripforu.Settings;
 
@@ -49,10 +50,10 @@ public class MyJobService extends JobService {
                 json.append(line);
             }
     
-            ArrayList<Settings> sList = new Gson().fromJson(
-                json.toString(),
-                new TypeToken<ArrayList<Settings>>() {}.getType());
-            Settings setting = sList.get(0);
+            ArrayList<Settings> settingList =
+                new Gson()
+                    .fromJson(JsonController.readJson("settings", this).toJSONString(), new TypeToken<ArrayList<Settings>>() {}.getType());
+            Settings setting = settingList.get(0);
             
             
             if(setting.lastAlarmCheck == null || LocalDate.now().isAfter(setting.lastAlarmCheck)){
