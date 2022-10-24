@@ -310,6 +310,9 @@ public class ScheduleController extends Application {
     public void setWaypointList(HashMap<Integer, Waypoint> waypointList) {
         getInstance().waypointList = waypointList;
     }
+    public void saveWaypoint(){
+        JsonController.saveJson(getAllWaypointValues(), "waypoints", context);
+    }
     
     public void addOwnerList(long id, String name, String profileUrl) {
         String[] info = new String[2];

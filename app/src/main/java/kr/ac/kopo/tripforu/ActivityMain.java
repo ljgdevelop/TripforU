@@ -121,15 +121,10 @@ public class ActivityMain extends PageController implements OnBackPressedListene
             startActivity(i);
         });
         
-        //서버에서 관광지 목록 가져오기
-        /*for (Waypoint wp : INetTask.getInstance().getWayPoints("")) {
-            ScheduleController.getInstance().addWaypointToList(wp);
-        }*/
-        
         //일정 추가하기
         findViewById(R.id.LAYOUT_MainGotoAdd).setOnClickListener(view -> {
             Intent i = new Intent(this, ActivityNewSchedule.class);
-            startActivity(i);
+            startActivityForResult(i, 1);
         });
 
         //지금 액티비티의 fullView 가져오기
@@ -302,6 +297,11 @@ public class ActivityMain extends PageController implements OnBackPressedListene
         if (requestCode == 0) {//권한 요구
             if(resultCode == Activity.RESULT_OK){
                 syncPermissionIsChecked();
+            }
+        }
+        else if(requestCode == 1) {//권한 요구
+            if(resultCode == Activity.RESULT_OK){
+                showScheduleList(findViewById(R.id.LAYOUT_SchListContainer), findViewById(R.id.LAYOUT_FirstSchedule), 0);
             }
         }
     }

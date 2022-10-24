@@ -14,17 +14,16 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
 import androidx.core.widget.NestedScrollView;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -40,12 +39,9 @@ import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.widget.LocationButtonView;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -54,8 +50,10 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
     private FusedLocationSource locationSource;
     private SearchView searchView;
     private boolean enabled;
+    private int memberCount = 1;
     private LayoutCalendar calendar;
     private Schedule newSchedule = new Schedule();
+    
 
     @Override
     protected boolean useToolbar() {
@@ -85,10 +83,24 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
 
         //앱 바 설정
         SetAppBarAction(0, true, "").setOnClickListener(null);
-        SetAppBarAction(0, false, "다음").setOnClickListener(v -> onAppBarClick(11));
+        SetAppBarAction(0, false, "다음").setOnClickListener(v -> onAppBarClick(1));
         
         //캘린더 레이아웃 실행
         onLayoutCalendar();
+        
+        ImageButton plusBtn = findViewById(R.id.BTN_NewSch_Plus);
+        ImageButton minusBtn = findViewById(R.id.BTN_NewSch_Minus);
+        TextView countText = findViewById(R.id.TEXT_NewSch_Strength);
+        plusBtn.setOnClickListener(view -> {
+            if(memberCount < 8)
+                memberCount++;
+            countText.setText(memberCount + "");
+        });
+        minusBtn.setOnClickListener(view -> {
+            if(memberCount > 1)
+                memberCount--;
+            countText.setText(memberCount + "");
+        });
     }
     
     @SuppressLint("ClickableViewAccessibility")
@@ -145,7 +157,7 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
             @Override
             public boolean onKey(View view, int keycode, KeyEvent keyEvent) {
                 if (keycode == KeyEvent.KEYCODE_ENTER){
-                    findViewById(R.id.BTN_NewSch_Wp_ViewMore).setVisibility(View.VISIBLE);
+                    findViewById(R.id.LAYOUT_NewSch_Wp_CardContainer).setVisibility(View.VISIBLE);
                     findViewById(R.id.LAYOUT_NewSch_Wp_Banner).setVisibility(View.VISIBLE);
                     searchWaypointByName(autoCompleteTextView.getText().toString());
                 }
@@ -170,10 +182,11 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
     private void onLayoutNewSchList() {
         ExtendedFloatingActionButton BTN_AddSchedule = (ExtendedFloatingActionButton) findViewById(R.id.BTN_AddSchedule);
         BTN_AddSchedule.setOnClickListener(v -> {
-            TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 2);
+            findViewById(R.id.LAYOUT_NewSch_sch).setVisibility(View.VISIBLE);
+            TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 3);
             SetAppBarAction(0, true, "취소").setOnClickListener(view -> onAppBarClick(30));
             SetAppBarAction(0, false, "").setOnClickListener(null);
-            findViewById(R.id.BTN_NewSch_Wp_ViewMore).setVisibility(View.GONE);
+            findViewById(R.id.LAYOUT_NewSch_Wp_CardContainer).setVisibility(View.GONE);
             findViewById(R.id.LAYOUT_NewSch_Wp_Banner).setVisibility(View.GONE);
             onLayoutNewWaypoint();
         });
@@ -185,9 +198,8 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
         mapScroll.smoothScrollTo(0, 0);
         ((TextView) findViewById(R.id.TEXT_NewSch_Wp_ViewMoreText)).setText("더 보기");
         ((ViewGroup) findViewById(R.id.LAYOUT_NewSch_Wp_CardContainer)).removeAllViewsInLayout();
-        findViewById(R.id.BTN_NewSch_Wp_ViewMore).setVisibility(View.VISIBLE);
         findViewById(R.id.LAYOUT_NewSch_Wp_Banner).setVisibility(View.VISIBLE);
-        
+        findViewById(R.id.LAYOUT_NewSch_Wp_CardContainer).setVisibility(View.VISIBLE);
         
         for (Waypoint waypoint:
                 ScheduleController.getInstance().getAllWaypointValues()){
@@ -243,11 +255,13 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
     
         icon.setImageDrawable(ScheduleController.getInstance().getWayPointDrawable(waypoint));
         name.setText(waypoint.GetName());
+        
+        newSchedule.addWayPoint(waypoint);
     
-        TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 1);
+        TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 2);
     
         SetAppBarAction(0, true, "이전").setOnClickListener(v -> onAppBarClick(20));
-        SetAppBarAction(0, false, "다음").setOnClickListener(v -> onAppBarClick(21));
+        SetAppBarAction(0, false, "완료").setOnClickListener(v -> onAppBarClick(21));
     }
     
     private ArrayList<String> getListOfWaypoints(){
@@ -294,23 +308,39 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
 
     private void onAppBarClick(int index) {
         switch (index) {
+            case 1:
+                saveScheduleInfo();
+                break;
+            case 10:
+                TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 0);
+                SetAppBarAction(0, true, "").setOnClickListener(null);
+                SetAppBarAction(0, false, "다음").setOnClickListener(v -> onAppBarClick(1));
+                break;
             case 11:
                 saveDateToSchedule();
                 break;
             case 20:
-                SetAppBarAction(0, true, "").setOnClickListener(null);
+                SetAppBarAction(0, true, "이전").setOnClickListener(v -> onAppBarClick(10));
                 SetAppBarAction(0, false, "다음").setOnClickListener(v -> onAppBarClick(11));
-                TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 0);
+                TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 1);
                 break;
             case 21:
-        
+                ScheduleController.getInstance().addScheduleToDictionary(newSchedule);
+                Log.d("TAG", "onAppBarClick: "+ newSchedule.getStartDate());
+                setResult(RESULT_OK);
+                finish();
                 break;
             case 30:
                 SetAppBarAction(0, true, "이전").setOnClickListener(v -> onAppBarClick(20));
-                SetAppBarAction(0, false, "다음").setOnClickListener(v -> onAppBarClick(21));
-                TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 1);
+                SetAppBarAction(0, false, "완료").setOnClickListener(v -> onAppBarClick(21));
+                TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 2);
                 break;
             case 31:
+        
+                break;
+            case 40:
+                break;
+            case 41:
         
                 break;
             default:
@@ -318,17 +348,39 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
         }
     }
     
+    private void saveScheduleInfo(){
+        EditText title = findViewById(R.id.EDT_NewSch_Title);
+        
+        if(!title.getText().toString().equals("")) {
+            newSchedule.setId(ScheduleController.getInstance().getAllSchedule().size());
+            Member newMemeber = new Member(ScheduleController.getInstance().getAllMemberValues().size(), newSchedule.getId());
+            for (int i = 0; i < memberCount; i++) {
+                newMemeber.AddUserIdInList(i);
+            }
+            newSchedule.setMemberGroupId(newMemeber.GetId());
+            newSchedule.setName(title.getText().toString());
+            TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 1);
+            SetAppBarAction(0, true, "이전").setOnClickListener(v -> onAppBarClick(10));
+            SetAppBarAction(0, false, "다음").setOnClickListener(v -> onAppBarClick(11));
+        }
+        else
+            Toast.makeText(getApplicationContext(), "여행 제목을 입력 해주세요", Toast.LENGTH_SHORT).show();
+    }
+    
     private void saveDateToSchedule(){
         if(calendar.firstDate != null && calendar.secondDate != null){
             SetAppBarAction(0, true, "이전").setOnClickListener(v -> onAppBarClick(20));
-            SetAppBarAction(0, false, "다음").setOnClickListener(v -> onAppBarClick(21));
-            newSchedule.setStartDate(calendar.firstDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            SetAppBarAction(0, false, "완료").setOnClickListener(v -> onAppBarClick(21));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            newSchedule.setStartDate(calendar.firstDate.format(formatter));
+            Log.d("TAG", "saveDateToSchedule: " + calendar.firstDate.format(formatter));
+            Log.d("TAG", "saveDateToSchedule: " + newSchedule.getStartDate());
             newSchedule.setDays(Period.between(calendar.firstDate, calendar.secondDate).getDays());
             onLayoutNewSchList();
-            TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 1);
+            TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 2);
         }
         else
-            Toast.makeText(getApplicationContext(), "날짜를 선택해주세요.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "날짜를 선택 해주세요.", Toast.LENGTH_SHORT).show();
     }
 }
 

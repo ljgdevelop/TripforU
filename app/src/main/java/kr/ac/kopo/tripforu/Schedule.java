@@ -67,6 +67,9 @@ public class Schedule implements Serializable {
     public int getId(){
         return this.id;
     }
+    public void setId(int id){
+        this.id = id;
+    }
     
     //name 변수의 getter setter
     public String getName(){
@@ -100,7 +103,7 @@ public class Schedule implements Serializable {
         return this.startDate;
     }
     public void setStartDate(String date){
-        this.startDate = startDate;
+        this.startDate = date;
     }
     
     //wayPointId 변수의 getter setter adder remover

@@ -67,7 +67,7 @@ public class JsonController extends AppCompatActivity {
             Waypoint.class.toString());
         ScheduleController.syncJsonToObject(JsonController.readJsonArrayFromAssets("json/schedule.json", context),
             Schedule.class.toString());
-    
+
         saveJson(ScheduleController.getInstance().getAllMemberValues(), "member", context);
         saveJson(ScheduleController.getInstance().getAllWaypointValues(), "waypoints", context);
         saveJson(ScheduleController.getInstance().getAllScheduleValue(), "schedule", context);
@@ -96,7 +96,7 @@ public class JsonController extends AppCompatActivity {
             }
     
             json = buffer.toString();
-            
+    
             JSONParser parser = new JSONParser();
             JSONArray jsonArray = (JSONArray) parser.parse(json);
             //JSONObject obj = (JSONObject) parser.parse(json);

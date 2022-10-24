@@ -139,7 +139,7 @@ public class LayoutScheduleTicket extends FrameLayout {
         
         //스케줄 객체의 정보를 자식뷰에 표시
         String schName = schedule.getName();
-        String Destination = schedule.getDestination();
+        String Destination = schedule.getDestination() != null ? schedule.getDestination() : "";
         if(Destination.contains("시 ")) {
             txt_schUpperLoc.setText(Destination.split("시 ")[0] + "시");
             txt_schSpecLoc.setText(Destination.split("시 ")[1]);
