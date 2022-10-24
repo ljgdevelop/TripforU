@@ -8,6 +8,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -17,10 +18,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import kr.ac.kopo.tripforu.Alarm;
-import kr.ac.kopo.tripforu.JsonController;
 import kr.ac.kopo.tripforu.PageController;
 import kr.ac.kopo.tripforu.Settings;
 
@@ -47,11 +48,13 @@ public class MyJobService extends JobService {
             for (String line : jsonList) {
                 json.append(line);
             }
-
-            Settings setting = new Gson().fromJson(
+    
+            ArrayList<Settings> sList = new Gson().fromJson(
                 json.toString(),
-                Settings.class);
-
+                new TypeToken<ArrayList<Settings>>() {}.getType());
+            Settings setting = sList.get(0);
+            
+            
             if(setting.lastAlarmCheck == null || LocalDate.now().isAfter(setting.lastAlarmCheck)){
                 String settingText = new Gson().toJson(setting.lastAlarmCheck = LocalDate.now());
                 Files.write(Paths.get(getFilesDir() + "/settings.json"), settingText.getBytes());
