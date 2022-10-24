@@ -445,6 +445,8 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
     protected void showScheduleList(LinearLayout pastSchContainer, LinearLayout remainSchContainer, int check){
         ArrayList<Schedule> scheduleList = ScheduleController.getSortedScheduleByDate();
 
+        if(scheduleList.size() < 1)
+            return;
         if(isPassed(scheduleList.get(0).getStartDate()) && check == 0) {
             remainSchContainer.removeAllViewsInLayout();
             ((TextView)findViewById(R.id.TEXT_MainRemain)).setText("남은 여행 일정");

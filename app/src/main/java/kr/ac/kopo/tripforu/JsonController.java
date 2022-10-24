@@ -98,7 +98,14 @@ public class JsonController extends AppCompatActivity {
             json = buffer.toString();
     
             JSONParser parser = new JSONParser();
-            JSONArray jsonArray = (JSONArray) parser.parse(json);
+            JSONArray jsonArray;
+            try {
+                jsonArray = (JSONArray) parser.parse(json);
+            }catch (Exception e){
+                JSONArray tempArray = new JSONArray();
+                tempArray.add((JSONObject) parser.parse(json));
+                jsonArray = tempArray;
+            }
             //JSONObject obj = (JSONObject) parser.parse(json);
             
             //JSONArray jsonArray = (JSONArray) obj.get("items");
