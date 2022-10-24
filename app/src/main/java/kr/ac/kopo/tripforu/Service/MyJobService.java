@@ -55,13 +55,11 @@ public class MyJobService extends JobService {
             if(setting.lastAlarmCheck == null || LocalDate.now().isAfter(setting.lastAlarmCheck)){
                 String settingText = new Gson().toJson(setting.lastAlarmCheck = LocalDate.now());
                 Files.write(Paths.get(getFilesDir() + "/settings.json"), settingText.getBytes());
-                Alarm alarm = new Alarm();
+                Alarm alarm = new Alarm().asContext(this);
                 alarm.schAlarm();
             }else {
-                Alarm alarm = new Alarm();
+                Alarm alarm = new Alarm().asContext(this);
                 alarm.removeNotification();
-                PageController pageController = new PageController();
-                pageController.cancelJobService();
             }
         } catch (IOException e) {
             e.printStackTrace();

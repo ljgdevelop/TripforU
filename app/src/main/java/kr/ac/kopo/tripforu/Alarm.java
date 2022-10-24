@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.text.format.DateUtils;
@@ -23,7 +24,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class Alarm extends PageController{
+public class Alarm{
+    Context context;
     //D-Day 날짜 확인
     public void schAlarm(){
         try {
@@ -49,6 +51,11 @@ public class Alarm extends PageController{
             System.out.println(e.getMessage());
         }
     }
+    public Alarm asContext (Context context){
+        this.context = context;
+        return this;
+    }
+
     //알림 생성
     private void showNotification(Schedule schedule, Long day) {
         String CHANNEL_ID = Integer.toString(schedule.getId());
@@ -89,7 +96,7 @@ public class Alarm extends PageController{
         resetCal.set(Calendar.SECOND, 0);
 
         //알람 매니저에 셋팅
-        AlarmManager alarmManager = (AlarmManager)getSystemService(ActivityMain.context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(ActivityMain.context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC, resetCal.getTimeInMillis(), pendingIntent);
         Log.d("TAG", "showNotification123123: ");
         //알림창 실행
@@ -98,6 +105,6 @@ public class Alarm extends PageController{
 
     public void removeNotification() {
         // Notification 제거
-        NotificationManagerCompat.from(this).cancel(1);
+        NotificationManagerCompat.from(context).cancel(1);
     }
 }
