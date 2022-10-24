@@ -120,6 +120,9 @@ public class LayoutCalendar extends LinearLayout {
                 dateMemo.setTextColor(getResources().getColor(R.color.APP_Main));
             }
     
+            
+            
+    
             GridLayout.LayoutParams gl = new GridLayout.LayoutParams();
             gl.rowSpec = GridLayout.spec(row + 1);
             gl.columnSpec = GridLayout.spec(column);
@@ -132,9 +135,14 @@ public class LayoutCalendar extends LinearLayout {
             });
             v.setPadding(0,PageController.ConvertDPtoPX(context,16),0,PageController.ConvertDPtoPX(context,8));
             
-            
             v.setOnClickListener(view -> setSelectedDate(v, date));
     
+            if (date.isBefore(LocalDate.now())){
+                dateText.setTextColor(getResources().getColor(R.color.APP_Shade));
+                dateMemo.setTextColor(getResources().getColor(R.color.APP_Shade));
+                v.setOnClickListener(null);
+            }
+            
             grid.addView(v);
         }
         
@@ -222,6 +230,10 @@ public class LayoutCalendar extends LinearLayout {
                         dateText.setTextColor(getResources().getColor(R.color.APP_Main));
                         dateMemo.setTextColor(getResources().getColor(R.color.APP_Main));
                     }
+                }
+                if (thisDate.date.isBefore(LocalDate.now())){
+                    dateText.setTextColor(getResources().getColor(R.color.APP_Shade));
+                    dateMemo.setTextColor(getResources().getColor(R.color.APP_Shade));
                 }
             }
         }

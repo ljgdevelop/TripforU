@@ -22,6 +22,11 @@
             android:orientation="horizontal">
 
             <include
+                layout="@layout/layout_newsch_setting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <include
                 layout="@layout/layout_newsch_date"/>
 
             <include
@@ -31,11 +36,6 @@
 
             <include
                 layout="@layout/layout_newsch_wp_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-            <include
-                layout="@layout/layout_newsch_setting"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 

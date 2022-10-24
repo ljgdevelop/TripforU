@@ -47,6 +47,8 @@ import java.util.Locale;
 
 import kr.ac.kopo.tripforu.Service.MyJobService;
 
+import kr.ac.kopo.tripforu.Retrofit.INetTask;
+
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class PageController extends AppCompatActivity implements OnBackPressedListener{
@@ -333,6 +335,15 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
             ArrayList<Settings> tempArray = new ArrayList<>();
             tempArray.add(settings);
             JsonController.saveJson(tempArray, "settings", getApplicationContext());
+    
+            //서버에서 관광지 목록 가져오기
+            new Thread(() -> {
+                for (Waypoint wp : INetTask.getInstance().getWayPoints("")) {
+                    ScheduleController.getInstance().addWaypointToList(wp);
+                }
+                ScheduleController.getInstance().saveWaypoint();
+            }).start();
+            
             
             prefs.edit().putBoolean("isFirstRun",false).apply();
         }

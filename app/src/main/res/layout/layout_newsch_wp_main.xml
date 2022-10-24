@@ -42,6 +42,7 @@
                 android:orientation="vertical">
 
                 <include
+                    android:id="@+id/LAYOUT_NewSch_Wp_ViewMore"
                     layout="@layout/layout_newsch_wp_list"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
