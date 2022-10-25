@@ -196,16 +196,14 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
         //검색 결과 초기화
         mapScroll.smoothScrollTo(0, 0);
         scrollAction = false;
-        for(int i = 0; i < ((ViewGroup) findViewById(R.id.LAYOUT_NewSch_Wp_View)).getChildCount() - 2; i ++){
-            ((ViewGroup) findViewById(R.id.LAYOUT_NewSch_Wp_View)).removeViewAt(3);
-        }
+        ((ViewGroup) findViewById(R.id.BTN_NewSch_Wp_ViewMore)).removeAllViewsInLayout();
         
         for (Waypoint waypoint:
                 ScheduleController.getInstance().getAllWaypointValues()){
             if (waypoint.GetName().contains(name)){
                 //리스트에 뷰 추가, 정보 입력
-                View card = getLayoutInflater().inflate(R.layout.layout_newsch_wp_card, findViewById(R.id.LAYOUT_NewSch_Wp_View), false);
-                ((LinearLayout) findViewById(R.id.LAYOUT_NewSch_Wp_View)).addView(card);
+                View card = getLayoutInflater().inflate(R.layout.layout_newsch_wp_card, findViewById(R.id.BTN_NewSch_Wp_ViewMore), false);
+                ((LinearLayout) findViewById(R.id.BTN_NewSch_Wp_ViewMore)).addView(card);
     
                 TextView cardName = card.findViewById(R.id.LAYOUT_NewSch_WpName);
                 TextView cardAddress = card.findViewById(R.id.LAYOUT_NewSch_WpAddress);
