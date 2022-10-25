@@ -12,7 +12,7 @@ import android.widget.Button;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ActivityPermissionCheck extends PageController {
     Button btn_permissionCheck;
-    
+    @Override protected boolean useToolbar(){ return false; }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +30,9 @@ public class ActivityPermissionCheck extends PageController {
                 
                 Intent intent = new Intent();
                 setResult(RESULT_OK, intent);
+    
+                prefs = getSharedPreferences("Pref", MODE_PRIVATE);
+                prefs.edit().putBoolean("isFirstRun",false).apply();
                 finish();
             }
         });

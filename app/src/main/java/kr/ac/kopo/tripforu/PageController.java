@@ -343,9 +343,6 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
                 }
                 ScheduleController.getInstance().saveWaypoint();
             }).start();
-            
-            
-            prefs.edit().putBoolean("isFirstRun",false).apply();
         }
         else{
             //Json형식의 데이터 동기화
