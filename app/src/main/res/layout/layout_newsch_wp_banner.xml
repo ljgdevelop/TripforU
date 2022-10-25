@@ -8,37 +8,17 @@
     android:layout_marginBottom="80dp"
     android:clipToPadding="false">
 
-    <com.naver.maps.map.widget.LocationButtonView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:id="@+id/location"
-        android:layout_gravity="right"
-        android:layout_marginBottom="8dp"/>
+
 
     <LinearLayout
         android:id="@+id/LAYOUT_NewSch_Wp_Banner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="140dp"
         android:layout_gravity="bottom"
         android:padding="16dp"
         android:background="@drawable/background_white_rcorner_15"
         android:elevation="4dp"
-        android:visibility="gone"
         android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_tempimage"
-                android:scaleType="centerCrop"
-                android:id="@+id/LAYOUT_NewSch_WpImg"/>
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

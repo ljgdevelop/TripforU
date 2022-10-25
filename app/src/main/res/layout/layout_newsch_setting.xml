@@ -13,7 +13,7 @@
         android:textStyle="bold"
         android:textColor="@color/TEXT_Black"
         android:paddingVertical="16dp"
-        android:paddingStart="32dp"/>
+        android:paddingStart="16dp"/>
     <TextView
         style="@style/divideLine"/>
     <TextView

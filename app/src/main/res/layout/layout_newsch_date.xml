@@ -14,7 +14,7 @@
         android:textColor="@color/TEXT_Black"
         android:textSize="20sp"
         android:paddingVertical="16dp"
-        android:paddingStart="32dp"
+        android:paddingStart="16dp"
         android:background="@color/APP_Accent"
         android:text="여행 날짜 선택"/>
 

@@ -99,28 +99,8 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
         
         ResetAppBar();
         Toolbar toolbar = fullView.findViewById(R.id.LAYOUT_AppBar);
-        
-        fullView.findViewById(R.id.IMG_AppBarGoBack).setOnClickListener(v -> {
-            ViewGroup layout_TABBUTTON = fullView.findViewById(R.id.LAYOUT_TABBUTTON);
-            for (int i = 0; i < layout_TABBUTTON.getChildCount(); i++){
-                if (((TextView)layout_TABBUTTON.getChildAt(i).findViewById(R.id.IMG_NAVtext)).getCurrentTextColor() == getColor(R.color.APP_Main)){
-                    TabHorizontalScroll(fullView.findViewById(R.id.VIEW_MainPageTabPage),i);
-                }
-            }
-            ResetAppBar();
-        });
-        fullView.findViewById(R.id.IMG_AppBarErase).setOnClickListener(v ->
-            ((TextView)fullView.findViewById(R.id.TEXT_AppBarSearchText)).setText(""));
-        
-        EditText editText = (EditText) fullView.findViewById(R.id.TEXT_AppBarSearchText);
-        editText.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
-        editText.setOnEditorActionListener((textView, i, keyEvent) -> {
-           if(i == EditorInfo.IME_ACTION_DONE){
-               onAppBarSearchListener(editText.getText().toString());
-               return true;
-           }
-           return false;
-        });
+    
+        setToolBarSearchAction();
         
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) activityContainer.getLayoutParams();
         if(useToolbar()){
@@ -132,6 +112,30 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
             lp.topMargin = 0;
             activityContainer.setLayoutParams(lp);
         }
+    }
+    
+    private void setToolBarSearchAction(){
+        fullView.findViewById(R.id.IMG_AppBarGoBack).setOnClickListener(v -> {
+            ViewGroup layout_TABBUTTON = fullView.findViewById(R.id.LAYOUT_TABBUTTON);
+            for (int i = 0; i < layout_TABBUTTON.getChildCount(); i++){
+                if (((TextView)layout_TABBUTTON.getChildAt(i).findViewById(R.id.IMG_NAVtext)).getCurrentTextColor() == getColor(R.color.APP_Main)){
+                    TabHorizontalScroll(fullView.findViewById(R.id.VIEW_MainPageTabPage),i);
+                }
+            }
+            ResetAppBar();
+        });
+        fullView.findViewById(R.id.IMG_AppBarErase).setOnClickListener(v ->
+            ((TextView)fullView.findViewById(R.id.TEXT_AppBarSearchText)).setText(""));
+    
+        EditText editText = (EditText) fullView.findViewById(R.id.TEXT_AppBarSearchText);
+        editText.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
+        editText.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if(i == EditorInfo.IME_ACTION_DONE){
+                onAppBarSearchListener(editText.getText().toString());
+                return true;
+            }
+            return false;
+        });
     }
 
     /**
@@ -155,6 +159,9 @@ public class PageController extends AppCompatActivity implements OnBackPressedLi
                 break;
             case 2://negative
                 color = "#ff8888";
+                break;
+            case 3://inactivated
+                color = "#868E96";
                 break;
             default:
                 return null;

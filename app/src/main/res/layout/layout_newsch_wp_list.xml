@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingHorizontal="8dp"
-    android:elevation="4dp">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -11,10 +9,11 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/LAYOUT_NewSch_Wp_CardContainer"
+            android:id="@+id/LAYOUT_NewSch_Wp_View"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:clipToPadding="false">
 
             <View
                 android:id="@+id/LAYOUT_NewSch_Wp_CardContainer_Margin"
@@ -24,25 +23,13 @@
             <LinearLayout
                 android:id="@+id/BTN_NewSch_Wp_ViewMore"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
                 android:background="@drawable/background_banner_top"
                 android:gravity="center_vertical"
-                android:visibility="gone"
                 android:elevation="4dp">
 
-                <TextView
-                    android:id="@+id/TEXT_NewSch_Wp_ViewMoreText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="더 보기"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/TEXT_Black"
-                    android:textAlignment="center"/>
-
-                <TextView style="@style/divideLine"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

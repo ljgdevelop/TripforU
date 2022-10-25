@@ -49,11 +49,11 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
     private NaverMap naverMap;
     private FusedLocationSource locationSource;
     private SearchView searchView;
-    private boolean enabled;
+    private boolean scrollAction;
     private int memberCount = 1;
     private LayoutCalendar calendar;
     private Schedule newSchedule = new Schedule();
-    
+    private Waypoint selectedWaypoint;
 
     @Override
     protected boolean useToolbar() {
@@ -117,58 +117,6 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
             layoutParams.width = width;
             v.setLayoutParams(layoutParams);
         }
-        
-        NestedScrollView mapScroll = ((NestedScrollView) findViewById(R.id.LAYOUT_NewSch_Wp_Container));
-        mapScroll.setOnTouchListener(((view, motionEvent) -> {return true;}));
-    
-        //목록 아래 정렬
-        View margin = mapScroll.findViewById(R.id.LAYOUT_NewSch_Wp_CardContainer_Margin);
-        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) margin.getLayoutParams();
-        lp.height = height - ConvertDPtoPX(getApplicationContext(), 64);
-        margin.setLayoutParams(lp);
-        
-        //목록 확장 & 닫기
-        findViewById(R.id.BTN_NewSch_Wp_ViewMore).setOnClickListener(view -> {
-            if(mapScroll.getScrollY() < 10) {
-                mapScroll.smoothScrollTo(0, view.getTop());
-                ((TextView) findViewById(R.id.TEXT_NewSch_Wp_ViewMoreText)).setText("닫기");
-            }
-            else {
-                mapScroll.smoothScrollTo(0, 0);
-                ((TextView) findViewById(R.id.TEXT_NewSch_Wp_ViewMoreText)).setText("더 보기");
-            }
-        });
-    }
-    
-    private void onLayoutNewWaypoint(){
-        //네이버 맵 로드
-        MapView mapView = (MapView) findViewById(R.id.map_View);
-        mapView.getMapAsync(this);
-        mapView.requestDisallowInterceptTouchEvent(true);
-    
-        //검색창
-        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.AutoTextView);
-        autoCompleteTextView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        autoCompleteTextView.setAdapter(
-            new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line,
-                getListOfWaypoints()));
-        autoCompleteTextView.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int keycode, KeyEvent keyEvent) {
-                if (keycode == KeyEvent.KEYCODE_ENTER){
-                    findViewById(R.id.LAYOUT_NewSch_Wp_CardContainer).setVisibility(View.VISIBLE);
-                    findViewById(R.id.LAYOUT_NewSch_Wp_Banner).setVisibility(View.VISIBLE);
-                    searchWaypointByName(autoCompleteTextView.getText().toString());
-                }
-                return false;
-            }
-        });
-        autoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> {
-            searchWaypointByName(autoCompleteTextView.getText().toString());
-            android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(fullView.findViewById(R.id.TEXT_AppBarSearchText).getWindowToken(), 0);
-        });
     }
     
     private void onLayoutCalendar(){
@@ -185,41 +133,79 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
             findViewById(R.id.LAYOUT_NewSch_sch).setVisibility(View.VISIBLE);
             TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 3);
             SetAppBarAction(0, true, "취소").setOnClickListener(view -> onAppBarClick(30));
-            SetAppBarAction(0, false, "").setOnClickListener(null);
-            findViewById(R.id.LAYOUT_NewSch_Wp_CardContainer).setVisibility(View.GONE);
-            findViewById(R.id.LAYOUT_NewSch_Wp_Banner).setVisibility(View.GONE);
+            SetAppBarAction(3, false, "선택").setOnClickListener(null);
+            findViewById(R.id.LAYOUT_NewSch_Wp_View).setVisibility(View.GONE);
             onLayoutNewWaypoint();
         });
     }
     
+    private void onLayoutNewWaypoint(){
+        //네이버 맵 로드
+        MapView mapView = (MapView) findViewById(R.id.map_View);
+        mapView.getMapAsync(this);
+        mapView.requestDisallowInterceptTouchEvent(true);
+        
+        //검색창
+        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.AutoTextView);
+        autoCompleteTextView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        autoCompleteTextView.setAdapter(
+            new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line,
+                getListOfWaypoints()));
+        
+        //검색 완료
+        autoCompleteTextView.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_DONE);
+        autoCompleteTextView.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if(i == EditorInfo.IME_ACTION_DONE){
+                searchWaypointByName(autoCompleteTextView.getText().toString());
+                return true;
+            }
+            return false;
+        });
+        autoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> {
+            searchWaypointByName(autoCompleteTextView.getText().toString());
+        });
+    }
+    
     private void searchWaypointByName(String name){
-        //검색 결과 초기화
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y - ConvertDPtoPX(getApplicationContext(), 56);
+        
+        //결과 레이아웃 보여주기
         NestedScrollView mapScroll = ((NestedScrollView) findViewById(R.id.LAYOUT_NewSch_Wp_Container));
+        
+        findViewById(R.id.LAYOUT_NewSch_Wp_View).setVisibility(View.VISIBLE);
+    
+        //키보드 닫기
+        android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(fullView.findViewById(R.id.TEXT_AppBarSearchText).getWindowToken(), 0);
+    
+        //목록 확장 & 닫기
+        findViewById(R.id.BTN_NewSch_Wp_ViewMore).setOnClickListener(view -> {
+            if(mapScroll.getScrollY() < 10) {
+                mapScroll.smoothScrollTo(0, view.getTop());
+            }
+            else {
+                mapScroll.smoothScrollTo(0, 0);
+            }
+        });
+        
+        //검색 결과 초기화
         mapScroll.smoothScrollTo(0, 0);
-        ((TextView) findViewById(R.id.TEXT_NewSch_Wp_ViewMoreText)).setText("더 보기");
-        ((ViewGroup) findViewById(R.id.LAYOUT_NewSch_Wp_CardContainer)).removeAllViewsInLayout();
-        findViewById(R.id.LAYOUT_NewSch_Wp_Banner).setVisibility(View.VISIBLE);
-        findViewById(R.id.LAYOUT_NewSch_Wp_CardContainer).setVisibility(View.VISIBLE);
+        scrollAction = false;
+        for(int i = 0; i < ((ViewGroup) findViewById(R.id.LAYOUT_NewSch_Wp_View)).getChildCount() - 2; i ++){
+            ((ViewGroup) findViewById(R.id.LAYOUT_NewSch_Wp_View)).removeViewAt(3);
+        }
         
         for (Waypoint waypoint:
                 ScheduleController.getInstance().getAllWaypointValues()){
             if (waypoint.GetName().contains(name)){
-                //관광지 정보 배너에 정보 추가
-                View v = findViewById(R.id.LAYOUT_NewSch_Wp_Banner);
-                ImageView img = v.findViewById(R.id.LAYOUT_NewSch_WpImg);
-                TextView bannerName = v.findViewById(R.id.LAYOUT_NewSch_WpName);
-                TextView bannerAddress = v.findViewById(R.id.LAYOUT_NewSch_WpAddress);
-                TextView bannerRating = v.findViewById(R.id.LAYOUT_NewSch_WpRating);
-    
-                bannerName.setText(waypoint.GetName());
-                bannerAddress.setText(waypoint.GetName());
-                bannerRating.setText(waypoint.GetRating() + "");
-    
-                v.setOnClickListener(view -> onSelectWaypoint(view,waypoint));
-    
                 //리스트에 뷰 추가, 정보 입력
-                View card = getLayoutInflater().inflate(R.layout.layout_newsch_wp_card, findViewById(R.id.LAYOUT_NewSch_Wp_CardContainer), false);
-                ((ViewGroup) findViewById(R.id.LAYOUT_NewSch_Wp_CardContainer)).addView(card);
+                View card = getLayoutInflater().inflate(R.layout.layout_newsch_wp_card, findViewById(R.id.LAYOUT_NewSch_Wp_View), false);
+                ((LinearLayout) findViewById(R.id.LAYOUT_NewSch_Wp_View)).addView(card);
     
                 TextView cardName = card.findViewById(R.id.LAYOUT_NewSch_WpName);
                 TextView cardAddress = card.findViewById(R.id.LAYOUT_NewSch_WpAddress);
@@ -233,35 +219,55 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
 
                 //지도에 마커 표시 후 이동
                 Marker marker = new Marker();
-                marker.setPosition(new LatLng(waypoint.GetPosX(), waypoint.GetPosY()));
+                marker.setPosition(new LatLng(waypoint.GetPosY(), waypoint.GetPosX()));
                 marker.setMap(naverMap);
 
                 marker.setIconPerspectiveEnabled(true);
-
-                CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(waypoint.GetPosX(), waypoint.GetPosY()));
-                naverMap.moveCamera(cameraUpdate);
+                
+                if(!scrollAction) {
+                    scrollAction = true;
+                    mapScroll.scrollTo(0, card.getBottom());
+    
+                    selectedWaypoint = waypoint;
+                    
+                    CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(waypoint.GetPosY(), waypoint.GetPosX()));
+                    naverMap.moveCamera(cameraUpdate);
+                }
             }
         }
+    
+        //목록 아래 정렬
+        View margin = mapScroll.findViewById(R.id.LAYOUT_NewSch_Wp_CardContainer_Margin);
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) margin.getLayoutParams();
+        lp.height = (height - ConvertDPtoPX(getApplicationContext(), 64)) / 5 - findViewById(R.id.LAYOUT_NewSch_Wp_Card).getHeight();
+        margin.setLayoutParams(lp);
+    
+        SetAppBarAction(1, false, "선택").setOnClickListener(v -> {
+            View banner = getLayoutInflater().inflate(R.layout.layout_newsch_list_banner, findViewById(R.id.LAYOUT_NewSch_List_WPContainer), false);
+            ((ViewGroup)findViewById(R.id.LAYOUT_NewSch_List_WPContainer)).addView(banner);
+        
+            ImageButton wicon = banner.findViewById(R.id.IMG_NewSch_List_Banner_Icon);
+            TextView wname = banner.findViewById(R.id.TEXT_NewSch_List_Banner_Name);
+            ImageButton wclose = banner.findViewById(R.id.BTN_NewSch_List_Banner_Close);
+    
+            wicon.setImageDrawable(ScheduleController.getInstance().getWayPointDrawable(selectedWaypoint));
+            wname.setText(selectedWaypoint.GetName());
+        
+            newSchedule.addWayPoint(selectedWaypoint);
+        
+            TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 2);
+        
+            SetAppBarAction(0, true, "이전").setOnClickListener(vv -> onAppBarClick(20));
+            SetAppBarAction(0, false, "완료").setOnClickListener(vv -> onAppBarClick(21));
+        });
     }
 
     private void onSelectWaypoint(View view, Waypoint waypoint){
-        Log.d("TAG", "onSelectWaypoint: " + view.getId());
-        View banner = getLayoutInflater().inflate(R.layout.layout_newsch_list_banner, findViewById(R.id.LAYOUT_NewSch_List_WPContainer), false);
-        ((ViewGroup)findViewById(R.id.LAYOUT_NewSch_List_WPContainer)).addView(banner);
-        
-        ImageButton icon = banner.findViewById(R.id.IMG_NewSch_List_Banner_Icon);
-        TextView name = banner.findViewById(R.id.TEXT_NewSch_List_Banner_Name);
-        ImageButton close = banner.findViewById(R.id.BTN_NewSch_List_Banner_Close);
+        //이동
+        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(waypoint.GetPosY(), waypoint.GetPosX()));
+        naverMap.moveCamera(cameraUpdate);
     
-        icon.setImageDrawable(ScheduleController.getInstance().getWayPointDrawable(waypoint));
-        name.setText(waypoint.GetName());
-        
-        newSchedule.addWayPoint(waypoint);
-    
-        TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 2);
-    
-        SetAppBarAction(0, true, "이전").setOnClickListener(v -> onAppBarClick(20));
-        SetAppBarAction(0, false, "완료").setOnClickListener(v -> onAppBarClick(21));
+        selectedWaypoint = waypoint;
     }
     
     private ArrayList<String> getListOfWaypoints(){
@@ -307,6 +313,8 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
     }
 
     private void onAppBarClick(int index) {
+        android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(fullView.findViewById(R.id.TEXT_AppBarSearchText).getWindowToken(), 0);
         switch (index) {
             case 1:
                 saveScheduleInfo();
