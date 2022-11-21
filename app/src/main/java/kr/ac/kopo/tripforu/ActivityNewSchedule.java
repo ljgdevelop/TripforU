@@ -82,7 +82,7 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
         findViewById(R.id.LAYOUT_SchScroll).setOnTouchListener(((view, motionEvent) -> {return true;}));
 
         //앱 바 설정
-        SetAppBarAction(0, true, "").setOnClickListener(null);
+        SetAppBarAction(0, true, "취소").setOnClickListener(view -> finish());
         SetAppBarAction(0, false, "다음").setOnClickListener(v -> onAppBarClick(1));
         
         //캘린더 레이아웃 실행
@@ -319,7 +319,7 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
                 break;
             case 10:
                 TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 0);
-                SetAppBarAction(0, true, "").setOnClickListener(null);
+                SetAppBarAction(0, true, "취소").setOnClickListener(view -> finish());
                 SetAppBarAction(0, false, "다음").setOnClickListener(v -> onAppBarClick(1));
                 break;
             case 11:
@@ -365,6 +365,7 @@ public class ActivityNewSchedule extends PageController implements OnMapReadyCal
             }
             newSchedule.setMemberGroupId(newMemeber.GetId());
             newSchedule.setName(title.getText().toString());
+            ScheduleController.getInstance().addMemberToList(newMemeber);
             TabHorizontalScroll(findViewById(R.id.LAYOUT_SchScroll), 1);
             SetAppBarAction(0, true, "이전").setOnClickListener(v -> onAppBarClick(10));
             SetAppBarAction(0, false, "다음").setOnClickListener(v -> onAppBarClick(11));

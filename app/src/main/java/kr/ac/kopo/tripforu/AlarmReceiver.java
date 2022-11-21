@@ -21,14 +21,11 @@ public class AlarmReceiver extends BroadcastReceiver {
     NotificationCompat.Builder builder;
 
     //오레오 이상은 반드시 채널을 설정해줘야 Notification이 작동함
-    private static String CHANNEL_ID = "channel1";
-    private static String CHANNEL_NAME = "Channel1";
     public void onReceive(Context context, Intent intent){
 
         Log.e("TAG", "onReceive 알람이 들어옴!!");
-
-        String contentValue = intent.getStringExtra("content");
-        Log.e("TAG", "onReceive contentValue값 확인 : " + contentValue);
+        String contentName = "c";
+        String contentId = "1";
 
         builder = null;
 
@@ -38,9 +35,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         //안드로이드 오레오 버전 대응
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             manager.createNotificationChannel(
-                    new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+                    new NotificationChannel(contentName, contentId, NotificationManager.IMPORTANCE_DEFAULT)
             );
-            builder = new NotificationCompat.Builder(context, CHANNEL_ID);
+            builder = new NotificationCompat.Builder(context, contentId);
         } else {
             builder = new NotificationCompat.Builder(context);
         }
@@ -51,23 +48,24 @@ public class AlarmReceiver extends BroadcastReceiver {
         // FLAG_UPDATE_CURRENT ->
         // 설명된 PendingIntent가 이미 존재하는 경우 유지하되, 추가 데이터를 이 새 Intent에 있는 것으로 대체함을 나타내는 플래그입니다.
         // getActivity, getBroadcast 및 getService와 함께 사용
-        /*PendingIntent pendingIntent = PendingIntent.getActivity(context,schedule.getId(),intent2,
-                PendingIntent.FLAG_UPDATE_CURRENT);*/
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,Integer.parseInt(contentId),intent2,
+                PendingIntent.FLAG_MUTABLE);
 
         //알림창 제목
-        builder.setContentTitle(contentValue); //회의명노출
-        //builder.setContentText(intent.getStringExtra("content")); //회의 내용
+        builder.setContentTitle(contentName); //회의명노출
+        builder.setContentText(contentName + " 일정 시작일입니다."); //회의 내용
         //알림창 아이콘
         builder.setSmallIcon(R.drawable.ic_alarm);
         //알림창 터치시 자동 삭제
         builder.setAutoCancel(true);
 
-        /*builder.setContentIntent(pendingIntent);*/
+        builder.setContentIntent(pendingIntent);
 
         //푸시알림 빌드
         Notification notification = builder.build();
 
         //NotificationManager를 이용하여 푸시 알림 보내기
-        manager.notify(1,notification);
+        manager.notify(Integer.parseInt(contentId)+1,notification);
+        Log.d(TAG, "onReceive: 완료");
     }
 }

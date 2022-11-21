@@ -48,7 +48,7 @@ public class INetTask {
         CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
             try {
                 Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/image/")
+                    .baseUrl("http://ec2-3-38-150-208.ap-northeast-2.compute.amazonaws.com:6059/image/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         
@@ -88,7 +88,7 @@ public class INetTask {
             post.setJsonObject(jsonString.toString());
         
             Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/user/")
+                .baseUrl("http://ec2-3-38-150-208.ap-northeast-2.compute.amazonaws.com:6059/user/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         
@@ -122,7 +122,7 @@ public class INetTask {
             post.setJsonObject(jsonString);
             
             Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/schedule/")
+                .baseUrl("http://ec2-3-38-150-208.ap-northeast-2.compute.amazonaws.com:6059/schedule/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
             
@@ -154,7 +154,7 @@ public class INetTask {
             post.setJsonObject(jsonString);
     
             Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/sharedschedule/")
+                .baseUrl("http://ec2-3-38-150-208.ap-northeast-2.compute.amazonaws.com:6059/sharedschedule/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     
@@ -182,7 +182,7 @@ public class INetTask {
         CompletableFuture<List<GetRecommend>> future = CompletableFuture.supplyAsync(() -> {
             try {
                 Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/recommend/")
+                    .baseUrl("http://ec2-3-38-150-208.ap-northeast-2.compute.amazonaws.com:6059/recommend/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             
@@ -220,7 +220,7 @@ public class INetTask {
         CompletableFuture<List<GetRecommend>> future = CompletableFuture.supplyAsync(() -> {
             try {
                 Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/recommend/")
+                    .baseUrl("http://ec2-3-38-150-208.ap-northeast-2.compute.amazonaws.com:6059/recommend/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
                 
@@ -258,7 +258,7 @@ public class INetTask {
         CompletableFuture<List<GetRecommend>> future = CompletableFuture.supplyAsync(() -> {
             try {
                 Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/recommend/")
+                    .baseUrl("http://ec2-3-38-150-208.ap-northeast-2.compute.amazonaws.com:6059/recommend/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
                 
@@ -296,7 +296,7 @@ public class INetTask {
         CompletableFuture<GetSchedule> future = CompletableFuture.supplyAsync(() -> {
             try {
                 Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/schedule/")
+                    .baseUrl("http://ec2-3-38-150-208.ap-northeast-2.compute.amazonaws.com:6059/schedule/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
                 
@@ -333,7 +333,7 @@ public class INetTask {
         CompletableFuture<List<GetWaypoints>> future = CompletableFuture.supplyAsync(() -> {
             try {
                 Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://ec2-3-34-196-61.ap-northeast-2.compute.amazonaws.com:6059/waypoints/")
+                    .baseUrl("http://ec2-3-38-150-208.ap-northeast-2.compute.amazonaws.com:6059/waypoints/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
                 

@@ -65,12 +65,12 @@ public class JsonController extends AppCompatActivity {
             Member.class.toString());
         ScheduleController.syncJsonToObject(JsonController.readJsonArrayFromAssets("json/waypoints.json", context),
             Waypoint.class.toString());
-        ScheduleController.syncJsonToObject(JsonController.readJsonArrayFromAssets("json/schedule.json", context),
-            Schedule.class.toString());
+        //ScheduleController.syncJsonToObject(JsonController.readJsonArrayFromAssets("json/schedule.json", context),
+        //    Schedule.class.toString());
 
         saveJson(ScheduleController.getInstance().getAllMemberValues(), "member", context);
         saveJson(ScheduleController.getInstance().getAllWaypointValues(), "waypoints", context);
-        saveJson(ScheduleController.getInstance().getAllScheduleValue(), "schedule", context);
+        //saveJson(ScheduleController.getInstance().getAllScheduleValue(), "schedule", context);
     }
     
     /***

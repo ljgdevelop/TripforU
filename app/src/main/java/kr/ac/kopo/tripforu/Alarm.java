@@ -67,17 +67,17 @@ public class Alarm{
     private void showNotification(Schedule schedule, int day) {
         creatNotificationChannel(schedule);
         NotificationCompat.Builder builder = getBuilder(schedule, day);
-        Intent intent = new Intent(context, ActivityMain.class);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, schedule.getId(),
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, schedule.getId(),
                 intent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar resetCal = getCalendar();
+/*        //알림창 실행
+        NotificationManager manager = getManager();
+        Notification notification = builder.build();
+        manager.notify(schedule.getId(),notification);*/
         //알람 매니저에 셋팅
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, resetCal.getTimeInMillis(), pendingIntent);
-        //알림창 실행
-        NotificationManager manager = getManager();
-        manager.notify(schedule.getId(),builder.build());
     }
 
     //날짜와 시간 지정
@@ -85,8 +85,8 @@ public class Alarm{
         //오늘날짜의 몇시 몇분 몇초에 출력할지 지정
         Calendar resetCal = Calendar.getInstance();
         resetCal.setTimeInMillis(System.currentTimeMillis());
-        resetCal.set(Calendar.HOUR_OF_DAY, 15);
-        resetCal.set(Calendar.MINUTE, 41);
+        resetCal.set(Calendar.HOUR_OF_DAY, 17);
+        resetCal.set(Calendar.MINUTE, 11);
         resetCal.set(Calendar.SECOND, 10);
         if (Calendar.getInstance().after(resetCal)){
             resetCal.add(Calendar.DAY_OF_MONTH, 1);
@@ -105,17 +105,18 @@ public class Alarm{
     private PendingIntent getPendingIntent(Schedule schedule){
         //인텐트 추가 구간*
         PendingIntent pendingIntent = null;
-        Intent intent = new Intent(context, ActivityMain.class);
+        Intent intent = new Intent(context, AlarmReceiver.class);
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         //넘길 데이터 추가
-        intent.putExtra("schId",schedule.getId());
+        intent.putExtra("schName",schedule.getName());
+        intent.putExtra("schId",Integer.toString(schedule.getId()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            pendingIntent = PendingIntent.getActivity(context, schedule.getId(),
+            pendingIntent = PendingIntent.getBroadcast(context, schedule.getId(),
                     intent, PendingIntent.FLAG_MUTABLE);
         }else {
-            pendingIntent = PendingIntent.getActivity(context, schedule.getId(),
+            pendingIntent = PendingIntent.getBroadcast(context, schedule.getId(),
                     intent, 0);
         }
 

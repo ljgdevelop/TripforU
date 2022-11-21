@@ -156,7 +156,8 @@ public class ActivityRecommend extends PageController {
             ImageView waypointImg = detailWP.findViewById(R.id.IMG_Recommend_WP_Img);
             TextView waypointName = detailWP.findViewById(R.id.TEXT_Recommend_WP_Name);
             TextView waypointDesc = detailWP.findViewById(R.id.TEXT_Recommend_WP_Desc);
-            
+
+            Log.d("TAG", "onClick: "+ description.getWaypointId());
             int iconRes = ScheduleController.getInstance().getWayPointIcon(ScheduleController.getInstance().getWaypointById(description.getWaypointId()));
             waypointIcon.setImageResource(iconRes);
             
@@ -164,7 +165,6 @@ public class ActivityRecommend extends PageController {
             url.append(description.getWaypointImgId()[0]);
             url.append(".jpg");
             Glide.with(getApplicationContext()).load(url.toString()).into(waypointImg);
-            
             waypointName.setText(ScheduleController.getInstance().getWaypointById(description.getWaypointId()).GetName());
             waypointDesc.setText(description.getWaypointContent());
     

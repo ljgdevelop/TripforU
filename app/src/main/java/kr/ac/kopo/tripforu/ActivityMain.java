@@ -35,6 +35,15 @@ import java.time.Duration;
 import java.time.LocalTime;
 
 import kr.ac.kopo.tripforu.Retrofit.INetTask;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.util.Base64;
+import android.util.Log;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ActivityMain extends PageController implements OnBackPressedListener{
@@ -129,6 +138,8 @@ public class ActivityMain extends PageController implements OnBackPressedListene
 
         //지금 액티비티의 fullView 가져오기
         this.fullView = PageController.fullView;
+//        for (Waypoint Wp : INetTask.getInstance().getWayPoints(""))
+//            ScheduleController.getInstance().addWaypointToList(Wp);
     }
     
     @Override
@@ -310,5 +321,26 @@ public class ActivityMain extends PageController implements OnBackPressedListene
     protected void onResume() {
         super.onResume();
         PageController.fullView = this.fullView;
+    }
+
+    private void getHashKey(){
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (packageInfo == null)
+            Log.e("KeyHash", "KeyHash:null");
+
+        for (Signature signature : packageInfo.signatures) {
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            } catch (NoSuchAlgorithmException e) {
+                Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
+            }
+        }
     }
 }

@@ -174,6 +174,11 @@ public class ActivityUserShare extends PageController implements Cloneable{
         acbtn_AddContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //키보드가 올라와있으면 내리기
+                android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(fullView.findViewById(R.id.EDT_TitleText).getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(fullView.findViewById(R.id.EDT_ContentText).getWindowToken(), 0);
+
                 ScrollView layout_UserShareContent = findViewById(R.id.LAYOUT_UserShareContents);
                 
                 TabHorizontalScroll(findViewById(R.id.LAYOUT_UserShareContainer), 1);
